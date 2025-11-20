@@ -1,0 +1,111 @@
+{
+  "openapi": "3.0.3",
+  "x-stoplight": {
+    "id": "c59vgfyn3cehy"
+  },
+  "info": {
+    "title": "syncv3 API",
+    "version": "1.0-SNAPSHOT",
+    "description": "API del microservicio de syncv3",
+    "license": {
+      "name": "Proprietary - Internal Use Only",
+      "url": "https://v4.metacontratas.com/"
+    },
+    "contact": {
+      "email": "soporte.tecnico@metadata.es",
+      "name": "Metadata S.L.",
+      "url": "https://v4.metacontratas.com/"
+    }
+  },
+  "tags": [
+    {
+      "name": "Sincronizador",
+      "description": "Controlador para sincronizar información de MetacontratasV3 a MetacontratasV4"
+    }
+  ],
+  "paths": {
+    "/syncv3/v1/sincronizador": {
+      "post": {
+        "tags": [
+          "Sincronizador"
+        ],
+        "summary": "Sincroniza todos los esquemas de Metacontratas V3 con sus correspondientes entornos de ESTRUCTURA de Metacontratas V4",
+        "operationId": "postSincronizador",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "Sincroniza todos los esquemas de Metacontratas V3 con sus correspondientes entornos de ESTRUCTURA de Metacontratas V4",
+        "x-stoplight": {
+          "id": "wascworsoi92f"
+        }
+      }
+    },
+    "/syncv3/v1/sincronizador/idEsquema/{idEsquema}": {
+      "post": {
+        "tags": [
+          "Sincronizador"
+        ],
+        "summary": "Sincroniza un esquema concreto de Metacontratas V3",
+        "operationId": "postIdesquemaSincronizadorPorIdEsquema",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "Sincroniza un esquema concreto de Metacontratas V3",
+        "x-stoplight": {
+          "id": "1th2ty9qj38mz"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEsquema"
+        }
+      ]
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "jwt": {
+        "type": "http",
+        "description": "Authentication",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "parameters": {
+      "X-Timezone": {
+        "name": "X-Timezone",
+        "in": "header",
+        "description": "Zona horaria desde la que se hace la petición",
+        "required": true,
+        "schema": {
+          "default": "Europe/Madrid",
+          "type": "string"
+        }
+      },
+      "idEsquema": {
+        "name": "idEsquema",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      }
+    }
+  }
+}

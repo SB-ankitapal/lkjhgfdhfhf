@@ -1,0 +1,4631 @@
+{
+  "openapi": "3.0.3",
+  "x-stoplight": {
+    "id": "8oheqskuxhnqz"
+  },
+  "info": {
+    "title": "entornos API",
+    "version": "1.0-SNAPSHOT",
+    "description": "API del microservicio de entornos",
+    "license": {
+      "name": "Proprietary - Internal Use Only",
+      "url": "https://v4.metacontratas.com/"
+    },
+    "contact": {
+      "email": "soporte.tecnico@metadata.es",
+      "name": "Metadata S.L.",
+      "url": "https://v4.metacontratas.com/"
+    }
+  },
+  "tags": [
+    {
+      "name": "Bbdd",
+      "description": "Servicio de bbdds"
+    },
+    {
+      "name": "Configuraciones empresa",
+      "description": "Servicio de configuraciones de empresa"
+    },
+    {
+      "name": "Configuraciones entorno",
+      "description": "Servicio de configuraciones por entorno"
+    },
+    {
+      "name": "Empleado",
+      "description": "Servicio de empleados"
+    },
+    {
+      "name": "Empresa entorno",
+      "description": "Servicio de empresas entornos"
+    },
+    {
+      "name": "Empresas",
+      "description": "Servicio de empresas"
+    },
+    {
+      "name": "Entorno",
+      "description": "Servicio de entorno"
+    },
+    {
+      "name": "Grupo Empresas",
+      "description": "Servicio de grupos empresariales"
+    },
+    {
+      "name": "Grupo Entornos",
+      "description": "Servicio de grupos de entornos"
+    },
+    {
+      "name": "Modulo",
+      "description": "Servicio de módulos"
+    },
+    {
+      "name": "Persona",
+      "description": "Servicio de persona"
+    },
+    {
+      "name": "Recurso material",
+      "description": "Servicio de recursos materiales"
+    },
+    {
+      "name": "Usuario-Entorno",
+      "description": "Usuario-Entorno"
+    }
+  ],
+  "paths": {
+    "/entornos/v1/bbdds": {
+      "get": {
+        "tags": [
+          "Bbdd"
+        ],
+        "summary": "Recupera el listado de bbdds que están creadas",
+        "operationId": "getBbdds",
+        "parameters": [
+          {
+            "name": "estado",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/EntornoEstadoEnum"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "idEntorno",
+            "in": "query",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "servicio",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntornoBbddDTO_Actualizador"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Recupera el listado de bbdds que están creadas",
+        "x-stoplight": {
+          "id": "es524vg1z9oo2"
+        }
+      }
+    },
+    "/entornos/v1/empresa/{idEmpresa}/configuraciones": {
+      "get": {
+        "tags": [
+          "Configuraciones empresa"
+        ],
+        "summary": "Recupera las configuraciones de una empresa",
+        "operationId": "getConfiguracionesPorIdEmpresa",
+        "parameters": [
+          {
+            "name": "configuracion",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ConfiguracionEnum"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "idEntorno",
+            "in": "query",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntornoConfiguracionListaDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- ENT_0025 : No tienes permiso para consultar la empresa solicitada."
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": false,
+        "description": "Recupera las configuraciones de una empresa",
+        "x-stoplight": {
+          "id": "izqnakuqx4gmv"
+        }
+      },
+      "post": {
+        "tags": [
+          "Configuraciones empresa"
+        ],
+        "summary": "Crea la configuración de una empresa",
+        "operationId": "crearConfiguracionEmpresa",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EntornoConfiguracionDtoRequest"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntornoConfiguracionListaDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- ENT_0025 : No tienes permiso para consultar la empresa solicitada.\n - ENT_0021 : Configuración de módulo no disponible.\n - ENT_0002 : La lista de IDs de empresas validadoras no puede estar vacía\n - ENT_0035: La/s empresa/s {listaIdsEmpresasNoValidadoras} no pueden ser empresas validadoras para la empresa {idEmpresaPrincipal}\n - ENT_0036: No se pueden repetir IDs en la lista de IDs de empresas validadoras"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Crea la configuración de una empresa",
+        "x-stoplight": {
+          "id": "2iy8fyyte9h31"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEmpresa"
+        }
+      ]
+    },
+    "/entornos/v1/empresas-entornos": {
+      "get": {
+        "tags": [
+          "Empresa entorno"
+        ],
+        "summary": "Recupera el listado de relaciones de empresas con entornos a partir de unos filtros",
+        "operationId": "getEmpresasEntornos",
+        "parameters": [
+          {
+            "name": "esPrincipal",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "idsEmpresas",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "format": "int32",
+                "type": "integer"
+              }
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "modulo",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ModuloEnum"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "obtenerInfo",
+            "in": "query",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "soloActivos",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "soloModulosMultiempresa",
+            "in": "query",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmpresaEntornoDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": false,
+        "description": "Recupera el listado de relaciones de empresas con entornos a partir de unos filtros",
+        "x-stoplight": {
+          "id": "s345yks1jwozr"
+        }
+      }
+    },
+    "/entornos/v1/empresas/{idEmpresa}": {
+      "get": {
+        "tags": [
+          "Empresas"
+        ],
+        "summary": "Recupera la información de una empresa",
+        "operationId": "getEmpresa",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntornosEmpresaDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador",
+          "administrador_grupo_entornos"
+        ],
+        "x-permisos": false,
+        "description": "Recupera la información de una empresa",
+        "x-stoplight": {
+          "id": "respvjj4emlod"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEmpresa"
+        }
+      ]
+    },
+    "/entornos/v1/empresas/{idEmpresa}/empleados/{idEmpleado}/entornos": {
+      "get": {
+        "tags": [
+          "Empleado"
+        ],
+        "summary": "Recupera el listado de relaciones de empleados con entornos",
+        "operationId": "getEntornosPorIdEmpresaPorIdEmpleado",
+        "parameters": [
+          {
+            "name": "obtenerInfo",
+            "in": "query",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmpresaEntornoDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Recupera el listado de relaciones de empleados con entornos",
+        "x-stoplight": {
+          "id": "jb53gy5qg9m04"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEmpresa"
+        },
+        {
+          "$ref": "#/components/parameters/idEmpleado"
+        }
+      ]
+    },
+    "/entornos/v1/empresas/{idEmpresa}/modulos/{idModulo}/solicitar": {
+      "post": {
+        "tags": [
+          "Modulo"
+        ],
+        "summary": "Solicita la activación de un módulo",
+        "operationId": "postSolicitarPorIdEmpresaPorIdModulo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolicitudModuloResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- ENT_0015 : No se puede solicitar un módulo que ya está activo"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Solicita la activación de un módulo",
+        "x-stoplight": {
+          "id": "p63hxfj9newc6"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEmpresa"
+        },
+        {
+          "$ref": "#/components/parameters/idModulo"
+        }
+      ]
+    },
+    "/entornos/v1/empresas/{idEmpresa}/recursos-materiales/{idRecurso}/entornos": {
+      "get": {
+        "tags": [
+          "Recurso material"
+        ],
+        "summary": "Recupera el listado de relaciones de empresas con entornos, dado un recurso material",
+        "operationId": "getEntornosPorIdEmpresaPorIdRecurso",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmpresaEntornoDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Recupera el listado de relaciones de empresas con entornos, dado un recurso material",
+        "x-stoplight": {
+          "id": "1t5moouqawv1r"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEmpresa"
+        },
+        {
+          "$ref": "#/components/parameters/idRecurso"
+        }
+      ]
+    },
+    "/entornos/v1/empresas/{idEmpresa}/validadores": {
+      "get": {
+        "tags": [
+          "Empresas"
+        ],
+        "summary": "Recupera la lista de posibles validadores que tiene una empresa",
+        "operationId": "getValidadoresPorIdEmpresa",
+        "parameters": [
+          {
+            "name": "filtro",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmpresaDtoResponseInfoBasica"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- ENT_0025 : No tienes permiso para consultar la empresa solicitada."
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador",
+          "administrador_grupo_entornos",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Recupera la lista de posibles validadores que tiene una empresa",
+        "x-stoplight": {
+          "id": "lwoj4oprdk2ph"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEmpresa"
+        }
+      ]
+    },
+    "/entornos/v1/entornos": {
+      "get": {
+        "tags": [
+          "Entorno"
+        ],
+        "summary": "Recupera el listado de entornos",
+        "operationId": "getEntornos",
+        "parameters": [
+          {
+            "name": "estado",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/EntornoEstadoEnum"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "idsEntornos",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "format": "int32",
+                "type": "integer"
+              }
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "modulo",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ModuloEnum"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntornosEntornoDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Recupera el listado de entornos",
+        "x-stoplight": {
+          "id": "5xw7bd1r2k0xt"
+        }
+      },
+      "post": {
+        "tags": [
+          "Entorno"
+        ],
+        "summary": "Crea un nuevo entorno",
+        "operationId": "postEntorno",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntornoDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntornoDTO_Rabbit"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- ENT_0001 : Una empresa solo puede estar como principal en un módulo de cada tipo\n - ENT_0016 : El módulo no se puede crear porque tiene módulos dependientes no creados"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Crea un nuevo entorno",
+        "x-stoplight": {
+          "id": "jnujzps8tf6u5"
+        }
+      }
+    },
+    "/entornos/v1/entornos/zonas-horarias": {
+      "get": {
+        "tags": [
+          "Entorno"
+        ],
+        "summary": "Devuelve todas las zonas horarias disponibles",
+        "operationId": "getZonasHorarias",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": false,
+        "description": "Devuelve todas las zonas horarias disponibles",
+        "x-stoplight": {
+          "id": "jshy4k8ui6p3f"
+        }
+      }
+    },
+    "/entornos/v1/entornos/{idEntorno}": {
+      "get": {
+        "tags": [
+          "Entorno"
+        ],
+        "summary": "Recupera un entorno por su id",
+        "operationId": "getEntornoPorIdEntorno",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntornosEntornoDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Recupera un entorno por su id",
+        "x-stoplight": {
+          "id": "qkpfg1mmhs9e1"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEntorno"
+        }
+      ]
+    },
+    "/entornos/v1/entornos/{idEntorno}/activar": {
+      "post": {
+        "tags": [
+          "Entorno"
+        ],
+        "summary": "Activa un módulo en un entorno",
+        "operationId": "postActivarPorIdEntorno",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntornoDtoResponseEstado"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- ENT_0014 : No se puede activar o desactivar un módulo que no esté en estado CREADO"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Activa un módulo en un entorno",
+        "x-stoplight": {
+          "id": "gi7hv5eqo825y"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEntorno"
+        }
+      ]
+    },
+    "/entornos/v1/entornos/{idEntorno}/configuraciones": {
+      "get": {
+        "tags": [
+          "Configuraciones entorno"
+        ],
+        "summary": "Recupera las configuraciones de un entorno por su idEntorno",
+        "operationId": "getConfiguracionesPorIdEntorno",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntornoConfiguracionListaDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": false,
+        "description": "Recupera las configuraciones de un entorno por su idEntorno",
+        "x-stoplight": {
+          "id": "6ubogx9swxnct"
+        }
+      },
+      "post": {
+        "tags": [
+          "Configuraciones entorno"
+        ],
+        "summary": "Inserta o actualiza una configuración en caso de existir para un idEntorno concreto",
+        "operationId": "putConfiguracionPorIdEntorno",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EntornoConfiguracionDtoRequest"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntornoConfiguracionDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- ENT_0022 : La configuración de %s debe pertenecer al mismo módulo que el entorno a relacionar"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Inserta o actualiza una configuración en caso de existir para un idEntorno concreto",
+        "x-stoplight": {
+          "id": "mgoysgn9efvcj"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEntorno"
+        }
+      ]
+    },
+    "/entornos/v1/entornos/{idEntorno}/desactivar": {
+      "post": {
+        "tags": [
+          "Entorno"
+        ],
+        "summary": "Desactiva un módulo en un entorno",
+        "operationId": "postDesctivarPorIdEntorno",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntornoDtoResponseEstado"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": " - ENT_0014 : No se puede activar o desactivar un módulo que no esté en estado CREADO"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Desactiva un módulo en un entorno",
+        "x-stoplight": {
+          "id": "ptdl5x0lsuqne"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEntorno"
+        }
+      ]
+    },
+    "/entornos/v1/entornos/{idEntorno}/empleados": {
+      "get": {
+        "tags": [
+          "Entorno"
+        ],
+        "summary": "Recupera los empleados asociados a un entorno de estructura",
+        "operationId": "getEmpleadosPorIdEntorno",
+        "parameters": [
+          {
+            "name": "obtenerInfo",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmpleadoDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- ENT_0004 : El entorno debe encontrarse en estado creado para ser utilizado \n - ENT_0006 : El entorno a filtrar debe ser del módulo estructura"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Recupera los empleados asociados a un entorno de estructura",
+        "x-stoplight": {
+          "id": "6hzlvvo7hrhpl"
+        }
+      },
+      "post": {
+        "tags": [
+          "Entorno"
+        ],
+        "summary": "Relaciona empleados con un entorno",
+        "description": "** Para insertar relaciones habrá que usar un usuario con rol empresa y el listado de eliminar debe venir vacío, mientras que para eliminar relaciones habrá que usar un usuario con rol gestor y el listado de insertar debe venir vacío",
+        "operationId": "postEmpleadosPorIdEntorno",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestBodyDobleListaObjetoEmpleadoDTO_PKEmpleadoDTO_PK"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmpleadoEntornoDTO_Rabbit"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- ENT_0004 : El entorno debe encontrarse en estado creado para ser utilizado \n - ENT_0006 : El entorno a filtrar debe ser del módulo estructura \n - ENT_0008 : Una de las empresas asociadas no esta asignada a este entorno \n - ENT_0009 : No se puede modificar la relación de un empleado que pertenezca a la empresa principal del entorno \n - ENT_0011 : Un usuario con rol empresa interno solo puede eliminar relaciones, no puede insertarlas \n - ENT_0012 : Un usuario con rol empresa externo solo puede insertar relaciones, no puede eliminarlas"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "x-stoplight": {
+          "id": "kgij8yc6kv79i"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEntorno"
+        }
+      ]
+    },
+    "/entornos/v1/entornos/{idEntorno}/empresas": {
+      "get": {
+        "tags": [
+          "Entorno"
+        ],
+        "summary": "Recupera la empresas asociadas a un entorno",
+        "operationId": "getEmpresasByIdEntorno",
+        "parameters": [
+          {
+            "name": "esPrincipal",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "obtenerInfo",
+            "in": "query",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmpresaEntornoDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- ENT_0004 : El entorno debe encontrarse en estado creado para ser utilizado"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador",
+          "administrador_grupo_entornos"
+        ],
+        "x-permisos": false,
+        "description": "Recupera la empresas asociadas a un entorno",
+        "x-stoplight": {
+          "id": "b2bcew7nmzly7"
+        }
+      },
+      "post": {
+        "tags": [
+          "Entorno"
+        ],
+        "summary": "Relaciona un entornos con una o varias empresas, y si dicha empresa actuará como principal o no",
+        "operationId": "postEmpresasPorIdEntorno",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestBodyDobleListaEmpresaEntornoDtoRequestEsPrincipal"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmpresaEntornoDTO_Rabbit"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "-ENT_0001 : Una empresa solo puede estar como principal en un módulo de cada tipo \n - ENT_0003 : Sólo puede haber empresas principales en los módulos que no sean de estructura \n - ENT_0004 : El entorno debe encontrarse en estado creado para ser utilizado \n - ENT_0005 : No se puede eliminar una empresa principal en un entorno con tipo módulo estructura"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Relaciona un entornos con una o varias empresas, y si dicha empresa actuará como principal o no",
+        "x-stoplight": {
+          "id": "1h1vffdois97s"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEntorno"
+        }
+      ]
+    },
+    "/entornos/v1/entornos/{idEntorno}/entornos-clientes": {
+      "get": {
+        "tags": [
+          "Entorno"
+        ],
+        "summary": "Recupera los clientes que tiene la empresa principal de un entorno de estructura",
+        "operationId": "getEntornosClientesPorIdEntorno",
+        "parameters": [
+          {
+            "name": "obtenerInfo",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmpresaEntornoDTO_Cliente"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "-ENT_0004 : El entorno debe encontrarse en estado creado para ser utilizado\n - ENT_0006 : El entorno a filtrar debe ser del módulo estructura"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Recupera los clientes que tiene la empresa principal de un entorno de estructura",
+        "x-stoplight": {
+          "id": "t3afmxejnnshq"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEntorno"
+        }
+      ]
+    },
+    "/entornos/v1/entornos/{idEntorno}/entornos-principales": {
+      "get": {
+        "tags": [
+          "Entorno"
+        ],
+        "summary": "Devuelve los entornos principales de la empresa principal dado un entorno cualquiera",
+        "operationId": "getEntornosPrincipalesPorIdEntorno",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- ENT_0004 : El entorno debe encontrarse en estado creado para ser utilizado"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Devuelve los entornos principales de la empresa principal dado un entorno cualquiera",
+        "x-stoplight": {
+          "id": "2689spqrzw9m0"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEntorno"
+        }
+      ]
+    },
+    "/entornos/v1/entornos/{idEntorno}/entornos-relacionados": {
+      "get": {
+        "tags": [
+          "Entorno"
+        ],
+        "summary": "Recupera las relaciones que tiene la empresa principal de un entorno de estructura",
+        "operationId": "getEntornosRelacionadosPorIdEntorno",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntornoDTO_Relaciones"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- ENT_0004 : El entorno debe encontrarse en estado creado para ser utilizado \n - ENT_0006 : El entorno a filtrar debe ser del módulo estructura"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Recupera las relaciones que tiene la empresa principal de un entorno de estructura",
+        "x-stoplight": {
+          "id": "tofcdmbkc0ai0"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEntorno"
+        }
+      ]
+    },
+    "/entornos/v1/entornos/{idEntorno}/recursos-materiales": {
+      "get": {
+        "tags": [
+          "Entorno"
+        ],
+        "summary": "Recupera los recursos materiales asociados a un entorno de estructura",
+        "operationId": "getRecursosMaterialesPorIdEntorno",
+        "parameters": [
+          {
+            "name": "obtenerInfo",
+            "in": "query",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RecursoMaterialDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "-ENT_0004 : El entorno debe encontrarse en estado creado para ser utilizado \n - ENT_0006 : El entorno a filtrar debe ser del módulo estructura"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Recupera los recursos materiales asociados a un entorno de estructura",
+        "x-stoplight": {
+          "id": "7onegbs8y8dfh"
+        }
+      },
+      "post": {
+        "tags": [
+          "Entorno"
+        ],
+        "summary": "Relaciona recursos materiales con un entorno",
+        "description": "** Para insertar relaciones habrá que usar un usuario con rol empresa y el listado de eliminar debe venir vacío, mientras que para eliminar relaciones habrá que usar un usuario con rol gestor y el listado de insertar debe venir vacío",
+        "operationId": "postRecursosMaterialesPorIdEntorno",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestBodyDobleListaObjetoRecursoMaterialDTO_PKRecursoMaterialDTO_PK"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecursoMaterialEntornoDTO_Rabbit"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "-ENT_0004 : El entorno debe encontrarse en estado creado para ser utilizado \n - ENT_0006 : El entorno a filtrar debe ser del módulo estructura \n - ENT_0008 : Una de las empresas asociadas no esta asignada a este entorno \n - ENT_0007 : No se puede modificar la relación de un recurso material que pertenezca a la empresa principal del entorno \n - ENT_0011 : Un usuario con rol empresa interno solo puede eliminar relaciones, no puede insertarlas \n - ENT_0012 : Un usuario con rol empresa externo solo puede insertar relaciones, no puede eliminarlas"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "x-stoplight": {
+          "id": "ohtmxsxrqkc28"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEntorno"
+        }
+      ]
+    },
+    "/entornos/v1/entornos/{idEntorno}/usuarios-entornos": {
+      "get": {
+        "tags": [
+          "Usuario-Entorno"
+        ],
+        "summary": "Devuelve los registros de usuario-entorno-autorizado por un idEntornoAutorizado",
+        "description": "Devuelve las relaciones de un usuario-entorno-autorizado filtrando por el idEntorno y puede que por idEntornoAutorizado",
+        "operationId": "getUsuariosEntornosPorIdEntorno",
+        "parameters": [
+          {
+            "name": "idEntornoAutorizado",
+            "in": "query",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UsuarioEntornoDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "x-stoplight": {
+          "id": "79h6a0zn76m3v"
+        }
+      },
+      "post": {
+        "tags": [
+          "Usuario-Entorno"
+        ],
+        "summary": "Crea un registro en usuario-entorno",
+        "description": "Crea la relacion de un usuario-entorno con su entorno e id usuario",
+        "operationId": "postUsuarioEntornoPorIdEntorno",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioEntornoDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioEntornoDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- ENT_0017 : Solo se pueden crear usuarios en empresas principales.\n - ENT_0018 : El entorno indicado tiene que ser de tipo ESTRUCTURA."
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": true,
+        "x-stoplight": {
+          "id": "3rvbh4exp1jdf"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEntorno"
+        }
+      ]
+    },
+    "/entornos/v1/entornos/{idEntorno}/usuarios-entornos/{idUsuarioEntorno}/entornos-autorizados": {
+      "get": {
+        "tags": [
+          "Usuario-Entorno"
+        ],
+        "summary": "Devuelve los registros de usuario-entorno-autorizado",
+        "description": "Devuelve las relaciones de un usuario-entorno-autorizado",
+        "operationId": "getEntornosAutorizadosPorIdEntornoPorIdUsuarioEntorno",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntornoAutorizadoDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": false,
+        "x-stoplight": {
+          "id": "nhx33xidhkgjt"
+        }
+      },
+      "post": {
+        "tags": [
+          "Usuario-Entorno"
+        ],
+        "summary": "Crea un registro en usuario-entorno-autorizado",
+        "description": "Crea la relacion de un usuario-entorno con su entorno e id usuario",
+        "operationId": "postEntornosAutorizadosPorIdEntornoPorIdUsuarioEntorno",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestBodyDobleListaObjetoEmpresaEntornoDtoRequestEmpresaEntornoDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntornosAutorizadosDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- ENT_0023 : No es posible autorizar el usuario a un entorno de otra empresa.\n - ENT_0024 : El usuario no puede acceder a entornos a los que no está autorizado.\n - ENT_0040: Un usuario externo no puede tener acceso a un módulo que no sea multiempresa %s"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": true,
+        "x-stoplight": {
+          "id": "d0m21fbfhz24o"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEntorno"
+        },
+        {
+          "$ref": "#/components/parameters/idUsuarioEntorno"
+        }
+      ]
+    },
+    "/entornos/v1/grupos-empresariales": {
+      "get": {
+        "tags": [
+          "Grupo Empresas"
+        ],
+        "summary": "Recupera el listado de grupos empresariales",
+        "operationId": "getGruposEmpresariales",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrupoEmpresarialDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Recupera el listado de grupos empresariales",
+        "x-stoplight": {
+          "id": "nl61t8v999zcm"
+        }
+      },
+      "post": {
+        "tags": [
+          "Grupo Empresas"
+        ],
+        "summary": "Creación de un grupo empresarial",
+        "operationId": "postGrupoEmpresarial",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GrupoEmpresarialDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrupoEmpresarialDtoResponseCreate"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": " - ENT_0026 : No se puede asignar la empresa al grupo empresarial porque ya pertenece a otro grupo empresarial."
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Creación de un grupo empresarial",
+        "x-stoplight": {
+          "id": "zhali5xr0ierf"
+        }
+      }
+    },
+    "/entornos/v1/grupos-empresariales/empresas-sin-grupo": {
+      "get": {
+        "tags": [
+          "Grupo Empresas"
+        ],
+        "summary": "Obtener empresas por filtro que no pertenezcan a grupos empresariales",
+        "operationId": "getEmpresasSinGruposEmpresariales",
+        "parameters": [
+          {
+            "name": "filtro",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "minLength": 3,
+              "type": "string"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntornosEmpresaDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Obtener empresas por filtro que no pertenezcan a grupos empresariales",
+        "x-stoplight": {
+          "id": "a6sa7delo0nwy"
+        }
+      }
+    },
+    "/entornos/v1/grupos-empresariales/{idGrupoEmpresarial}": {
+      "get": {
+        "tags": [
+          "Grupo Empresas"
+        ],
+        "summary": "Obtiene el detalle de un grupo empresarial",
+        "operationId": "getGrupoEmpresarialPorIdGrupoEmpresarial",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrupoEmpresarialDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene el detalle de un grupo empresarial",
+        "x-stoplight": {
+          "id": "07dvhri1t8fye"
+        }
+      },
+      "put": {
+        "tags": [
+          "Grupo Empresas"
+        ],
+        "summary": "Edita un grupo empresarial",
+        "operationId": "editGrupoEmpresarialPorIdGrupoEmpresarial",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GrupoEmpresarialDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrupoEmpresarialDtoResponseCreate"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": " - ENT_0030 : La empresa especificada no pertenece al grupo empresarial"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Edita un grupo empresarial",
+        "x-stoplight": {
+          "id": "9go3108hbn4bw"
+        }
+      },
+      "delete": {
+        "tags": [
+          "Grupo Empresas"
+        ],
+        "summary": "Borra un grupo empresarial",
+        "operationId": "deleteGrupoEmpresarialPorIdGrupoEmpresarial",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrupoEmpresarialDtoResponseCreate"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": " - ENT_0027 : El grupo empresarial tiene empresas asignadas"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Borra un grupo empresarial",
+        "x-stoplight": {
+          "id": "6i5kodb1i40ve"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idGrupoEmpresarial"
+        }
+      ]
+    },
+    "/entornos/v1/grupos-empresariales/{idGrupoEmpresarial}/empresas": {
+      "get": {
+        "tags": [
+          "Grupo Empresas"
+        ],
+        "summary": "Recupera el listado de empresas de un grupo empresarial",
+        "operationId": "getEmpresasPorIdGrupoEmpresarial",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntornosEmpresaDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Recupera el listado de empresas de un grupo empresarial",
+        "x-stoplight": {
+          "id": "4urhqcwnhbjtx"
+        }
+      },
+      "post": {
+        "tags": [
+          "Grupo Empresas"
+        ],
+        "summary": "Añade  una nueva empresa a un grupo empresarial",
+        "operationId": "postNuevaEmpresaAGrupoEmpresarial",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmpresaGrupoEmpresarialDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmpresaGrupoEmpresarialDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": " - ENT_0029 : La empresa ya tiene configuración previa y no se puede añadir al grupo, modulo: %s, entidad: %s"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Añade  una nueva empresa a un grupo empresarial",
+        "x-stoplight": {
+          "id": "rt2plhtjwla59"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idGrupoEmpresarial"
+        }
+      ]
+    },
+    "/entornos/v1/grupos-empresariales/{idGrupoEmpresarial}/empresas/{idEmpresa}": {
+      "delete": {
+        "tags": [
+          "Grupo Empresas"
+        ],
+        "summary": "Elimina la empresa del grupo empresarial",
+        "operationId": "deleteEmpresasPorIdGrupoEmpresarialPorIdEmpresa",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmpresaGrupoEmpresarialDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": " - ENT_0028 : No se puede eliminar la empresa maestra del grupo empresarial."
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Elimina la empresa del grupo empresarial",
+        "x-stoplight": {
+          "id": "47wm17f75mwqb"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEmpresa"
+        },
+        {
+          "$ref": "#/components/parameters/idGrupoEmpresarial"
+        }
+      ]
+    },
+    "/entornos/v1/grupos-entornos": {
+      "get": {
+        "tags": [
+          "Grupo Entornos"
+        ],
+        "summary": "Devuelve la lista de grupos de entornos",
+        "operationId": "getGruposEntornos",
+        "parameters": [
+          {
+            "name": "filtroUsuarioAge",
+            "in": "query",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "idPais",
+            "in": "query",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GrupoEntornosDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "administrador_grupo_entornos",
+          "no_administrador"
+        ],
+        "x-permisos": false,
+        "description": "Devuelve la lista de grupos de entornos",
+        "x-stoplight": {
+          "id": "fosz2g2s32ui4"
+        }
+      },
+      "post": {
+        "tags": [
+          "Grupo Entornos"
+        ],
+        "summary": "Crea un grupo de entornos",
+        "operationId": "postGrupoEntornos",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GrupoEntornosDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrupoEntornosDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": " - ENT_0037: Una empresa no puede administrar más de un grupo de entornos"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": false,
+        "description": "Crea un grupo de entornos",
+        "x-stoplight": {
+          "id": "1ygfyi0ik5cur"
+        }
+      }
+    },
+    "/entornos/v1/grupos-entornos/empresas-no-administradoras": {
+      "get": {
+        "tags": [
+          "Grupo Entornos"
+        ],
+        "summary": "Devuelve las empresas que no administran ningún grupo de entornos",
+        "operationId": "getEmpresasNoAdministradoras",
+        "parameters": [
+          {
+            "name": "filtro",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "minLength": 3,
+              "type": "string"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmpresaGrupoEntornosDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": false,
+        "description": "Devuelve las empresas que no administran ningún grupo de entornos",
+        "x-stoplight": {
+          "id": "e06m32bpfwooq"
+        }
+      }
+    },
+    "/entornos/v1/grupos-entornos/{idGrupoEntornos}": {
+      "get": {
+        "tags": [
+          "Grupo Entornos"
+        ],
+        "summary": "Recupera un grupo de entornos por su ID",
+        "operationId": "getGrupoEntornosPorIdGrupoEntornos",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrupoEntornosDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "GEN_0041: El usuario entorno no tiene acceso a la entidad %s con id %s"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "administrador_grupo_entornos"
+        ],
+        "x-permisos": false,
+        "description": "Recupera un grupo de entornos por su ID",
+        "x-stoplight": {
+          "id": "7hc7xi62f42db"
+        }
+      },
+      "put": {
+        "tags": [
+          "Grupo Entornos"
+        ],
+        "summary": "Edita un grupo de entornos",
+        "operationId": "putGrupoEntornos",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GrupoEntornosPutDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrupoEntornosDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": false,
+        "description": "Edita un grupo de entornos",
+        "x-stoplight": {
+          "id": "ve7n87u4kl6id"
+        }
+      },
+      "delete": {
+        "tags": [
+          "Grupo Entornos"
+        ],
+        "summary": "Elimina un grupo de entornos por su ID",
+        "operationId": "deleteGrupoEntornos",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrupoEntornosDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": false,
+        "description": "Elimina un grupo de entornos por su ID",
+        "x-stoplight": {
+          "id": "pkospldc54sbn"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idGrupoEntornos"
+        }
+      ]
+    },
+    "/entornos/v1/grupos-entornos/{idGrupoEntornos}/paises": {
+      "get": {
+        "tags": [
+          "Grupo Entornos"
+        ],
+        "summary": "Devuelve la lista de países relacionados con un grupo de entornos",
+        "operationId": "getPaisesPorIdGrupoEntornos",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "format": "int32",
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "GEN_0041: El usuario entorno no tiene acceso a la entidad %s con id %s"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "administrador_grupo_entornos"
+        ],
+        "x-permisos": false,
+        "description": "Devuelve la lista de países relacionados con un grupo de entornos",
+        "x-stoplight": {
+          "id": "5bt531lxlrj83"
+        }
+      },
+      "post": {
+        "tags": [
+          "Grupo Entornos"
+        ],
+        "summary": "Inserta o elimina relaciones de grupos de entornos con paises",
+        "operationId": "updateRelacioneGrupoEntornosPaises",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestBodyDobleListaInteger"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrupoEntornosPaisesDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": false,
+        "description": "Inserta o elimina relaciones de grupos de entornos con paises",
+        "x-stoplight": {
+          "id": "1c3ex5jhy3nsh"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idGrupoEntornos"
+        }
+      ]
+    },
+    "/entornos/v1/personas/{idPersona}/empleados-entornos": {
+      "get": {
+        "tags": [
+          "Persona"
+        ],
+        "summary": "Recupera el listado de relaciones de empleados con entornos, dado un id Persona",
+        "operationId": "getEmpleadosEntornosPorIdPersona",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmpleadoEntornoDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Recupera el listado de relaciones de empleados con entornos, dado un id Persona",
+        "x-stoplight": {
+          "id": "g7v0e86een6uc"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idPersona"
+        }
+      ]
+    }
+  },
+  "components": {
+    "schemas": {
+      "BbddDtoResponse": {
+        "required": [
+          "prefijoBbdd"
+        ],
+        "type": "object",
+        "properties": {
+          "prefijoBbdd": {
+            "type": "string"
+          },
+          "idModulo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idBbdd": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "rd0q8h54zka0y"
+        }
+      },
+      "ComunEmpresaDtoResponse": {
+        "required": [
+          "cif",
+          "nombre",
+          "paisCif",
+          "observaciones",
+          "idGrupoEntornos"
+        ],
+        "type": "object",
+        "properties": {
+          "cif": {
+            "maxLength": 25,
+            "minLength": 3,
+            "type": "string"
+          },
+          "nombre": {
+            "maxLength": 255,
+            "minLength": 3,
+            "type": "string"
+          },
+          "paisCif": {
+            "format": "int32",
+            "maximum": 1000,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "observaciones": {
+            "maxLength": 4096,
+            "type": "string"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombreUsuario": {
+            "type": "string"
+          },
+          "apellidosUsuario": {
+            "type": "string"
+          },
+          "emailUsuario": {
+            "type": "string"
+          },
+          "tipoEmpresa": {
+            "$ref": "#/components/schemas/TipoSolicitudAltaEnum"
+          },
+          "entornos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ComunEntornoDtoResponse"
+            }
+          },
+          "fechaCreacion": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "fechaUltimoAcceso": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "razonSocial": {
+            "type": "string"
+          },
+          "zonaHoraria": {
+            "$ref": "#/components/schemas/ZoneId"
+          },
+          "uuid": {
+            "type": "string"
+          },
+          "idGrupoEntornos": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "c50u2oldebs1h"
+        }
+      },
+      "ComunEntornoDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idEntorno": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idModulo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "activo": {
+            "type": "boolean"
+          },
+          "estado": {
+            "$ref": "#/components/schemas/EntornoEstadoEnum"
+          }
+        },
+        "x-stoplight": {
+          "id": "ueechqdzf0is6"
+        }
+      },
+      "ConfiguracionEnum": {
+        "enum": [
+          "NOMBRE_ENTIDAD_AGRUPADORA_COMPRA",
+          "CREACION_ENTIDAD_AGRUPADORA_COMPRA",
+          "NUMERO_ENTIDAD_AGRUPADORA_COMPRA",
+          "PERMITIR_FACTURA_SIN_DOCUMENTO",
+          "PERMITIR_CAMBIO_ESTADO_FACTURA",
+          "NOMBRE_FACTURA_SUBIDA_ERP",
+          "NOMBRE_FACTURA_RECIBIDA_ERP",
+          "NOMBRE_FACTURA_RECHAZADA_ERP",
+          "NOMBRE_FACTURA_POR_PAGAR_ERP",
+          "NOMBRE_FACTURA_PAGADA_ERP",
+          "ID_FACTURA_SUBIDA_ERP",
+          "ID_FACTURA_RECIBIDA_ERP",
+          "ID_FACTURA_RECHAZADA_ERP",
+          "ID_FACTURA_POR_PAGAR_ERP",
+          "ID_FACTURA_PAGADA_ERP",
+          "ZONA_HORARIA",
+          "ZONA_HORARIA_POR_DEFECTO_UG",
+          "PERIODO_RANGO_FECHAS_NUMERO",
+          "PERIODO_RANGO_FECHAS_UNIDAD_TIEMPO",
+          "LISTA_IDS_EMPRESAS_VALIDADORAS",
+          "CRITERIOS_VALIDACION_SOLICITUDES",
+          "INFORMACION_CONTACTO",
+          "CADENA_CONEXION_AZURE_STORAGE_ACCOUNT"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "qo12upwt3cqlc"
+        }
+      },
+      "DayOfWeek": {
+        "enum": [
+          "MONDAY",
+          "TUESDAY",
+          "WEDNESDAY",
+          "THURSDAY",
+          "FRIDAY",
+          "SATURDAY",
+          "SUNDAY"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "p1bih39wr3xrf"
+        }
+      },
+      "Duration": {
+        "format": "duration",
+        "type": "string",
+        "example": "P1D",
+        "x-stoplight": {
+          "id": "4q847146ms8eu"
+        }
+      },
+      "EmpleadoDTO_PK": {
+        "required": [
+          "idEmpleado",
+          "idEmpresa"
+        ],
+        "type": "object",
+        "properties": {
+          "idEmpleado": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "hqgeavz703s7j"
+        }
+      },
+      "EmpleadoDtoResponse": {
+        "required": [
+          "idEmpleado",
+          "idEmpresa"
+        ],
+        "type": "object",
+        "properties": {
+          "idEmpleado": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idPersona": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "apellido1": {
+            "type": "string"
+          },
+          "apellido2": {
+            "type": "string"
+          },
+          "dni": {
+            "type": "string"
+          },
+          "nombreEmpresa": {
+            "type": "string"
+          },
+          "cifEmpresa": {
+            "type": "string"
+          },
+          "permiteComunicacionesDigitales": {
+            "type": "boolean"
+          },
+          "uuid": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "jizud6gf08b5y"
+        }
+      },
+      "EmpleadoEntornoDTO_Rabbit": {
+        "type": "object",
+        "properties": {
+          "idEntorno": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "modulo": {
+            "$ref": "#/components/schemas/ModuloEnum"
+          },
+          "empleadosInsertar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EmpleadoDtoResponse"
+            }
+          },
+          "empleadosEliminar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EmpleadoDtoResponse"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "nw95a906eiuv4"
+        }
+      },
+      "EmpleadoEntornoDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idEntorno": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEmpleado": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "p9nt3urtdp34u"
+        }
+      },
+      "EmpresaDtoResponseInfoBasica": {
+        "type": "object",
+        "properties": {
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "cif": {
+            "type": "string"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "uuid": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "4m1n37rrp6doy"
+        }
+      },
+      "EmpresaEntornoDTO_Cliente": {
+        "required": [
+          "cif",
+          "nombre",
+          "paisCif",
+          "observaciones"
+        ],
+        "type": "object",
+        "properties": {
+          "cif": {
+            "maxLength": 25,
+            "minLength": 3,
+            "type": "string"
+          },
+          "nombre": {
+            "maxLength": 255,
+            "minLength": 3,
+            "type": "string"
+          },
+          "paisCif": {
+            "format": "int32",
+            "maximum": 1000,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "observaciones": {
+            "maxLength": 4096,
+            "type": "string"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombreUsuario": {
+            "type": "string"
+          },
+          "apellidosUsuario": {
+            "type": "string"
+          },
+          "emailUsuario": {
+            "type": "string"
+          },
+          "tipoEmpresa": {
+            "$ref": "#/components/schemas/TipoSolicitudAltaEnum"
+          },
+          "entornos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ComunEntornoDtoResponse"
+            }
+          },
+          "fechaCreacion": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "fechaUltimoAcceso": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "razonSocial": {
+            "type": "string"
+          },
+          "zonaHoraria": {
+            "$ref": "#/components/schemas/ZoneId"
+          },
+          "idEntorno": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "9rbjywfc0acih"
+        }
+      },
+      "EmpresaEntornoDTO_Rabbit": {
+        "type": "object",
+        "properties": {
+          "idEntorno": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "modulo": {
+            "$ref": "#/components/schemas/ModuloEnum"
+          },
+          "empresasInsertar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EmpresaEntornoDtoRequestEsPrincipal"
+            }
+          },
+          "empresasEliminar": {
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "uakyyayuo6fci"
+        }
+      },
+      "EmpresaEntornoDtoRequest": {
+        "required": [
+          "idEmpresa",
+          "idEntorno"
+        ],
+        "type": "object",
+        "properties": {
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEntorno": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "92p83ybm8sz8l"
+        }
+      },
+      "EmpresaEntornoDtoRequestEsPrincipal": {
+        "required": [
+          "esPrincipal",
+          "idEmpresa"
+        ],
+        "type": "object",
+        "properties": {
+          "esPrincipal": {
+            "type": "boolean"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "w53fmm0w8vbze"
+        }
+      },
+      "EmpresaEntornoDtoResponse": {
+        "required": [
+          "esPrincipal"
+        ],
+        "type": "object",
+        "properties": {
+          "esPrincipal": {
+            "type": "boolean"
+          },
+          "entorno": {
+            "$ref": "#/components/schemas/EntornosEntornoDtoResponse"
+          },
+          "empresa": {
+            "$ref": "#/components/schemas/ComunEmpresaDtoResponse"
+          }
+        },
+        "x-stoplight": {
+          "id": "ij2cvs3ddj3v6"
+        }
+      },
+      "EmpresaGrupoEmpresarialDtoRequest": {
+        "required": [
+          "idEmpresa"
+        ],
+        "type": "object",
+        "properties": {
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "x0th9h4i50500"
+        }
+      },
+      "EmpresaGrupoEmpresarialDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idGrupoEmpresarial": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "wst0kia0zvfqg"
+        }
+      },
+      "EmpresaGrupoEntornosDtoResponse": {
+        "required": [
+          "idEmpresa"
+        ],
+        "type": "object",
+        "properties": {
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "cif": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "3oe0rrqj2q47i"
+        }
+      },
+      "EntornoAutorizadoDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEntorno": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "3e5o6kclvbai7"
+        }
+      },
+      "EntornoBbddDTO_Actualizador": {
+        "required": [
+          "idEntorno",
+          "idModulo"
+        ],
+        "type": "object",
+        "properties": {
+          "idEntorno": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idModulo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "bbdds": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BbddDtoResponse"
+            }
+          },
+          "nombreBbdd": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "pbnfvom3jy3x5"
+        }
+      },
+      "EntornoConfiguracionDtoRequest": {
+        "required": [
+          "idConfiguracion",
+          "valor"
+        ],
+        "type": "object",
+        "properties": {
+          "idConfiguracion": {
+            "$ref": "#/components/schemas/ConfiguracionEnum"
+          },
+          "valor": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "j2d59sghyjx1s"
+        }
+      },
+      "EntornoConfiguracionDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEntorno": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "modulo": {
+            "$ref": "#/components/schemas/ModuloEnum"
+          },
+          "configuraciones": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EntornoConfiguracionListaDtoResponse"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "yndgjmg2ik160"
+        }
+      },
+      "EntornoConfiguracionListaDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idConfiguracion": {
+            "$ref": "#/components/schemas/ConfiguracionEnum"
+          },
+          "valor": {
+            "type": "string"
+          },
+          "idEntorno": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "modulo": {
+            "$ref": "#/components/schemas/ModuloEnum"
+          }
+        },
+        "x-stoplight": {
+          "id": "rs4y3zalmbb57"
+        }
+      },
+      "EntornoDTO_Rabbit": {
+        "required": [
+          "idModulo",
+          "idEmpresa"
+        ],
+        "type": "object",
+        "properties": {
+          "idModulo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEntorno": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "estado": {
+            "type": "string"
+          },
+          "fechaPeticion": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "bbdds": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BbddDtoResponse"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "kmlusiz76e4s0"
+        }
+      },
+      "EntornoDTO_Relaciones": {
+        "type": "object",
+        "properties": {
+          "entornosPrincipales": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EntornosEntornoDtoResponse"
+            }
+          },
+          "entornosNoPrincipales": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EntornosEntornoDtoResponse"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "sujppde7r03ez"
+        }
+      },
+      "EntornoDtoRequest": {
+        "required": [
+          "idModulo",
+          "idEmpresa"
+        ],
+        "type": "object",
+        "properties": {
+          "idModulo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "650vynkxun0f1"
+        }
+      },
+      "EntornoDtoResponseEstado": {
+        "type": "object",
+        "properties": {
+          "idEntorno": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "8ah45nif4jan8"
+        }
+      },
+      "EntornoEstadoEnum": {
+        "enum": [
+          "CREADO",
+          "PENDIENTE",
+          "BORRANDO"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "0j1lt4rtr8yii"
+        }
+      },
+      "EntornosAutorizadosDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idUsuarioEntorno": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEntorno": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "listadoInsertar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EntornoAutorizadoDtoResponse"
+            }
+          },
+          "ListadoEliminar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EntornoAutorizadoDtoResponse"
+            }
+          },
+          "listadoEliminar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EntornoAutorizadoDtoResponse"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "rpe6ik8h9xakf"
+        }
+      },
+      "EntornosEmpresaDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idGrupoEmpresarial": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "cif": {
+            "type": "string"
+          },
+          "paisCif": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "esMaestra": {
+            "type": "boolean"
+          },
+          "uuid": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "rzjxz52c4emrd"
+        }
+      },
+      "EntornosEntornoDtoResponse": {
+        "required": [
+          "idModulo",
+          "idEmpresa"
+        ],
+        "type": "object",
+        "properties": {
+          "idModulo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEntorno": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "estado": {
+            "type": "string"
+          },
+          "fechaPeticion": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "activo": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "lzyvoy8dmogat"
+        }
+      },
+      "GrupoEmpresarialDtoRequest": {
+        "required": [
+          "nombre",
+          "idEmpresaMaestra"
+        ],
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "maxLength": 128,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "idEmpresaMaestra": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "q5g9ts2xjik0s"
+        }
+      },
+      "GrupoEmpresarialDtoResponse": {
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "type": "string"
+          },
+          "idGrupoEmpresarial": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "empresaMaestra": {
+            "$ref": "#/components/schemas/EntornosEmpresaDtoResponse"
+          }
+        },
+        "x-stoplight": {
+          "id": "a4exrl93nj7ga"
+        }
+      },
+      "GrupoEmpresarialDtoResponseCreate": {
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "type": "string"
+          },
+          "idGrupoEmpresarial": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEmpresaMaestra": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "3fvoxr3o55dma"
+        }
+      },
+      "GrupoEntornosDtoRequest": {
+        "required": [
+          "idEmpresaAdministradora",
+          "nombre"
+        ],
+        "type": "object",
+        "properties": {
+          "idEmpresaAdministradora": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "informacionAdicional": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "obaatuo9smqz7"
+        }
+      },
+      "GrupoEntornosDtoResponse": {
+        "required": [
+          "idGrupoEntornos",
+          "empresaAdministradora",
+          "nombre",
+          "fechaCreacion"
+        ],
+        "type": "object",
+        "properties": {
+          "idGrupoEntornos": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "empresaAdministradora": {
+            "$ref": "#/components/schemas/EmpresaGrupoEntornosDtoResponse"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "fechaCreacion": {
+            "type": "string"
+          },
+          "informacionAdicional": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "rtptk64qn6oit"
+        }
+      },
+      "GrupoEntornosPaisesDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idGrupoEntornos": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "listaInsertados": {
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "listadoEliminados": {
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "j3qq66s0orma6"
+        }
+      },
+      "GrupoEntornosPutDtoRequest": {
+        "required": [
+          "nombre"
+        ],
+        "type": "object",
+        "properties": {
+          "idEmpresaAdministradora": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "informacionAdicional": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "o3ni8rc8ibzwt"
+        }
+      },
+      "Instant": {
+        "format": "date-time",
+        "type": "string",
+        "example": "2022-03-10T16:15:50Z",
+        "x-stoplight": {
+          "id": "74d7jiy7wan6b"
+        }
+      },
+      "LocalDateTime": {
+        "format": "date-time",
+        "type": "string",
+        "example": "2022-03-10T12:15:50",
+        "x-stoplight": {
+          "id": "ysnu4f2mr7y25"
+        }
+      },
+      "LocalTime": {
+        "format": "local-time",
+        "type": "string",
+        "externalDocs": {
+          "description": "As defined by 'partial-time' in RFC3339",
+          "url": "https://www.rfc-editor.org/rfc/rfc3339.html#section-5.6"
+        },
+        "example": "13:45:30.123456789",
+        "x-stoplight": {
+          "id": "py7004hxldq2z"
+        }
+      },
+      "ModuloEnum": {
+        "enum": [
+          "ESTRUCTURA",
+          "CAE",
+          "CA",
+          "FORMULARIOS",
+          "METAMARKET",
+          "MQL",
+          "TAREAS",
+          "PROVEEDORES",
+          "PRL",
+          "GESTION_DOCUMENTAL",
+          "ADMINISTRACION",
+          "CALENDARIOS"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "366za4a6i2phs"
+        }
+      },
+      "Month": {
+        "enum": [
+          "JANUARY",
+          "FEBRUARY",
+          "MARCH",
+          "APRIL",
+          "MAY",
+          "JUNE",
+          "JULY",
+          "AUGUST",
+          "SEPTEMBER",
+          "OCTOBER",
+          "NOVEMBER",
+          "DECEMBER"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "zayvju33sa47s"
+        }
+      },
+      "RecursoMaterialDTO_PK": {
+        "required": [
+          "idRecurso",
+          "idEmpresa"
+        ],
+        "type": "object",
+        "properties": {
+          "idRecurso": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "3d10l15resc49"
+        }
+      },
+      "RecursoMaterialDtoResponse": {
+        "required": [
+          "idRecurso",
+          "idEmpresa"
+        ],
+        "type": "object",
+        "properties": {
+          "idRecurso": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "identificador1": {
+            "type": "string"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "empresa": {
+            "$ref": "#/components/schemas/ComunEmpresaDtoResponse"
+          },
+          "uuid": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "v69chjxwrcu79"
+        }
+      },
+      "RecursoMaterialEntornoDTO_Rabbit": {
+        "type": "object",
+        "properties": {
+          "idEntorno": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "modulo": {
+            "$ref": "#/components/schemas/ModuloEnum"
+          },
+          "recursosMaterialesInsertar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RecursoMaterialDtoResponse"
+            }
+          },
+          "recursosMaterialesEliminar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RecursoMaterialDtoResponse"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "4igqhys79jyev"
+        }
+      },
+      "RequestBodyDobleListaEmpresaEntornoDtoRequestEsPrincipal": {
+        "required": [
+          "listadoInsertar",
+          "listadoEliminar"
+        ],
+        "type": "object",
+        "properties": {
+          "listadoInsertar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EmpresaEntornoDtoRequestEsPrincipal"
+            }
+          },
+          "listadoEliminar": {
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "hcxeojqvyr59s"
+        }
+      },
+      "RequestBodyDobleListaInteger": {
+        "required": [
+          "listadoInsertar",
+          "listadoEliminar"
+        ],
+        "type": "object",
+        "properties": {
+          "listadoInsertar": {
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "listadoEliminar": {
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "zs5imsyxub0yz"
+        }
+      },
+      "RequestBodyDobleListaObjetoEmpleadoDTO_PKEmpleadoDTO_PK": {
+        "required": [
+          "listadoInsertar",
+          "listadoEliminar"
+        ],
+        "type": "object",
+        "properties": {
+          "listadoInsertar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EmpleadoDTO_PK"
+            }
+          },
+          "listadoEliminar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EmpleadoDTO_PK"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "pxdx7m0zxm7cm"
+        }
+      },
+      "RequestBodyDobleListaObjetoEmpresaEntornoDtoRequestEmpresaEntornoDtoRequest": {
+        "required": [
+          "listadoInsertar",
+          "listadoEliminar"
+        ],
+        "type": "object",
+        "properties": {
+          "listadoInsertar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EmpresaEntornoDtoRequest"
+            }
+          },
+          "listadoEliminar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EmpresaEntornoDtoRequest"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "2l8aldk62fpax"
+        }
+      },
+      "RequestBodyDobleListaObjetoRecursoMaterialDTO_PKRecursoMaterialDTO_PK": {
+        "required": [
+          "listadoInsertar",
+          "listadoEliminar"
+        ],
+        "type": "object",
+        "properties": {
+          "listadoInsertar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RecursoMaterialDTO_PK"
+            }
+          },
+          "listadoEliminar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RecursoMaterialDTO_PK"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "mdriniqn7nlgg"
+        }
+      },
+      "SolicitudModuloResponse": {
+        "type": "object",
+        "properties": {
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idModulo": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "47wj9kzqhe1kp"
+        }
+      },
+      "TimeDefinition": {
+        "enum": [
+          "UTC",
+          "WALL",
+          "STANDARD"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "vy4fy0d648xd4"
+        }
+      },
+      "TipoSolicitudAltaEnum": {
+        "enum": [
+          "EMPRESA",
+          "AUTONOMO"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "9h5fil9z3bhyi"
+        }
+      },
+      "UsuarioEntornoDtoRequest": {
+        "required": [
+          "idUsuarioEntorno",
+          "idEmpresa",
+          "idUsuario"
+        ],
+        "type": "object",
+        "properties": {
+          "idUsuarioEntorno": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idUsuario": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "igz1rnx98etex"
+        }
+      },
+      "UsuarioEntornoDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idUsuarioEntorno": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEntorno": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idUsuario": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "uwtzcdethss72"
+        }
+      },
+      "ZoneId": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "rules": {
+            "$ref": "#/components/schemas/ZoneRules"
+          }
+        },
+        "x-stoplight": {
+          "id": "nt0dc41u3t6lx"
+        }
+      },
+      "ZoneOffset": {
+        "type": "object",
+        "properties": {
+          "totalSeconds": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "rules": {
+            "$ref": "#/components/schemas/ZoneRules"
+          }
+        },
+        "x-stoplight": {
+          "id": "5sfpyuxs9kwt1"
+        }
+      },
+      "ZoneOffsetTransition": {
+        "type": "object",
+        "properties": {
+          "epochSecond": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "transition": {
+            "$ref": "#/components/schemas/LocalDateTime"
+          },
+          "offsetBefore": {
+            "$ref": "#/components/schemas/ZoneOffset"
+          },
+          "offsetAfter": {
+            "$ref": "#/components/schemas/ZoneOffset"
+          },
+          "instant": {
+            "$ref": "#/components/schemas/Instant"
+          },
+          "dateTimeBefore": {
+            "$ref": "#/components/schemas/LocalDateTime"
+          },
+          "dateTimeAfter": {
+            "$ref": "#/components/schemas/LocalDateTime"
+          },
+          "duration": {
+            "$ref": "#/components/schemas/Duration"
+          },
+          "durationSeconds": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "gap": {
+            "type": "boolean"
+          },
+          "overlap": {
+            "type": "boolean"
+          },
+          "validOffsets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ZoneOffset"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "qia3xo1tlipd5"
+        }
+      },
+      "ZoneOffsetTransitionRule": {
+        "type": "object",
+        "properties": {
+          "month": {
+            "$ref": "#/components/schemas/Month"
+          },
+          "dom": {
+            "format": "byte",
+            "type": "string"
+          },
+          "dow": {
+            "$ref": "#/components/schemas/DayOfWeek"
+          },
+          "time": {
+            "$ref": "#/components/schemas/LocalTime"
+          },
+          "timeEndOfDay": {
+            "type": "boolean"
+          },
+          "timeDefinition": {
+            "$ref": "#/components/schemas/TimeDefinition"
+          },
+          "standardOffset": {
+            "$ref": "#/components/schemas/ZoneOffset"
+          },
+          "offsetBefore": {
+            "$ref": "#/components/schemas/ZoneOffset"
+          },
+          "offsetAfter": {
+            "$ref": "#/components/schemas/ZoneOffset"
+          },
+          "dayOfMonthIndicator": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "dayOfWeek": {
+            "$ref": "#/components/schemas/DayOfWeek"
+          },
+          "localTime": {
+            "$ref": "#/components/schemas/LocalTime"
+          },
+          "midnightEndOfDay": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "py5513ekki7zr"
+        }
+      },
+      "ZoneRules": {
+        "type": "object",
+        "properties": {
+          "standardTransitions": {
+            "type": "array",
+            "items": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          "standardOffsets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ZoneOffset"
+            }
+          },
+          "savingsInstantTransitions": {
+            "type": "array",
+            "items": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          "savingsLocalTransitions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LocalDateTime"
+            }
+          },
+          "wallOffsets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ZoneOffset"
+            }
+          },
+          "lastRules": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ZoneOffsetTransitionRule"
+            }
+          },
+          "fixedOffset": {
+            "type": "boolean"
+          },
+          "transitions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ZoneOffsetTransition"
+            }
+          },
+          "transitionRules": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ZoneOffsetTransitionRule"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "52o348s5v575i"
+        }
+      },
+      "ZonedDateTime": {
+        "format": "date-time",
+        "type": "string",
+        "example": "2022-03-10T12:15:50-04:00",
+        "x-stoplight": {
+          "id": "xie34hrzxecpq"
+        }
+      }
+    },
+    "securitySchemes": {
+      "jwt": {
+        "type": "http",
+        "description": "Authentication",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "parameters": {
+      "X-Timezone": {
+        "name": "X-Timezone",
+        "in": "header",
+        "description": "Zona horaria desde la que se hace la petición",
+        "required": true,
+        "schema": {
+          "default": "Europe/Madrid",
+          "type": "string"
+        }
+      },
+      "idEmpresa": {
+        "name": "idEmpresa",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idEmpleado": {
+        "name": "idEmpleado",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idModulo": {
+        "name": "idModulo",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idRecurso": {
+        "name": "idRecurso",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idEntorno": {
+        "name": "idEntorno",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idUsuarioEntorno": {
+        "name": "idUsuarioEntorno",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idGrupoEmpresarial": {
+        "name": "idGrupoEmpresarial",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idGrupoEntornos": {
+        "name": "idGrupoEntornos",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idPersona": {
+        "name": "idPersona",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      }
+    }
+  }
+}

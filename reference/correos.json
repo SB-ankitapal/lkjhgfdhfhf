@@ -1,0 +1,340 @@
+{
+  "openapi": "3.0.3",
+  "x-stoplight": {
+    "id": "mgtu9e1aelvrq"
+  },
+  "info": {
+    "title": "correos API",
+    "version": "1.0-SNAPSHOT",
+    "description": "API del microservicio de correos",
+    "license": {
+      "name": "Proprietary - Internal Use Only",
+      "url": "https://v4.metacontratas.com/"
+    },
+    "contact": {
+      "email": "soporte.tecnico@metadata.es",
+      "name": "Metadata S.L.",
+      "url": "https://v4.metacontratas.com/"
+    }
+  },
+  "tags": [
+    {
+      "name": "Correo",
+      "description": "Servicio de correos"
+    }
+  ],
+  "paths": {
+    "/correos/v1/correos": {
+      "get": {
+        "tags": [
+          "Correo"
+        ],
+        "summary": "Obtiene todos los correos enviados a una dirección entre dos fechas",
+        "operationId": "getCorreos",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/fechaDesde"
+          },
+          {
+            "$ref": "#/components/parameters/fechaHasta"
+          },
+          {
+            "$ref": "#/components/parameters/filtro"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CorreoDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene todos los correos enviados a una dirección entre dos fechas",
+        "x-stoplight": {
+          "id": "vaeilterun1lx"
+        }
+      }
+    },
+    "/correos/v1/correos/{idCorreo}": {
+      "get": {
+        "tags": [
+          "Correo"
+        ],
+        "summary": "Ver un correo enviado",
+        "operationId": "getCorreoPorIdCorreo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CorreoDetalleDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Ver un correo enviado",
+        "x-stoplight": {
+          "id": "y5lbom17jb3e2"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idCorreo"
+        }
+      ]
+    },
+    "/correos/v1/correos/{idCorreo}/reenviar": {
+      "post": {
+        "tags": [
+          "Correo"
+        ],
+        "summary": "Reenvía un correo almacenado",
+        "operationId": "postReenviarPorIdCorreo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CorreoDtoResponseReenviar"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Reenvía un correo almacenado",
+        "x-stoplight": {
+          "id": "fktly7mo11fa2"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idCorreo"
+        }
+      ]
+    }
+  },
+  "components": {
+    "schemas": {
+      "CorreoDetalleDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idCorreo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "asunto": {
+            "type": "string"
+          },
+          "to": {
+            "type": "string"
+          },
+          "cc": {
+            "type": "string"
+          },
+          "cco": {
+            "type": "string"
+          },
+          "correo": {
+            "type": "string"
+          },
+          "fechaEnvio": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "envioOk": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "cyne8q8jtke7p"
+        }
+      },
+      "CorreoDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idCorreo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "asunto": {
+            "type": "string"
+          },
+          "cc": {
+            "type": "string"
+          },
+          "cco": {
+            "type": "string"
+          },
+          "fechaEnvio": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "to": {
+            "type": "string"
+          },
+          "envioOk": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "7n5omdune2emp"
+        }
+      },
+      "CorreoDtoResponseReenviar": {
+        "type": "object",
+        "properties": {
+          "idCorreo": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "t1zhyi2f89tyr"
+        }
+      },
+      "ZonedDateTime": {
+        "format": "date-time",
+        "type": "string",
+        "example": "2022-03-10T12:15:50-04:00",
+        "x-stoplight": {
+          "id": "rrkpf384p9gy9"
+        }
+      }
+    },
+    "securitySchemes": {
+      "jwt": {
+        "type": "http",
+        "description": "Authentication",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "parameters": {
+      "fechaDesde": {
+        "name": "fechaDesde",
+        "in": "query",
+        "schema": {
+          "format": "date-time",
+          "type": "string",
+          "example": "2022-03-10T12:15:50-04:00"
+        },
+        "description": "TODO: add description"
+      },
+      "fechaHasta": {
+        "name": "fechaHasta",
+        "in": "query",
+        "schema": {
+          "format": "date-time",
+          "type": "string",
+          "example": "2022-03-10T12:15:50-04:00"
+        },
+        "description": "TODO: add description"
+      },
+      "filtro": {
+        "name": "filtro",
+        "in": "query",
+        "schema": {
+          "minLength": 4,
+          "type": "string"
+        },
+        "description": "TODO: add description"
+      },
+      "X-Timezone": {
+        "name": "X-Timezone",
+        "in": "header",
+        "description": "Zona horaria desde la que se hace la petición",
+        "required": true,
+        "schema": {
+          "default": "Europe/Madrid",
+          "type": "string"
+        }
+      },
+      "idCorreo": {
+        "name": "idCorreo",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      }
+    }
+  }
+}

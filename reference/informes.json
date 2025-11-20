@@ -1,0 +1,345 @@
+{
+  "openapi": "3.0.3",
+  "x-stoplight": {
+    "id": "v7ju0umo24ige"
+  },
+  "info": {
+    "title": "informes API",
+    "version": "1.0-SNAPSHOT",
+    "description": "API del microservicio de informes",
+    "license": {
+      "name": "Proprietary - Internal Use Only",
+      "url": "https://v4.metacontratas.com/"
+    },
+    "contact": {
+      "email": "soporte.tecnico@metadata.es",
+      "name": "Metadata S.L.",
+      "url": "https://v4.metacontratas.com/"
+    }
+  },
+  "tags": [
+    {
+      "name": "Informes",
+      "description": "Servicio de informes"
+    }
+  ],
+  "paths": {
+    "/informes/v1/informes": {
+      "get": {
+        "tags": [
+          "Informes"
+        ],
+        "summary": "Recupera el listado de informes de un usuario",
+        "operationId": "getInformes",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InformeDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Recupera el listado de informes de un usuario",
+        "x-stoplight": {
+          "id": "gdbi7yysqn51p"
+        }
+      }
+    },
+    "/informes/v1/informes/{idInforme}": {
+      "delete": {
+        "tags": [
+          "Informes"
+        ],
+        "summary": "Elimina el informe correspondiente al id pasado",
+        "operationId": "deleteInformePorIdInforme",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- INF_0002: No se puede eliminar un informe que está siendo procesado\n - INF_0003: El informe a eliminar no pertenece al usuario\n - INF_0005: El JWT debe incorporar el claim id_usuario\n - INF_0006: El informe a obtener no pertenece al usuario"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Elimina el informe correspondiente al id pasado",
+        "x-stoplight": {
+          "id": "8hzqged5n6xxm"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idInforme"
+        }
+      ]
+    },
+    "/informes/v1/informes/{idInforme}/informacion": {
+      "get": {
+        "tags": [
+          "Informes"
+        ],
+        "summary": "Obtiene información sobre el binario del informe",
+        "operationId": "getInformacionPorIdInforme",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArchivoDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- INF_0001 : Ha ocurrido un error al generar el informe\n - INF_0004: No se puede descargar un informe que no ha terminado de generarse\n - INF_0005: El JWT debe incorporar el claim id_usuario\n - INF_0006: El informe a obtener no pertenece al usuario"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene información sobre el binario del informe",
+        "x-stoplight": {
+          "id": "zkdtqqrywnitw"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idInforme"
+        }
+      ]
+    }
+  },
+  "components": {
+    "schemas": {
+      "ArchivoDtoResponse": {
+        "required": [
+          "idTipoEntidad",
+          "idEntidad",
+          "observaciones",
+          "nombre"
+        ],
+        "type": "object",
+        "properties": {
+          "idTipoEntidad": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEntidad": {
+            "type": "string"
+          },
+          "idTipoEntidadSecundaria": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEntidadSecundaria": {
+            "type": "string"
+          },
+          "observaciones": {
+            "type": "string"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "esCreacion": {
+            "type": "boolean"
+          },
+          "extension": {
+            "type": "string"
+          },
+          "numeroPaginas": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "uuid": {
+            "type": "string"
+          },
+          "fechaInsercion": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "fechaModificacion": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "tamano": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "url": {
+            "type": "string"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "s2gw5hrld9c3x"
+        }
+      },
+      "EstadoInformeEnum": {
+        "enum": [
+          "EN_COLA",
+          "PROCESANDO",
+          "TERMINADO",
+          "ERROR"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "of0973ar2anld"
+        }
+      },
+      "InformeDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idInforme": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "bytes": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "empresa": {
+            "type": "string"
+          },
+          "idModulo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "fechaSolicitud": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "estadoInforme": {
+            "$ref": "#/components/schemas/EstadoInformeEnum"
+          },
+          "tipoInforme": {
+            "$ref": "#/components/schemas/TipoInformeEnum"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "q2vbj71c9or44"
+        }
+      },
+      "TipoInformeEnum": {
+        "enum": [
+          "INFORME",
+          "EXPORTACION"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "87etrpf5tu41p"
+        }
+      },
+      "ZonedDateTime": {
+        "format": "date-time",
+        "type": "string",
+        "example": "2022-03-10T12:15:50-04:00",
+        "x-stoplight": {
+          "id": "ttsrhz9205tan"
+        }
+      }
+    },
+    "securitySchemes": {
+      "jwt": {
+        "type": "http",
+        "description": "Authentication",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "parameters": {
+      "X-Timezone": {
+        "name": "X-Timezone",
+        "in": "header",
+        "description": "Zona horaria desde la que se hace la petición",
+        "required": true,
+        "schema": {
+          "default": "Europe/Madrid",
+          "type": "string"
+        }
+      },
+      "idInforme": {
+        "name": "idInforme",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      }
+    }
+  }
+}

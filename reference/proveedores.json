@@ -1,0 +1,2899 @@
+{
+  "openapi": "3.0.3",
+  "x-stoplight": {
+    "id": "94qzlpd3t6bmo"
+  },
+  "info": {
+    "title": "proveedores API",
+    "version": "1.0-SNAPSHOT",
+    "description": "API del microservicio de proveedores",
+    "license": {
+      "name": "Proprietary - Internal Use Only",
+      "url": "https://v4.metacontratas.com/"
+    },
+    "contact": {
+      "email": "soporte.tecnico@metadata.es",
+      "name": "Metadata S.L.",
+      "url": "https://v4.metacontratas.com/"
+    }
+  },
+  "tags": [
+    {
+      "name": "Entidad Agrupadora Compra",
+      "description": "Servicio de entidades agrupadoras de compras"
+    },
+    {
+      "name": "EntidadAgrupadoraCompraProveedor",
+      "description": "Servicio de Entidades Agrupadoras Compras de Proveedores"
+    },
+    {
+      "name": "Factura",
+      "description": "Servicio de facturas"
+    },
+    {
+      "name": "FacturaProveedor",
+      "description": "Servicio de Facturas de Proveedores"
+    },
+    {
+      "name": "Importes Totales",
+      "description": "Servicio de importes de totales"
+    },
+    {
+      "name": "Proveedor",
+      "description": "Servicio de proveedores"
+    },
+    {
+      "name": "Ug",
+      "description": "Servicio de ugs"
+    },
+    {
+      "name": "Ut",
+      "description": "Servicio de UTs"
+    }
+  ],
+  "paths": {
+    "/proveedores/v1/empresas/{idEmpresa}/ugs": {
+      "get": {
+        "tags": [
+          "Ug"
+        ],
+        "summary": "Obtiene las ugs no internas que se pueden relacionar con una entidad agrupadora de compra",
+        "operationId": "getUgsPorIdEmpresa",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UgDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene las ugs no internas que se pueden relacionar con una entidad agrupadora de compra",
+        "x-stoplight": {
+          "id": "qpj7pcguxe53h"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEmpresa"
+        }
+      ]
+    },
+    "/proveedores/v1/empresas/{idEmpresa}/ugs/{idUg}/uts": {
+      "get": {
+        "tags": [
+          "Ug"
+        ],
+        "summary": "Obtiene las uts que estén relacionadas con una ug",
+        "operationId": "getUtsPorIdEmpresaPorIdUg",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UtDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene las uts que estén relacionadas con una ug",
+        "x-stoplight": {
+          "id": "y8nf2glo68n04"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEmpresa"
+        },
+        {
+          "$ref": "#/components/parameters/idUg"
+        }
+      ]
+    },
+    "/proveedores/v1/empresas/{idEmpresa}/uts": {
+      "get": {
+        "tags": [
+          "Ut"
+        ],
+        "summary": "Obtiene las UTs no internas que se pueden relacionar con una entidad agrupadora de compra",
+        "operationId": "getUtsPorIdEmpresa",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UtDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene las UTs no internas que se pueden relacionar con una entidad agrupadora de compra",
+        "x-stoplight": {
+          "id": "ct5zqtt8wkq94"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEmpresa"
+        }
+      ]
+    },
+    "/proveedores/v1/empresas/{idEmpresa}/uts/{idUt}/ugs": {
+      "get": {
+        "tags": [
+          "Ut"
+        ],
+        "summary": "Obtiene las UGs que estén relacionadas con una UT",
+        "operationId": "getUgsPorIdEmpresaPorIdUt",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UgDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene las UGs que estén relacionadas con una UT",
+        "x-stoplight": {
+          "id": "f8yqwv2ziuvy4"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEmpresa"
+        },
+        {
+          "$ref": "#/components/parameters/idUt"
+        }
+      ]
+    },
+    "/proveedores/v1/entidades-agrupadoras-compras/estado": {
+      "put": {
+        "tags": [
+          "Entidad Agrupadora Compra"
+        ],
+        "summary": "Actualiza el estado de un listado de entidades agrupadoras de compras",
+        "operationId": "putEstadoEntidadesAgrupadorasCompras",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EstadoListaEntidadesAgrupadorasCompraDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntidadAgrupadoraCompraDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Actualiza el estado de un listado de entidades agrupadoras de compras",
+        "x-stoplight": {
+          "id": "2cuuef14mfrqd"
+        }
+      }
+    },
+    "/proveedores/v1/entidades-agrupadoras-compras/totales": {
+      "get": {
+        "tags": [
+          "Entidad Agrupadora Compra"
+        ],
+        "summary": "Obtiene el listado de totales de las entidades agrupadoras de compras",
+        "operationId": "getTotalesEntidadesAgrupadorasCompras",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/estado"
+          },
+          {
+            "$ref": "#/components/parameters/fechaDesde"
+          },
+          {
+            "$ref": "#/components/parameters/fechaHasta"
+          },
+          {
+            "$ref": "#/components/parameters/idEmpresaUgUt"
+          },
+          {
+            "name": "idUg",
+            "in": "query",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "idUt",
+            "in": "query",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntidadAgrupadoraCompraTotalesDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- PPR_0004: Para filtrar por UG y/o UT debe enviar el parámetro idUg y/o idUt y el parámetro idEmpresaUgUt\n - PPR_0010: La fecha desde debe ser menor o igual a la fecha hasta"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene el listado de totales de las entidades agrupadoras de compras",
+        "x-stoplight": {
+          "id": "t1a302f32ofnm"
+        }
+      }
+    },
+    "/proveedores/v1/facturas/estado": {
+      "put": {
+        "tags": [
+          "Factura"
+        ],
+        "summary": "Actualiza el estado de un listado de facturas",
+        "operationId": "putEstadoFacturas",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EstadoListaFacturasDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FacturaListaDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Actualiza el estado de un listado de facturas",
+        "x-stoplight": {
+          "id": "0dklw5gv6ffg4"
+        }
+      }
+    },
+    "/proveedores/v1/facturas/totales": {
+      "get": {
+        "tags": [
+          "Factura"
+        ],
+        "summary": "Recupera un listado de todas las facturas",
+        "operationId": "getTotalesFacturas",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/fechaDesde"
+          },
+          {
+            "$ref": "#/components/parameters/fechaHasta"
+          },
+          {
+            "$ref": "#/components/parameters/idEmpresaUgUt"
+          },
+          {
+            "name": "idUg",
+            "in": "query",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "idUt",
+            "in": "query",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FacturaListaDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- PPR_0003: No puede filtrar por UG y/o UT si no se han configurado las facturas sin entidad agrupadora de compra\n - PPR_0004: Para filtrar por UG y/o UT debe enviar el parámetro idUg y/o idUt y el parámetro idEmpresaUgUt\n - PPR_0010: La fecha desde debe ser menor o igual a la fecha hasta"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Recupera un listado de todas las facturas",
+        "x-stoplight": {
+          "id": "t5utz8yzypixa"
+        }
+      }
+    },
+    "/proveedores/v1/importes-totales": {
+      "get": {
+        "tags": [
+          "Importes Totales"
+        ],
+        "summary": "Obtiene los importes totales",
+        "operationId": "getImportesTotales",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/estadoEac"
+          },
+          {
+            "$ref": "#/components/parameters/fechaDesde"
+          },
+          {
+            "$ref": "#/components/parameters/fechaHasta"
+          },
+          {
+            "$ref": "#/components/parameters/idEmpresaUgUt"
+          },
+          {
+            "name": "idProveedor",
+            "in": "query",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "idUg",
+            "in": "query",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "idUt",
+            "in": "query",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/incluirFacturasPagadas"
+          },
+          {
+            "$ref": "#/components/parameters/proveedoresSinEacAbierta"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImportesTotalesDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- PPR_0004: Para filtrar por UG y/o UT debe enviar el parámetro idUg y/o idUt y el parámetro idEmpresaUgUt\n - PPR_0010: La fecha desde debe ser menor o igual a la fecha hasta"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene los importes totales",
+        "x-stoplight": {
+          "id": "jfkaqdj4korqi"
+        }
+      }
+    },
+    "/proveedores/v1/proveedores": {
+      "get": {
+        "tags": [
+          "Proveedor"
+        ],
+        "summary": "Obtiene los proveedores del entorno",
+        "operationId": "getProveedores",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmpresaDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene los proveedores del entorno",
+        "x-stoplight": {
+          "id": "6z27j5wr13o4o"
+        }
+      }
+    },
+    "/proveedores/v1/proveedores/totales": {
+      "get": {
+        "tags": [
+          "Proveedor"
+        ],
+        "summary": "Obtiene el listado de proveedores con sus estados totales",
+        "operationId": "getTotalesProveedores",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/fechaDesde"
+          },
+          {
+            "$ref": "#/components/parameters/fechaHasta"
+          },
+          {
+            "$ref": "#/components/parameters/idEmpresaUgUt"
+          },
+          {
+            "name": "idUg",
+            "in": "query",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "idUt",
+            "in": "query",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/proveedoresSinPedidoAbierto"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProveedorTotalesDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- PPR_0003: No puede filtrar por UG y/o UT si no se han configurado las facturas sin entidad agrupadora de compra\n - PPR_0004: Para filtrar por UG y/o UT debe enviar el parámetro idUg y/o idUt y el parámetro idEmpresaUgUt\n - PPR_0010: La fecha desde debe ser menor o igual a la fecha hasta"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene el listado de proveedores con sus estados totales",
+        "x-stoplight": {
+          "id": "09ulhpbn024zc"
+        }
+      }
+    },
+    "/proveedores/v1/proveedores/{idProveedor}/entidades-agrupadoras-compras": {
+      "get": {
+        "tags": [
+          "EntidadAgrupadoraCompraProveedor"
+        ],
+        "summary": "Obtiene las entidades agrupadoras de compras del proveedor",
+        "operationId": "getEntidadesAgrupadorasComprasPorIdProveedor",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/fechaDesde"
+          },
+          {
+            "$ref": "#/components/parameters/fechaHasta"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntidadAgrupadoraCompraListaDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- PPR_0010: La fecha desde debe ser menor o igual a la fecha hasta\n - PPR_0015 : La empresa indicada no es proveedora"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene las entidades agrupadoras de compras del proveedor",
+        "x-stoplight": {
+          "id": "1tvcinuubbgd3"
+        }
+      },
+      "post": {
+        "tags": [
+          "EntidadAgrupadoraCompraProveedor"
+        ],
+        "summary": "Inserta una entidad agrupadora compra",
+        "operationId": "postEntidadesAgrupadorasComprasPorIdProveedor",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntidadAgrupadoraCompraDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntidadAgrupadoraCompraDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- PPR_0015 : La empresa indicada no es proveedora\n - PPR_0005 : No puede insertar manualmente el número si se ha configurado como autonumérico\n - PPR_0006 : Debe añadir un valor para el número de la entidad agrupadora de compra\n - PPR_0007 : Ya existe una entidad agrupadora de compra con este número\n - PPR_0008 : La fecha de fin debe ser mayor o igual a la de inicio"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Inserta una entidad agrupadora compra",
+        "x-stoplight": {
+          "id": "bzughg80tjwmf"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idProveedor"
+        }
+      ]
+    },
+    "/proveedores/v1/proveedores/{idProveedor}/entidades-agrupadoras-compras/{idEntidadAgrupadoraCompra}": {
+      "get": {
+        "tags": [
+          "EntidadAgrupadoraCompraProveedor"
+        ],
+        "summary": "Obtiene una entidad agrupadora de compra",
+        "operationId": "getEntidadAgrupadoraCompraPorIdProveedorPorIdEntidadAgrupadoraCompra",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntidadAgrupadoraCompraDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- PPR_0018 : No se puede consultar una entidad agrupadora de compra del tipo interno"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene una entidad agrupadora de compra",
+        "x-stoplight": {
+          "id": "b23ta6dsg55j3"
+        }
+      },
+      "put": {
+        "tags": [
+          "EntidadAgrupadoraCompraProveedor"
+        ],
+        "summary": "Actualiza una entidad agrupadora compra",
+        "operationId": "putEntidadAgrupadoraCompraPorIdProveedorPorIdEntidadAgrupadoraCompra",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntidadAgrupadoraCompraDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntidadAgrupadoraCompraDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- PPR_0015 : La empresa indicada no es proveedora\n - PPR_0005 : No puede insertar manualmente el número si se ha configurado como autonumérico\n - PPR_0006 : Debe añadir un valor para el número de la entidad agrupadora de compra\n - PPR_0007 : Ya existe una entidad agrupadora de compra con este número\n - PPR_0008 : La fecha de fin debe ser mayor o igual a la de inicio"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Actualiza una entidad agrupadora compra",
+        "x-stoplight": {
+          "id": "ulwvlnck7ngdt"
+        }
+      },
+      "delete": {
+        "tags": [
+          "EntidadAgrupadoraCompraProveedor"
+        ],
+        "summary": "Elimina una entidad agrupadora de compra",
+        "operationId": "deleteEntidadAgrupadoraCompraPorIdProveedorPorIdEntidadAgrupadoraCompra",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntidadAgrupadoraCompraDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Elimina una entidad agrupadora de compra",
+        "x-stoplight": {
+          "id": "bogg3758xa9nv"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEntidadAgrupadoraCompra"
+        },
+        {
+          "$ref": "#/components/parameters/idProveedor"
+        }
+      ]
+    },
+    "/proveedores/v1/proveedores/{idProveedor}/entidades-agrupadoras-compras/{idEntidadAgrupadoraCompra}/adjuntos": {
+      "post": {
+        "tags": [
+          "EntidadAgrupadoraCompraProveedor"
+        ],
+        "summary": "Inserta un adjunto de una entidad agrupadora de compra para un proveedor",
+        "operationId": "postAdjuntosPorIdProveedorPorIdEntidadAgrupadoraCompra",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "format": "binary",
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "fileName": {
+                    "type": "string"
+                  }
+                }
+              },
+              "encoding": {
+                "fileName": {
+                  "contentType": "text/plain"
+                },
+                "file": {
+                  "contentType": "application/octet-stream"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArchivoDtoResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArchivoDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- PPR_0009 : La entidad agrupadora de compra %idEntidadAgrupadoraCompra% no pertenece al proveedor %idProveedor%"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": true,
+        "description": "Inserta un adjunto de una entidad agrupadora de compra para un proveedor",
+        "x-stoplight": {
+          "id": "eghwklz8r949j"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEntidadAgrupadoraCompra"
+        },
+        {
+          "$ref": "#/components/parameters/idProveedor"
+        }
+      ]
+    },
+    "/proveedores/v1/proveedores/{idProveedor}/entidades-agrupadoras-compras/{idEntidadAgrupadoraCompra}/adjuntos/informacion": {
+      "get": {
+        "tags": [
+          "EntidadAgrupadoraCompraProveedor"
+        ],
+        "summary": "Obtiene la información del archivo adjunto de una entidad agrupadora de compra",
+        "operationId": "getInformacionAdjuntosPorIdProveedorPorIdEntidadAgrupadoraCompra",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ArchivoDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene la información del archivo adjunto de una entidad agrupadora de compra",
+        "x-stoplight": {
+          "id": "vsmv31fu8eos6"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEntidadAgrupadoraCompra"
+        },
+        {
+          "$ref": "#/components/parameters/idProveedor"
+        }
+      ]
+    },
+    "/proveedores/v1/proveedores/{idProveedor}/entidades-agrupadoras-compras/{idEntidadAgrupadoraCompra}/adjuntos/zip": {
+      "get": {
+        "tags": [
+          "EntidadAgrupadoraCompraProveedor"
+        ],
+        "summary": "Obtiene el comprimido de los archivo adjuntos de una entidad agrupadora de compra",
+        "operationId": "getZipAdjuntosPorIdProveedorPorIdEntidadAgrupadoraCompra",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/uuids"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "format": "byte",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene el comprimido de los archivo adjuntos de una entidad agrupadora de compra",
+        "x-stoplight": {
+          "id": "33u7droyli0vw"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEntidadAgrupadoraCompra"
+        },
+        {
+          "$ref": "#/components/parameters/idProveedor"
+        }
+      ]
+    },
+    "/proveedores/v1/proveedores/{idProveedor}/entidades-agrupadoras-compras/{idEntidadAgrupadoraCompra}/adjuntos/{uuid}": {
+      "delete": {
+        "tags": [
+          "EntidadAgrupadoraCompraProveedor"
+        ],
+        "summary": "Elimina el archivo adjunto de una entidad agrupadora de compra para un proveedor",
+        "operationId": "deleteAdjuntoPorIdProveedorPorIdEntidadAgrupadoraCompraPorUuid",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArchivoDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- PPR_0020 : El adjunto a eliminar no se corresponde con esta factura"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": true,
+        "description": "Elimina el archivo adjunto de una entidad agrupadora de compra para un proveedor",
+        "x-stoplight": {
+          "id": "d60wlwspdmud8"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEntidadAgrupadoraCompra"
+        },
+        {
+          "$ref": "#/components/parameters/idProveedor"
+        },
+        {
+          "$ref": "#/components/parameters/uuid"
+        }
+      ]
+    },
+    "/proveedores/v1/proveedores/{idProveedor}/facturas": {
+      "get": {
+        "tags": [
+          "FacturaProveedor"
+        ],
+        "summary": "Obtiene las facturas del proveedor",
+        "operationId": "getFacturasPorIdProveedor",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/fechaDesde"
+          },
+          {
+            "$ref": "#/components/parameters/fechaHasta"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FacturaListaDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- PPR_0010: La fecha desde debe ser menor o igual a la fecha hasta\n - PPR_0015 : La empresa indicada no es proveedora"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene las facturas del proveedor",
+        "x-stoplight": {
+          "id": "nw8lxqfikmf48"
+        }
+      },
+      "post": {
+        "tags": [
+          "FacturaProveedor"
+        ],
+        "summary": "Crear una factura de un proveedor",
+        "operationId": "postFacturasPorIdProveedor",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FacturaDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FacturaDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- PPR_0001 : La factura no puede tener relacionada una entidad agrupadora de compra\n - PPR_0013 : Ya existe una factura con este número\n - PPR_0014 : Debe insertar una fecha de pago\n - PPR_0011 : No puede insertar una fecha de pago si el estado de la factura no es PAGADO\n - PPR_0012 : La fecha de la factura no puede ser posterior a la fecha de pago\n - PPR_0006 : Debe añadir un valor para el número de la entidad agrupadora de compra\n - PPR_0015 : La empresa indicada no es proveedora\n - PPR_0009 : La entidad agrupadora de compra %idEntidadAgrupadoraCompra% no pertenece al proveedor %idProveedor%\n - PPR_0019 : Debe añadir un valor para la UG-UT"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": true,
+        "description": "Crear una factura de un proveedor",
+        "x-stoplight": {
+          "id": "rfpv7i9spj7ko"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idProveedor"
+        }
+      ]
+    },
+    "/proveedores/v1/proveedores/{idProveedor}/facturas/{idFactura}": {
+      "get": {
+        "tags": [
+          "FacturaProveedor"
+        ],
+        "summary": "Recuperar la factura de un proveedor",
+        "operationId": "getFacturaPorIdProveedorPorIdFactura",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FacturaDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": true,
+        "description": "Recuperar la factura de un proveedor",
+        "x-stoplight": {
+          "id": "0djpw4tdt9u2r"
+        }
+      },
+      "put": {
+        "tags": [
+          "FacturaProveedor"
+        ],
+        "summary": "Actualiza la factura de un proveedor",
+        "operationId": "putFacturaPorIdProveedorPorIdFactura",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FacturaPutDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FacturaDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- PPR_0001 : La factura no puede tener relacionada una entidad agrupadora de compra\n - PPR_0013 : Ya existe una factura con este número\n - PPR_0014 : Debe insertar una fecha de pago\n - PPR_0011 : No puede insertar una fecha de pago si el estado de la factura no es PAGADO\n - PPR_0012 : La fecha de la factura no puede ser posterior a la fecha de pago\n - PPR_0006 : Debe añadir un valor para el número de la entidad agrupadora de compra\n - PPR_0015 : La empresa indicada no es proveedora\n - PPR_0009 : La entidad agrupadora de compra %idEntidadAgrupadoraCompra% no pertenece al proveedor %idProveedor%\n - PPR_0019 : Debe añadir un valor para la UG-UT"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": true,
+        "description": "Actualiza la factura de un proveedor",
+        "x-stoplight": {
+          "id": "spymtb33rmvle"
+        }
+      },
+      "delete": {
+        "tags": [
+          "FacturaProveedor"
+        ],
+        "summary": "Elimina una factura de un proveedor",
+        "operationId": "deleteFacturaPorIdProveedorPorIdFactura",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FacturaDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- PPR_0002 : No puede eliminar una factura cuyo estado sea distinto de SUBIDO"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": true,
+        "description": "Elimina una factura de un proveedor",
+        "x-stoplight": {
+          "id": "rzf0fowqtf6u0"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idFactura"
+        },
+        {
+          "$ref": "#/components/parameters/idProveedor"
+        }
+      ]
+    },
+    "/proveedores/v1/proveedores/{idProveedor}/facturas/{idFactura}/adjuntos": {
+      "post": {
+        "tags": [
+          "FacturaProveedor"
+        ],
+        "summary": "Inserta un adjunto de una factura para un proveedor",
+        "operationId": "postAdjuntosPorIdProveedorPorIdFactura",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "format": "binary",
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "fileName": {
+                    "type": "string"
+                  }
+                }
+              },
+              "encoding": {
+                "fileName": {
+                  "contentType": "text/plain"
+                },
+                "file": {
+                  "contentType": "application/octet-stream"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArchivoDtoResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArchivoDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": true,
+        "description": "Inserta un adjunto de una factura para un proveedor",
+        "x-stoplight": {
+          "id": "7tgwseuljsxm7"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idFactura"
+        },
+        {
+          "$ref": "#/components/parameters/idProveedor"
+        }
+      ]
+    },
+    "/proveedores/v1/proveedores/{idProveedor}/facturas/{idFactura}/adjuntos/informacion": {
+      "get": {
+        "tags": [
+          "FacturaProveedor"
+        ],
+        "summary": "Obtiene la información del archivo adjunto de una factura",
+        "operationId": "getInformacionAdjuntosPorIdProveedorPorIdFactura",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ArchivoDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene la información del archivo adjunto de una factura",
+        "x-stoplight": {
+          "id": "d5qm5qtekvuzq"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idFactura"
+        },
+        {
+          "$ref": "#/components/parameters/idProveedor"
+        }
+      ]
+    },
+    "/proveedores/v1/proveedores/{idProveedor}/facturas/{idFactura}/adjuntos/zip": {
+      "get": {
+        "tags": [
+          "FacturaProveedor"
+        ],
+        "summary": "Obtiene el comprimido de los archivo adjuntos de una factura",
+        "operationId": "getZipAdjuntosPorIdProveedorPorIdFactura",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/uuids"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "format": "byte",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene el comprimido de los archivo adjuntos de una factura",
+        "x-stoplight": {
+          "id": "e3zr28fjk7dj7"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idFactura"
+        },
+        {
+          "$ref": "#/components/parameters/idProveedor"
+        }
+      ]
+    },
+    "/proveedores/v1/proveedores/{idProveedor}/facturas/{idFactura}/adjuntos/{uuid}": {
+      "delete": {
+        "tags": [
+          "FacturaProveedor"
+        ],
+        "summary": "Elimina el archivo adjunto de una factura para un proveedor dado su UUID",
+        "operationId": "deleteAdjuntoPorIdProveedorPorIdFacturaPorUuid",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArchivoDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- PPR_0021 : El adjunto a eliminar no se corresponde con esta entidad agrupadora de compra"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": true,
+        "description": "Elimina el archivo adjunto de una factura para un proveedor dado su UUID",
+        "x-stoplight": {
+          "id": "x756hevx5cuh4"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idFactura"
+        },
+        {
+          "$ref": "#/components/parameters/idProveedor"
+        },
+        {
+          "$ref": "#/components/parameters/uuid"
+        }
+      ]
+    }
+  },
+  "components": {
+    "schemas": {
+      "ArchivoDtoResponse": {
+        "required": [
+          "idTipoEntidad",
+          "idEntidad",
+          "observaciones",
+          "nombre"
+        ],
+        "type": "object",
+        "properties": {
+          "idTipoEntidad": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEntidad": {
+            "type": "string"
+          },
+          "idTipoEntidadSecundaria": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEntidadSecundaria": {
+            "type": "string"
+          },
+          "observaciones": {
+            "type": "string"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "esCreacion": {
+            "type": "boolean"
+          },
+          "extension": {
+            "type": "string"
+          },
+          "numeroPaginas": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "uuid": {
+            "type": "string"
+          },
+          "fechaInsercion": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "fechaModificacion": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "tamano": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "url": {
+            "type": "string"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "i5d5rirrea2q6"
+        }
+      },
+      "DivisaEnum": {
+        "enum": [
+          "EURO",
+          "DOLAR_ESTADOUNIDENSE",
+          "LIBRA_ESTERLINA"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "pd475x1y5nro5"
+        }
+      },
+      "EmpresaDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "cif": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "wzk9femyrepov"
+        }
+      },
+      "EntidadAgrupadoraCompraDtoRequest": {
+        "required": [
+          "divisa",
+          "estado",
+          "ugUt",
+          "fechaInicio",
+          "fechaFin",
+          "informacionAdicional"
+        ],
+        "type": "object",
+        "properties": {
+          "numero": {
+            "maxLength": 18,
+            "type": "string"
+          },
+          "divisa": {
+            "$ref": "#/components/schemas/DivisaEnum"
+          },
+          "estado": {
+            "$ref": "#/components/schemas/EstadoEntidadAgrupadoraCompraEnum"
+          },
+          "ugUt": {
+            "$ref": "#/components/schemas/UgUtDtoRequest"
+          },
+          "fechaInicio": {
+            "type": "string"
+          },
+          "fechaFin": {
+            "type": "string"
+          },
+          "informacionAdicional": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "zraydjw8vjyaa"
+        }
+      },
+      "EntidadAgrupadoraCompraDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idEntidadAgrupadoraCompra": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "empresa": {
+            "$ref": "#/components/schemas/EmpresaDtoResponse"
+          },
+          "ug": {
+            "$ref": "#/components/schemas/UgDtoResponse"
+          },
+          "ut": {
+            "$ref": "#/components/schemas/UtDtoResponse"
+          },
+          "divisa": {
+            "$ref": "#/components/schemas/DivisaEnum"
+          },
+          "estado": {
+            "$ref": "#/components/schemas/EstadoEntidadAgrupadoraCompraEnum"
+          },
+          "numero": {
+            "type": "string"
+          },
+          "informacionAdicional": {
+            "type": "string"
+          },
+          "fechaInicio": {
+            "type": "string"
+          },
+          "fechaFin": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "zro2k3weipk6l"
+        }
+      },
+      "EntidadAgrupadoraCompraFacturasDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idEntidadAgrupadoraCompra": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "numero": {
+            "type": "string"
+          },
+          "ug": {
+            "$ref": "#/components/schemas/UgDtoResponse"
+          },
+          "ut": {
+            "$ref": "#/components/schemas/UtDtoResponse"
+          },
+          "proveedor": {
+            "$ref": "#/components/schemas/EmpresaDtoResponse"
+          }
+        },
+        "x-stoplight": {
+          "id": "swxx5dexj4qpc"
+        }
+      },
+      "EntidadAgrupadoraCompraListaDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idEntidadAgrupadoraCompra": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "numero": {
+            "type": "string"
+          },
+          "ug": {
+            "$ref": "#/components/schemas/UgDtoResponse"
+          },
+          "ut": {
+            "$ref": "#/components/schemas/UtDtoResponse"
+          },
+          "totalImportePagado": {
+            "format": "double",
+            "type": "number"
+          },
+          "totalImportePendiente": {
+            "format": "double",
+            "type": "number"
+          },
+          "totalFacturasPendientes": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "fechaInicio": {
+            "type": "string"
+          },
+          "estado": {
+            "$ref": "#/components/schemas/EstadoEntidadAgrupadoraCompraEnum"
+          }
+        },
+        "x-stoplight": {
+          "id": "2fo5ym79j19ix"
+        }
+      },
+      "EntidadAgrupadoraCompraTotalesDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idEntidadAgrupadoraCompra": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "numero": {
+            "type": "string"
+          },
+          "proveedor": {
+            "$ref": "#/components/schemas/EmpresaDtoResponse"
+          },
+          "totalImportePagado": {
+            "format": "double",
+            "type": "number"
+          },
+          "totalImportePendiente": {
+            "format": "double",
+            "type": "number"
+          },
+          "fechaInicio": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "un35ov6uox4tw"
+        }
+      },
+      "EstadoEntidadAgrupadoraCompraEnum": {
+        "enum": [
+          "ABIERTO",
+          "CERRADO"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "k9dk3v1c0a06s"
+        }
+      },
+      "EstadoFacturaEnum": {
+        "enum": [
+          "SUBIDO",
+          "RECIBIDO",
+          "RECHAZADO",
+          "A_PAGAR",
+          "PAGADO"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "l7vz1us9trzbp"
+        }
+      },
+      "EstadoListaEntidadesAgrupadorasCompraDtoRequest": {
+        "required": [
+          "estado",
+          "listaEntidadesAgrupadorasCompra"
+        ],
+        "type": "object",
+        "properties": {
+          "estado": {
+            "$ref": "#/components/schemas/EstadoEntidadAgrupadoraCompraEnum"
+          },
+          "listaEntidadesAgrupadorasCompra": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "8queuymuwq95u"
+        }
+      },
+      "EstadoListaFacturasDtoRequest": {
+        "required": [
+          "estado",
+          "listaFacturas"
+        ],
+        "type": "object",
+        "properties": {
+          "estado": {
+            "$ref": "#/components/schemas/EstadoFacturaEnum"
+          },
+          "listaFacturas": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "s7meqbgri0zix"
+        }
+      },
+      "FacturaDtoRequest": {
+        "required": [
+          "estado",
+          "numeroFactura",
+          "fechaFactura",
+          "divisa",
+          "importeSinImpuestos",
+          "importeIva",
+          "retenciones",
+          "informacionAdicional"
+        ],
+        "type": "object",
+        "properties": {
+          "numeroEntidadAgrupadoraCompra": {
+            "maxLength": 18,
+            "type": "string"
+          },
+          "estado": {
+            "$ref": "#/components/schemas/EstadoFacturaEnum"
+          },
+          "numeroFactura": {
+            "maxLength": 12,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "fechaFactura": {
+            "type": "string"
+          },
+          "fechaPago": {
+            "type": "string"
+          },
+          "divisa": {
+            "$ref": "#/components/schemas/DivisaEnum"
+          },
+          "importeSinImpuestos": {
+            "format": "double",
+            "type": "number"
+          },
+          "importeIva": {
+            "format": "double",
+            "type": "number"
+          },
+          "retenciones": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RetencionDtoRequest"
+            }
+          },
+          "informacionAdicional": {
+            "type": "string"
+          },
+          "ugUt": {
+            "$ref": "#/components/schemas/UgUtDtoRequest"
+          }
+        },
+        "x-stoplight": {
+          "id": "d46lwbyl1ylay"
+        }
+      },
+      "FacturaDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idFactura": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "proveedor": {
+            "$ref": "#/components/schemas/EmpresaDtoResponse"
+          },
+          "numeroEntidadAgrupadoraCompra": {
+            "type": "string"
+          },
+          "estado": {
+            "$ref": "#/components/schemas/EstadoFacturaEnum"
+          },
+          "numeroFactura": {
+            "type": "string"
+          },
+          "fechaFactura": {
+            "type": "string"
+          },
+          "fechaPago": {
+            "type": "string"
+          },
+          "divisa": {
+            "$ref": "#/components/schemas/DivisaEnum"
+          },
+          "importeSinImpuestos": {
+            "format": "double",
+            "type": "number"
+          },
+          "importeIva": {
+            "format": "double",
+            "type": "number"
+          },
+          "importeNetoPagar": {
+            "format": "double",
+            "type": "number"
+          },
+          "retenciones": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RetencionDtoResponse"
+            }
+          },
+          "informacionAdicional": {
+            "type": "string"
+          },
+          "ugUt": {
+            "$ref": "#/components/schemas/UgUtDtoResponse"
+          }
+        },
+        "x-stoplight": {
+          "id": "e9lo44uq2yfyd"
+        }
+      },
+      "FacturaListaDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idFactura": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "numero": {
+            "type": "string"
+          },
+          "fechaFactura": {
+            "type": "string"
+          },
+          "estado": {
+            "$ref": "#/components/schemas/EstadoFacturaEnum"
+          },
+          "fechaPago": {
+            "type": "string"
+          },
+          "importeNetoPagar": {
+            "format": "double",
+            "type": "number"
+          },
+          "entidadAgrupadoraCompra": {
+            "$ref": "#/components/schemas/EntidadAgrupadoraCompraFacturasDtoResponse"
+          }
+        },
+        "x-stoplight": {
+          "id": "c013uruq4xonx"
+        }
+      },
+      "FacturaPutDtoRequest": {
+        "required": [
+          "estado",
+          "numeroFactura",
+          "fechaFactura",
+          "divisa",
+          "importeSinImpuestos",
+          "importeIva",
+          "retencionesInsertar",
+          "retencionesEditar",
+          "retencionesEliminar",
+          "informacionAdicional"
+        ],
+        "type": "object",
+        "properties": {
+          "numeroEntidadAgrupadoraCompra": {
+            "maxLength": 18,
+            "type": "string"
+          },
+          "estado": {
+            "$ref": "#/components/schemas/EstadoFacturaEnum"
+          },
+          "numeroFactura": {
+            "maxLength": 12,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "fechaFactura": {
+            "type": "string"
+          },
+          "fechaPago": {
+            "type": "string"
+          },
+          "divisa": {
+            "$ref": "#/components/schemas/DivisaEnum"
+          },
+          "importeSinImpuestos": {
+            "format": "double",
+            "type": "number"
+          },
+          "importeIva": {
+            "format": "double",
+            "type": "number"
+          },
+          "retencionesInsertar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RetencionDtoRequest"
+            }
+          },
+          "retencionesEditar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RetencionPutDtoRequest"
+            }
+          },
+          "retencionesEliminar": {
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "informacionAdicional": {
+            "type": "string"
+          },
+          "ugUt": {
+            "$ref": "#/components/schemas/UgUtDtoRequest"
+          }
+        },
+        "x-stoplight": {
+          "id": "e0aswpnhhxidb"
+        }
+      },
+      "ImportesTotalesDtoResponse": {
+        "type": "object",
+        "properties": {
+          "importeTotalPagado": {
+            "format": "double",
+            "type": "number"
+          },
+          "importeTotalPendiente": {
+            "format": "double",
+            "type": "number"
+          }
+        },
+        "x-stoplight": {
+          "id": "cqw0062zx7n8r"
+        }
+      },
+      "ProveedorTotalesDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "importeTotalPagado": {
+            "format": "double",
+            "type": "number"
+          },
+          "importeTotalPendiente": {
+            "format": "double",
+            "type": "number"
+          },
+          "totalFacturasPendientePago": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "totalPedidosAbiertos": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "ikmtj4j46xkku"
+        }
+      },
+      "RetencionDtoRequest": {
+        "required": [
+          "importe"
+        ],
+        "type": "object",
+        "properties": {
+          "importe": {
+            "format": "double",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "type": "number"
+          }
+        },
+        "x-stoplight": {
+          "id": "anrycfsr07dqp"
+        }
+      },
+      "RetencionDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idRetencion": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "importe": {
+            "format": "double",
+            "type": "number"
+          }
+        },
+        "x-stoplight": {
+          "id": "ojv5o3q3hwmss"
+        }
+      },
+      "RetencionPutDtoRequest": {
+        "required": [
+          "idRetencion",
+          "importe"
+        ],
+        "type": "object",
+        "properties": {
+          "idRetencion": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "importe": {
+            "format": "double",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "type": "number"
+          }
+        },
+        "x-stoplight": {
+          "id": "lfy0qtskqykz5"
+        }
+      },
+      "UgDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idUg": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "ouxflhss4jfm5"
+        }
+      },
+      "UgUtDtoRequest": {
+        "required": [
+          "idEmpresa",
+          "idUg",
+          "idUt"
+        ],
+        "type": "object",
+        "properties": {
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idUg": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idUt": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "nvid1hwd7obbo"
+        }
+      },
+      "UgUtDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idUg": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idUt": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "d0fym5a55j3c5"
+        }
+      },
+      "UtDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idUt": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "cze1mx6mjx2ra"
+        }
+      },
+      "ZonedDateTime": {
+        "format": "date-time",
+        "type": "string",
+        "example": "2022-03-10T12:15:50-04:00",
+        "x-stoplight": {
+          "id": "wd0kgg0oj8opf"
+        }
+      }
+    },
+    "securitySchemes": {
+      "jwt": {
+        "type": "http",
+        "description": "Authentication",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "parameters": {
+      "idEmpresa": {
+        "name": "idEmpresa",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "X-Timezone": {
+        "name": "X-Timezone",
+        "in": "header",
+        "description": "Zona horaria desde la que se hace la petición",
+        "required": true,
+        "schema": {
+          "default": "Europe/Madrid",
+          "type": "string"
+        }
+      },
+      "idUg": {
+        "name": "idUg",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idUt": {
+        "name": "idUt",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "estado": {
+        "name": "estado",
+        "in": "query",
+        "schema": {
+          "$ref": "#/components/schemas/EstadoEntidadAgrupadoraCompraEnum"
+        },
+        "description": "TODO: add description"
+      },
+      "fechaDesde": {
+        "name": "fechaDesde",
+        "in": "query",
+        "schema": {
+          "type": "string"
+        },
+        "description": "TODO: add description"
+      },
+      "fechaHasta": {
+        "name": "fechaHasta",
+        "in": "query",
+        "schema": {
+          "type": "string"
+        },
+        "description": "TODO: add description"
+      },
+      "idEmpresaUgUt": {
+        "name": "idEmpresaUgUt",
+        "in": "query",
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "estadoEac": {
+        "name": "estadoEac",
+        "in": "query",
+        "schema": {
+          "$ref": "#/components/schemas/EstadoEntidadAgrupadoraCompraEnum"
+        },
+        "description": "TODO: add description"
+      },
+      "incluirFacturasPagadas": {
+        "name": "incluirFacturasPagadas",
+        "in": "query",
+        "schema": {
+          "type": "boolean"
+        },
+        "description": "TODO: add description"
+      },
+      "proveedoresSinEacAbierta": {
+        "name": "proveedoresSinEacAbierta",
+        "in": "query",
+        "schema": {
+          "type": "boolean"
+        },
+        "description": "TODO: add description"
+      },
+      "proveedoresSinPedidoAbierto": {
+        "name": "proveedoresSinPedidoAbierto",
+        "in": "query",
+        "schema": {
+          "type": "boolean"
+        },
+        "description": "TODO: add description"
+      },
+      "idProveedor": {
+        "name": "idProveedor",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idEntidadAgrupadoraCompra": {
+        "name": "idEntidadAgrupadoraCompra",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "uuids": {
+        "name": "uuids",
+        "in": "query",
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "description": "TODO: add description"
+      },
+      "uuid": {
+        "name": "uuid",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "TODO: add description"
+      },
+      "idFactura": {
+        "name": "idFactura",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      }
+    }
+  }
+}

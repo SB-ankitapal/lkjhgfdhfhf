@@ -1,0 +1,958 @@
+{
+  "openapi": "3.0.3",
+  "x-stoplight": {
+    "id": "vkxpbcqqk29ox"
+  },
+  "info": {
+    "title": "firma API",
+    "version": "1.0-SNAPSHOT",
+    "description": "API del microservicio de firma",
+    "license": {
+      "name": "Proprietary - Internal Use Only",
+      "url": "https://v4.metacontratas.com/"
+    },
+    "contact": {
+      "email": "soporte.tecnico@metadata.es",
+      "name": "Metadata S.L.",
+      "url": "https://v4.metacontratas.com/"
+    }
+  },
+  "tags": [
+    {
+      "name": "Archivos",
+      "description": "Archivos"
+    },
+    {
+      "name": "Public",
+      "description": "Servicio de endpoints publicos"
+    },
+    {
+      "name": "Token firma",
+      "description": "Token firma"
+    }
+  ],
+  "paths": {
+    "/firma/v1/archivos": {
+      "post": {
+        "tags": [
+          "Archivos"
+        ],
+        "summary": "Inserta un archivo a firmar",
+        "operationId": "postArchivos",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "file",
+                  "nombre",
+                  "observaciones"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "format": "binary",
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "nombre": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "observaciones": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                }
+              },
+              "encoding": {
+                "file": {
+                  "contentType": "application/octet-stream"
+                },
+                "observaciones": {
+                  "contentType": "text/plain"
+                },
+                "nombre": {
+                  "contentType": "text/plain"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArchivoDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- FIR_0005: El JWT debe incorporar el claim id_entorno"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": true,
+        "description": "Inserta un archivo a firmar",
+        "x-stoplight": {
+          "id": "ra73vthe1ezdu"
+        }
+      }
+    },
+    "/firma/v1/archivos/binario/{uuid}/informacion": {
+      "get": {
+        "tags": [
+          "Archivos"
+        ],
+        "summary": "Obtiene información sobre un archivo firmado",
+        "operationId": "getInformacionPorUuid",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArchivoDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- FIR_0001: El tipo de entidad del archivo no es ARCHIVO_A_FIRMAR o ARCHIVO_FIRMADO\n - FIR_0005: El JWT debe incorporar el claim id_entorno\n - FIR_0006: No se puede acceder a un archivo de otro entorno"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene información sobre un archivo firmado",
+        "x-stoplight": {
+          "id": "eexx0mthlmhgb"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/uuid"
+        }
+      ]
+    },
+    "/firma/v1/archivos/{uuid}/firmar-recibi": {
+      "post": {
+        "tags": [
+          "Archivos"
+        ],
+        "summary": "Firma un archivo adjuntándole la firma recibida",
+        "operationId": "postFirmarRecibiPorUuid",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FirmaRecibiDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArchivoDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- FIR_0002: No se puede anexar un recibí firmado a un archivo cuyo formato no sea PDF\n - FIR_0003: Ha ocurrido un error al parsear la firma\n - FIR_0005: El JWT debe incorporar el claim id_entorno\n - FIR_0006: No se puede acceder a un archivo de otro entorno\n - FIR_0007: No se puede utilizar un token firma ya usado\n - FIR_0008: No se puede proceder en la firma si no se envían tokens firma"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "firmar_informacion"
+        ],
+        "x-permisos": true,
+        "description": "Firma un archivo adjuntándole la firma recibida",
+        "x-stoplight": {
+          "id": "wtf22ox43njcp"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/uuid"
+        }
+      ]
+    },
+    "/firma/v1/public/autenticar": {
+      "post": {
+        "tags": [
+          "Public"
+        ],
+        "summary": "Obtiene un token de autenticación de público acceso a partir de un token de Metacontratas",
+        "operationId": "postAutenticarPublic",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TokenDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionTokenDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "- FIR_0004: No se ha podido generar el JWT porque faltan datos asociados al token de firma"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "description": "Obtiene un token de autenticación de público acceso a partir de un token de Metacontratas",
+        "x-stoplight": {
+          "id": "5okbd5ghkha5l"
+        }
+      }
+    },
+    "/firma/v1/tokens-firma": {
+      "get": {
+        "tags": [
+          "Token firma"
+        ],
+        "summary": "Obtener varios tokens firma filtrados",
+        "operationId": "getTokensFirma",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/idEmpresa"
+          },
+          {
+            "$ref": "#/components/parameters/idTipoEntidad"
+          },
+          {
+            "$ref": "#/components/parameters/idTipoEntidadSecundaria"
+          },
+          {
+            "$ref": "#/components/parameters/tipoEntidad"
+          },
+          {
+            "$ref": "#/components/parameters/tipoEntidadSecundaria"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TokenFirmaDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Obtener varios tokens firma filtrados",
+        "x-stoplight": {
+          "id": "b389zjpzk5cy6"
+        }
+      },
+      "post": {
+        "tags": [
+          "Token firma"
+        ],
+        "summary": "Inserta un token firma",
+        "operationId": "postTokensFirma",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TokenFirmaDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenFirmaDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Inserta un token firma",
+        "x-stoplight": {
+          "id": "g6z1j52x618jq"
+        }
+      }
+    },
+    "/firma/v1/tokens-firma/token/{token}": {
+      "get": {
+        "tags": [
+          "Token firma"
+        ],
+        "summary": "Obtener token firma",
+        "operationId": "getTokenTokenFirmaPorToken",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenFirmaDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Obtener token firma",
+        "x-stoplight": {
+          "id": "fjxbdpyt601cu"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/token"
+        }
+      ]
+    },
+    "/firma/v1/tokens-firma/{idTokenFirma}": {
+      "put": {
+        "tags": [
+          "Token firma"
+        ],
+        "summary": "Actualizar los datos adicionales de un token firma",
+        "operationId": "putTokenFirmaPorIdTokenFirma",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TokenFirmaPutDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenFirmaDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Actualizar los datos adicionales de un token firma",
+        "x-stoplight": {
+          "id": "s85brwp2hosgl"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idTokenFirma"
+        }
+      ]
+    }
+  },
+  "components": {
+    "schemas": {
+      "ActionTokenDtoResponse": {
+        "type": "object",
+        "properties": {
+          "actionToken": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "em46zh9ku7z6k"
+        }
+      },
+      "ArchivoDtoResponse": {
+        "required": [
+          "idTipoEntidad",
+          "idEntidad",
+          "observaciones",
+          "nombre"
+        ],
+        "type": "object",
+        "properties": {
+          "idTipoEntidad": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEntidad": {
+            "type": "string"
+          },
+          "idTipoEntidadSecundaria": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEntidadSecundaria": {
+            "type": "string"
+          },
+          "observaciones": {
+            "type": "string"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "esCreacion": {
+            "type": "boolean"
+          },
+          "extension": {
+            "type": "string"
+          },
+          "numeroPaginas": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "uuid": {
+            "type": "string"
+          },
+          "fechaInsercion": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "fechaModificacion": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "tamano": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "url": {
+            "type": "string"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "jwech77gjgbfv"
+        }
+      },
+      "EntidadEnum": {
+        "enum": [
+          "EMPRESA",
+          "PERSONA",
+          "UG",
+          "UT",
+          "MAESTRO_EMPRESA",
+          "SOLICITUD",
+          "DOCUMENTO",
+          "VALOR_CAMPO",
+          "SECCION",
+          "DOCUMENTACION_ANEXA",
+          "ACTIVIDAD",
+          "LOGO_USUARIO",
+          "LOGO_EMPRESA",
+          "LOGO_EMPLEADO",
+          "LOGO_UG",
+          "LOGO_UT",
+          "LOGO_RECURSO_MATERIAL",
+          "DOCUMENTO_EJEMPLO",
+          "TAREA",
+          "CAUSA",
+          "MEDIDA_PREVENTIVA",
+          "INFORME",
+          "FIRMA_ENTREGA_EPI_EMPLEADO",
+          "FIRMA_ENTREGA_EPI_RESPONSABLE",
+          "FACTURA",
+          "ENTIDAD_AGRUPADORA_COMPRA",
+          "ARCHIVO_A_FIRMAR",
+          "ARCHIVO_FIRMADO",
+          "GESTION_EPI",
+          "PDF_GESTION_EPI_TEMPORAL",
+          "USUARIO",
+          "FIRMA_EVALUADOR",
+          "PDF_EVALUADOR_FIRMADO",
+          "DOCUMENTO_INFORMATIZADO_POR_PROCESAR",
+          "GRUPO_ENTORNO"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "e5wfg3q9pxobh"
+        }
+      },
+      "FirmaDtoRequest": {
+        "required": [
+          "archivoFirma",
+          "nombreFirmante",
+          "dniFirmante"
+        ],
+        "type": "object",
+        "properties": {
+          "archivoFirma": {
+            "format": "binary",
+            "minLength": 1,
+            "type": "string"
+          },
+          "nombreFirmante": {
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "dniFirmante": {
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "cargoFirmante": {
+            "type": "string"
+          },
+          "tokensFirma": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "7y25gihh3kqzo"
+        }
+      },
+      "FirmaRecibiDtoRequest": {
+        "required": [
+          "idEmpresa",
+          "datosRecibi",
+          "firmas",
+          "tipoEntidad"
+        ],
+        "type": "object",
+        "properties": {
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "datosRecibi": {
+            "minProperties": 1,
+            "type": "object",
+            "additionalProperties": {}
+          },
+          "firmas": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FirmaDtoRequest"
+            }
+          },
+          "tipoEntidad": {
+            "$ref": "#/components/schemas/EntidadEnum"
+          }
+        },
+        "x-stoplight": {
+          "id": "y0i3iyqizrg73"
+        }
+      },
+      "TipoEntidadFirmaEnum": {
+        "enum": [
+          "TIPO_DOCUMENTO",
+          "PDF_GESTION_EPI_TEMPORAL",
+          "EVALUACION_INFORME"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "b6zx5c1edw2qy"
+        }
+      },
+      "TipoEntidadSecundariaFirmaEnum": {
+        "enum": [
+          "UG",
+          "UT",
+          "ACTIVIDAD",
+          "USUARIO"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "ajzzwgz1sjule"
+        }
+      },
+      "TokenDtoRequest": {
+        "required": [
+          "token"
+        ],
+        "type": "object",
+        "properties": {
+          "token": {
+            "maxLength": 128,
+            "minLength": 128,
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "8e2q8ekj0usvx"
+        }
+      },
+      "TokenFirmaDtoRequest": {
+        "required": [
+          "idEntorno",
+          "tipoEntidad"
+        ],
+        "type": "object",
+        "properties": {
+          "idEntorno": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "tipoEntidad": {
+            "$ref": "#/components/schemas/TipoEntidadFirmaEnum"
+          },
+          "idEntidad": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "tipoEntidadSecundaria": {
+            "$ref": "#/components/schemas/TipoEntidadSecundariaFirmaEnum"
+          },
+          "idEntidadSecundaria": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "datosAdicionales": {
+            "type": "object",
+            "additionalProperties": {}
+          }
+        },
+        "x-stoplight": {
+          "id": "vwewcfr1sn8ug"
+        }
+      },
+      "TokenFirmaDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idTokenFirma": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idUsuario": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idUsuarioEntorno": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "tipoEntidad": {
+            "$ref": "#/components/schemas/TipoEntidadFirmaEnum"
+          },
+          "idEntidad": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "tipoEntidadSecundaria": {
+            "$ref": "#/components/schemas/TipoEntidadSecundariaFirmaEnum"
+          },
+          "idEntidadSecundaria": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "datosAdicionales": {
+            "type": "object",
+            "additionalProperties": {}
+          },
+          "token": {
+            "type": "string"
+          },
+          "fechaInsercion": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          }
+        },
+        "x-stoplight": {
+          "id": "t7td9dyum3sp3"
+        }
+      },
+      "TokenFirmaPutDtoRequest": {
+        "required": [
+          "datosAdicionales"
+        ],
+        "type": "object",
+        "properties": {
+          "datosAdicionales": {
+            "type": "object",
+            "additionalProperties": {}
+          }
+        },
+        "x-stoplight": {
+          "id": "yr5vg0jvsv3qj"
+        }
+      },
+      "ZonedDateTime": {
+        "format": "date-time",
+        "type": "string",
+        "example": "2022-03-10T12:15:50-04:00",
+        "x-stoplight": {
+          "id": "vj1wt29adg4fm"
+        }
+      }
+    },
+    "securitySchemes": {
+      "jwt": {
+        "type": "http",
+        "description": "Authentication",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "parameters": {
+      "X-Timezone": {
+        "name": "X-Timezone",
+        "in": "header",
+        "description": "Zona horaria desde la que se hace la petición",
+        "required": true,
+        "schema": {
+          "default": "Europe/Madrid",
+          "type": "string"
+        }
+      },
+      "uuid": {
+        "name": "uuid",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "TODO: add description"
+      },
+      "idEmpresa": {
+        "name": "idEmpresa",
+        "in": "query",
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idTipoEntidad": {
+        "name": "idTipoEntidad",
+        "in": "query",
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idTipoEntidadSecundaria": {
+        "name": "idTipoEntidadSecundaria",
+        "in": "query",
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "tipoEntidad": {
+        "name": "tipoEntidad",
+        "in": "query",
+        "schema": {
+          "$ref": "#/components/schemas/TipoEntidadFirmaEnum"
+        },
+        "description": "TODO: add description"
+      },
+      "tipoEntidadSecundaria": {
+        "name": "tipoEntidadSecundaria",
+        "in": "query",
+        "schema": {
+          "$ref": "#/components/schemas/TipoEntidadSecundariaFirmaEnum"
+        },
+        "description": "TODO: add description"
+      },
+      "token": {
+        "name": "token",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "TODO: add description"
+      },
+      "idTokenFirma": {
+        "name": "idTokenFirma",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      }
+    }
+  }
+}

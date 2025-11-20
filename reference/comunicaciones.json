@@ -1,0 +1,1597 @@
+{
+  "openapi": "3.0.3",
+  "x-stoplight": {
+    "id": "ciycdq8c0v4w1"
+  },
+  "info": {
+    "title": "comunicaciones API",
+    "version": "1.0-SNAPSHOT",
+    "description": "API del microservicio de comunicaciones",
+    "license": {
+      "name": "Proprietary - Internal Use Only",
+      "url": "https://v4.metacontratas.com/"
+    },
+    "contact": {
+      "email": "soporte.tecnico@metadata.es",
+      "name": "Metadata S.L.",
+      "url": "https://v4.metacontratas.com/"
+    }
+  },
+  "tags": [
+    {
+      "name": "Comunicacion",
+      "description": "Servicio de comunicaciones"
+    },
+    {
+      "name": "Notificacion",
+      "description": "Servicio de notificaciones"
+    },
+    {
+      "name": "Notificación de aviso de entrada",
+      "description": "Servicio de notificaciones de avisos de entrada"
+    },
+    {
+      "name": "Usuario",
+      "description": "Servicio de usuarios"
+    }
+  ],
+  "paths": {
+    "/comunicaciones/v1/comunicaciones/push/borrado-bulk": {
+      "post": {
+        "tags": [
+          "Comunicacion"
+        ],
+        "summary": "Elimina las comunicaciones que correspondan a los IDs enviados",
+        "operationId": "postBorradoBulkPushComunicaciones",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "format": "int32",
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "COM_0002: Solo se pueden eliminar notificaciones de las que el usuario sea propietario"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": false,
+        "description": "Elimina las comunicaciones que correspondan a los IDs enviados",
+        "x-stoplight": {
+          "id": "1kbqn0ms7melr"
+        }
+      }
+    },
+    "/comunicaciones/v1/comunicaciones/push/marcar-como-leida": {
+      "post": {
+        "tags": [
+          "Comunicacion"
+        ],
+        "summary": "Marca como leídas las comunicaciones que correspondan a los IDs enviados",
+        "operationId": "postMarcarComoLeidaPushComunicaciones",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "format": "int32",
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "COM_0001: Solo se pueden marcar como leídas notificaciones de las que el usuario sea propietario"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": false,
+        "description": "Marca como leídas las comunicaciones que correspondan a los IDs enviados",
+        "x-stoplight": {
+          "id": "ou5uvp49ag5el"
+        }
+      }
+    },
+    "/comunicaciones/v1/notificaciones": {
+      "get": {
+        "tags": [
+          "Notificacion"
+        ],
+        "summary": "Obtener todas las notificaciones",
+        "operationId": "getNotificaciones",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/estado"
+          },
+          {
+            "$ref": "#/components/parameters/fechaDesde"
+          },
+          {
+            "$ref": "#/components/parameters/fechaHasta"
+          },
+          {
+            "$ref": "#/components/parameters/tipo"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NotificacionBasicoDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": false,
+        "description": "Obtener todas las notificaciones",
+        "x-stoplight": {
+          "id": "k04btx3h9nbsi"
+        }
+      },
+      "post": {
+        "tags": [
+          "Notificacion"
+        ],
+        "summary": "Crear una notificación",
+        "operationId": "postNotificaciones",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificacionDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificacionBasicoDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": false,
+        "description": "Crear una notificación",
+        "x-stoplight": {
+          "id": "y5auaaouoqr5p"
+        }
+      }
+    },
+    "/comunicaciones/v1/notificaciones-aviso-entrada/{idNotificacion}": {
+      "get": {
+        "tags": [
+          "Notificación de aviso de entrada"
+        ],
+        "summary": "Obtiene una notificación de aviso de entrada mediante su ID",
+        "operationId": "getNotificacionAvisoEntradaPorIdNotificacion",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificacionAvisoEntradaDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": false,
+        "description": "Obtiene una notificación de aviso de entrada mediante su ID",
+        "x-stoplight": {
+          "id": "5sa5iohh97gxt"
+        }
+      },
+      "put": {
+        "tags": [
+          "Notificación de aviso de entrada"
+        ],
+        "summary": "Edita una notificación de aviso de entrada",
+        "operationId": "putNotificacionAvisoEntradaPorIdNotificacion",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificacionAvisoEntradaDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificacionAvisoEntradaDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- COM_0005: No es posible editar una notificación que ya ha sido publicada."
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": false,
+        "description": "Edita una notificación de aviso de entrada",
+        "x-stoplight": {
+          "id": "o6dn7hedse34x"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idNotificacion"
+        }
+      ]
+    },
+    "/comunicaciones/v1/notificaciones-aviso-entrada/{idNotificacion}/desprogramar": {
+      "post": {
+        "tags": [
+          "Notificación de aviso de entrada"
+        ],
+        "summary": "Desprograma una notificación de aviso de entrada",
+        "operationId": "postDesprogramarPorIdNotificacion",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificacionAvisoEntradaDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- COM_0004: No puedes desprogramar una notificación cuyo estado es {estado}"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": false,
+        "description": "Desprograma una notificación de aviso de entrada",
+        "x-stoplight": {
+          "id": "sxkz7osgu91vr"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idNotificacion"
+        }
+      ]
+    },
+    "/comunicaciones/v1/notificaciones-aviso-entrada/{idNotificacion}/empresas": {
+      "post": {
+        "tags": [
+          "Notificación de aviso de entrada"
+        ],
+        "summary": "Relaciona y desrelaciona empresas a un aviso de entrada",
+        "operationId": "postEmpresasPorIdNotificacion",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestBodyDobleListaInteger"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificacionAvisoEntradaDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": false,
+        "description": "Relaciona y desrelaciona empresas a un aviso de entrada",
+        "x-stoplight": {
+          "id": "0uom64doelimz"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idNotificacion"
+        }
+      ]
+    },
+    "/comunicaciones/v1/notificaciones-aviso-entrada/{idNotificacion}/programar": {
+      "post": {
+        "tags": [
+          "Notificación de aviso de entrada"
+        ],
+        "summary": "Programar una notificación de aviso de entrada",
+        "operationId": "postProgramarPorIdNotificacion",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificacionAvisoEntradaProgramarDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificacionAvisoEntradaProgramarDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- COM_0006: No es posible programar una notificación mientras tenga un campo a null.\n - COM_0007: No es posible programar una notificación que está {estado}."
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": false,
+        "description": "Programar una notificación de aviso de entrada",
+        "x-stoplight": {
+          "id": "3d9w6nje4aat2"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idNotificacion"
+        }
+      ]
+    },
+    "/comunicaciones/v1/notificaciones-aviso-entrada/{idNotificacion}/usuarios": {
+      "get": {
+        "tags": [
+          "Notificación de aviso de entrada"
+        ],
+        "summary": "Obtiene todos los usuarios que están asociados a una notificación de aviso de entrada",
+        "operationId": "getUsuariosPorIdNotificacion",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UsuarioNotificacionDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": false,
+        "description": "Obtiene todos los usuarios que están asociados a una notificación de aviso de entrada",
+        "x-stoplight": {
+          "id": "ndvi4izk53wkc"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idNotificacion"
+        }
+      ]
+    },
+    "/comunicaciones/v1/notificaciones/{idNotificacion}": {
+      "delete": {
+        "tags": [
+          "Notificacion"
+        ],
+        "summary": "Elimina una notificación",
+        "operationId": "deleteNotificacionPorIdNotificacion",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificacionBasicoDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "COM_0003: Solo se pueden eliminar notificaciones que estén en estado BORRADOR o PROGRAMADA"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": false,
+        "description": "Elimina una notificación",
+        "x-stoplight": {
+          "id": "g4lu41poc12jc"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idNotificacion"
+        }
+      ]
+    },
+    "/comunicaciones/v1/usuarios/{idUsuario}/comunicaciones/push": {
+      "get": {
+        "tags": [
+          "Usuario"
+        ],
+        "summary": "Obtiene un listado de notificaciones push pertenecientes a un usuario",
+        "operationId": "getPushComunicacionesPorIdUsuario",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NotificacionDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador",
+          "administrador_grupo_entornos"
+        ],
+        "x-permisos": false,
+        "description": "Obtiene un listado de notificaciones push pertenecientes a un usuario",
+        "x-stoplight": {
+          "id": "bhub2383mepwx"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idUsuario"
+        }
+      ]
+    },
+    "/comunicaciones/v1/usuarios/{idUsuario}/configuraciones": {
+      "get": {
+        "tags": [
+          "Usuario"
+        ],
+        "summary": "Obtiene las configuraciones de un usuario en base a su ID",
+        "operationId": "getConfiguracionesPorIdUsuario",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ServicioConfiguracionDto"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": false,
+        "description": "Obtiene las configuraciones de un usuario en base a su ID",
+        "x-stoplight": {
+          "id": "igf0qcifcirx7"
+        }
+      },
+      "post": {
+        "tags": [
+          "Usuario"
+        ],
+        "summary": "Actualiza y/o crea las configuraciones de un usuario según su id",
+        "operationId": "postConfiguracionesPorIdUsuario",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ServicioConfiguracionDto"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": false,
+        "description": "Actualiza y/o crea las configuraciones de un usuario según su id",
+        "x-stoplight": {
+          "id": "my8b5uzlrakcs"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idUsuario"
+        }
+      ]
+    },
+    "/comunicaciones/v1/usuarios/{idUsuario}/notificaciones-aviso-entrada": {
+      "get": {
+        "tags": [
+          "Usuario"
+        ],
+        "summary": "Obtiene las notificaciones activas de aviso de entrada de un usuario",
+        "operationId": "getNotificacionesAvisoEntradaPorIdUsuario",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/idEmpresa"
+          },
+          {
+            "$ref": "#/components/parameters/modulo"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NotificacionAvisoEntradaVisualizarDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": false,
+        "description": "Obtiene las notificaciones activas de aviso de entrada de un usuario",
+        "x-stoplight": {
+          "id": "slxmmqdcq4b3e"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idUsuario"
+        }
+      ]
+    },
+    "/comunicaciones/v1/usuarios/{idUsuario}/ocultar-notificaciones-aviso-entrada": {
+      "post": {
+        "tags": [
+          "Usuario"
+        ],
+        "summary": "Oculta notificaciones de aviso de entrada de un usuario",
+        "operationId": "postOcultarNotificacionesAvisoEntradaPorIdUsuario",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OcultarNotificacionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NotificacionAvisoEntradaDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- COM_0008: No es posible dejar de ver la notificación {idNotificacion} ya que no permite ocultación."
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": false,
+        "description": "Oculta notificaciones de aviso de entrada de un usuario",
+        "x-stoplight": {
+          "id": "t21992rdgju3o"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idUsuario"
+        }
+      ]
+    }
+  },
+  "components": {
+    "schemas": {
+      "AccionConfiguracionDto": {
+        "type": "object",
+        "properties": {
+          "idAccion": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idConfiguracion": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "email": {
+            "type": "boolean"
+          },
+          "push": {
+            "type": "boolean"
+          },
+          "prioridad": {
+            "$ref": "#/components/schemas/PrioridadEnum"
+          }
+        },
+        "x-stoplight": {
+          "id": "hqor5udu3t26f"
+        }
+      },
+      "EmplazamientoNotificacionEnum": {
+        "enum": [
+          "AL_ACCEDER_A_LA_EMPRESA",
+          "AL_INICIAR_SESION"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "w9c3l9w28tk6z"
+        }
+      },
+      "EmpresaDtoResponse": {
+        "type": "object",
+        "properties": {
+          "cif": {
+            "type": "string"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "uuid": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "3ck25w9u7ozkl"
+        }
+      },
+      "EntidadConfiguracionDto": {
+        "type": "object",
+        "properties": {
+          "idEntidad": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "acciones": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccionConfiguracionDto"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "qqb9t525wgj8a"
+        }
+      },
+      "EstadoNotificacionEnum": {
+        "enum": [
+          "BORRADOR",
+          "PROGRAMADO",
+          "ENVIADO_PUBLICADO",
+          "ACTIVO"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "0dxw719hm126k"
+        }
+      },
+      "ModuloEnum": {
+        "enum": [
+          "ESTRUCTURA",
+          "CAE",
+          "CA",
+          "FORMULARIOS",
+          "METAMARKET",
+          "MQL",
+          "TAREAS",
+          "PROVEEDORES",
+          "PRL",
+          "GESTION_DOCUMENTAL",
+          "ADMINISTRACION",
+          "CALENDARIOS"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "g82wbq1sylb6t"
+        }
+      },
+      "NotificacionAvisoEntradaDtoRequest": {
+        "required": [
+          "titulo"
+        ],
+        "type": "object",
+        "properties": {
+          "asunto": {
+            "type": "string"
+          },
+          "diseno": {
+            "type": "string"
+          },
+          "emplazamiento": {
+            "$ref": "#/components/schemas/EmplazamientoNotificacionEnum"
+          },
+          "idModulo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idPais": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "remitenteMetadata": {
+            "type": "boolean"
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "titulo": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "ofkavwrugxbhi"
+        }
+      },
+      "NotificacionAvisoEntradaDtoResponse": {
+        "type": "object",
+        "properties": {
+          "asunto": {
+            "type": "string"
+          },
+          "diseno": {
+            "type": "string"
+          },
+          "editado": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "empresas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EmpresaDtoResponse"
+            }
+          },
+          "estado": {
+            "$ref": "#/components/schemas/EstadoNotificacionEnum"
+          },
+          "fechaDesde": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "fechaHasta": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "emplazamiento": {
+            "$ref": "#/components/schemas/EmplazamientoNotificacionEnum"
+          },
+          "idModulo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idNotificacion": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idPais": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "permiteOcultacion": {
+            "type": "boolean"
+          },
+          "remitenteMetadata": {
+            "type": "boolean"
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "tipo": {
+            "$ref": "#/components/schemas/TipoNotificacionEnum"
+          },
+          "titulo": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "nezo8w6mojyoa"
+        }
+      },
+      "NotificacionAvisoEntradaProgramarDto": {
+        "required": [
+          "fechaDesde",
+          "fechaHasta",
+          "permiteOcultacion"
+        ],
+        "type": "object",
+        "properties": {
+          "fechaDesde": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "fechaHasta": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "permiteOcultacion": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "slnc6mbrsk6id"
+        }
+      },
+      "NotificacionAvisoEntradaVisualizarDtoResponse": {
+        "required": [
+          "idNotificacion"
+        ],
+        "type": "object",
+        "properties": {
+          "asunto": {
+            "type": "string"
+          },
+          "diseno": {
+            "type": "string"
+          },
+          "empresas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EmpresaDtoResponse"
+            }
+          },
+          "fechaDesde": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "idNotificacion": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "permiteOcultacion": {
+            "type": "boolean"
+          },
+          "remitenteMetadata": {
+            "type": "boolean"
+          },
+          "titulo": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "2di339qk0ln1y"
+        }
+      },
+      "NotificacionBasicoDtoResponse": {
+        "type": "object",
+        "properties": {
+          "editado": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "estado": {
+            "$ref": "#/components/schemas/EstadoNotificacionEnum"
+          },
+          "fechaDesde": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "fechaHasta": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "idNotificacion": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "tipo": {
+            "$ref": "#/components/schemas/TipoNotificacionEnum"
+          },
+          "titulo": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "h2gtzyywu77iz"
+        }
+      },
+      "NotificacionDtoRequest": {
+        "required": [
+          "tipo",
+          "titulo"
+        ],
+        "type": "object",
+        "properties": {
+          "tipo": {
+            "$ref": "#/components/schemas/TipoNotificacionEnum"
+          },
+          "titulo": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "k13lhfd5qsd6q"
+        }
+      },
+      "NotificacionDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idNotificacion": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "descripcion": {
+            "type": "string"
+          },
+          "empresa": {
+            "$ref": "#/components/schemas/RelacionDtoResponse"
+          },
+          "rol": {
+            "$ref": "#/components/schemas/RelacionDtoResponse"
+          },
+          "modulo": {
+            "$ref": "#/components/schemas/RelacionDtoResponse"
+          },
+          "leida": {
+            "type": "boolean"
+          },
+          "fechaCreacion": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "prioridad": {
+            "$ref": "#/components/schemas/PrioridadEnum"
+          }
+        },
+        "x-stoplight": {
+          "id": "ve7lgeii1vm2i"
+        }
+      },
+      "OcultarNotificacionDto": {
+        "required": [
+          "idsNotificaciones"
+        ],
+        "type": "object",
+        "properties": {
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idsNotificaciones": {
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "idRol": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "4ww4pimrh7kqf"
+        }
+      },
+      "PrioridadEnum": {
+        "enum": [
+          "INFORMATIVA",
+          "ADVERTENCIA",
+          "ALERTA"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "4xx28hls0253k"
+        }
+      },
+      "RelacionDtoResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "uuid": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "z0wgmvz5j45ws"
+        }
+      },
+      "RequestBodyDobleListaInteger": {
+        "required": [
+          "listadoInsertar",
+          "listadoEliminar"
+        ],
+        "type": "object",
+        "properties": {
+          "listadoInsertar": {
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "listadoEliminar": {
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "n6y4imnurxrm8"
+        }
+      },
+      "ServicioConfiguracionDto": {
+        "type": "object",
+        "properties": {
+          "servicio": {
+            "type": "string"
+          },
+          "entidades": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EntidadConfiguracionDto"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "lbpgfty9kiw7w"
+        }
+      },
+      "TipoNotificacionEnum": {
+        "enum": [
+          "AVISO_ENTRADA",
+          "EMAIL",
+          "SMS",
+          "WHATSAPP"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "eihqn2a2xznw1"
+        }
+      },
+      "UsuarioNotificacionDtoResponse": {
+        "type": "object",
+        "properties": {
+          "correo": {
+            "type": "string"
+          },
+          "empresa": {
+            "$ref": "#/components/schemas/EmpresaDtoResponse"
+          },
+          "idUsuario": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idRol": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "x3ud0mpvy0uxg"
+        }
+      },
+      "ZonedDateTime": {
+        "format": "date-time",
+        "type": "string",
+        "example": "2022-03-10T12:15:50-04:00",
+        "x-stoplight": {
+          "id": "hz86w6m2y37ys"
+        }
+      }
+    },
+    "securitySchemes": {
+      "jwt": {
+        "type": "http",
+        "description": "Authentication",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "parameters": {
+      "X-Timezone": {
+        "name": "X-Timezone",
+        "in": "header",
+        "description": "Zona horaria desde la que se hace la petición",
+        "required": true,
+        "schema": {
+          "default": "Europe/Madrid",
+          "type": "string"
+        }
+      },
+      "estado": {
+        "name": "estado",
+        "in": "query",
+        "schema": {
+          "$ref": "#/components/schemas/EstadoNotificacionEnum"
+        },
+        "description": "TODO: add description"
+      },
+      "fechaDesde": {
+        "name": "fechaDesde",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "format": "date-time",
+          "type": "string",
+          "example": "2022-03-10T12:15:50-04:00"
+        },
+        "description": "TODO: add description"
+      },
+      "fechaHasta": {
+        "name": "fechaHasta",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "format": "date-time",
+          "type": "string",
+          "example": "2022-03-10T12:15:50-04:00"
+        },
+        "description": "TODO: add description"
+      },
+      "tipo": {
+        "name": "tipo",
+        "in": "query",
+        "schema": {
+          "$ref": "#/components/schemas/TipoNotificacionEnum"
+        },
+        "description": "TODO: add description"
+      },
+      "idNotificacion": {
+        "name": "idNotificacion",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idUsuario": {
+        "name": "idUsuario",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idEmpresa": {
+        "name": "idEmpresa",
+        "in": "query",
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "modulo": {
+        "name": "modulo",
+        "in": "query",
+        "schema": {
+          "$ref": "#/components/schemas/ModuloEnum"
+        },
+        "description": "TODO: add description"
+      }
+    }
+  }
+}

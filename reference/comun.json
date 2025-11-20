@@ -1,0 +1,3189 @@
+{
+  "openapi": "3.0.3",
+  "x-stoplight": {
+    "id": "980pigs0hj3zy"
+  },
+  "info": {
+    "title": "comun API",
+    "version": "1.0-SNAPSHOT",
+    "description": "API del microservicio de comun",
+    "license": {
+      "name": "Proprietary - Internal Use Only",
+      "url": "https://v4.metacontratas.com/"
+    },
+    "contact": {
+      "email": "soporte.tecnico@metadata.es",
+      "name": "Metadata S.L.",
+      "url": "https://v4.metacontratas.com/"
+    }
+  },
+  "tags": [
+    {
+      "name": "Autónomo",
+      "description": "Servicio de autónomo"
+    },
+    {
+      "name": "Categoría recurso-material",
+      "description": "Servicio de categorías de recursos materiales"
+    },
+    {
+      "name": "Configuración",
+      "description": "Servicio de configuraciones"
+    },
+    {
+      "name": "Criterio Estándar",
+      "description": "Servicio de Criterio estándar"
+    },
+    {
+      "name": "Empresa",
+      "description": "Servicio de Empresa"
+    },
+    {
+      "name": "Idioma",
+      "description": "Servicio de Idioma"
+    },
+    {
+      "name": "Persona",
+      "description": "Servicio de Persona"
+    },
+    {
+      "name": "Tipo Documento Informatizado",
+      "description": "Servicio de Tipo documento informatizado"
+    },
+    {
+      "name": "Tipo Documento Universal",
+      "description": "Servicio de Tipo documento universal"
+    }
+  ],
+  "paths": {
+    "/comun/v1/autonomos/{idEmpresa}": {
+      "get": {
+        "tags": [
+          "Autónomo"
+        ],
+        "summary": "Devuelve los datos de un autónomo",
+        "operationId": "getAutonomoPorIdEmpresa",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AutonomoDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "GEN_0041: El usuario entorno no tiene acceso a la entidad %s con id %s"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador",
+          "administrador_grupo_entornos"
+        ],
+        "x-permisos": true,
+        "description": "Devuelve los datos de un autónomo",
+        "x-stoplight": {
+          "id": "gbctlzxghihk4"
+        }
+      },
+      "put": {
+        "tags": [
+          "Autónomo"
+        ],
+        "summary": "Edita los datos de un autónomo",
+        "operationId": "putAutonomoPorIdEmpresa",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AutonomoDtoRequestUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AutonomoDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- COM_0009 : No se puede modificar los datos de una empresa\n - COM_0017: No puede asignar un grupo de entornos que no opere en el mismo país que la empresa o el autónomo\n - GEN_0041: El usuario entorno no tiene acceso a la entidad %s con id %s"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador",
+          "administrador_grupo_entornos"
+        ],
+        "x-permisos": true,
+        "description": "Edita los datos de un autónomo",
+        "x-stoplight": {
+          "id": "ossufririwncf"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEmpresa"
+        }
+      ]
+    },
+    "/comun/v1/categorias-recursos-materiales": {
+      "get": {
+        "tags": [
+          "Categoría recurso-material"
+        ],
+        "summary": "Devuelve las categorías de recursos materiales filtradas",
+        "operationId": "getCategoriasRecursosMateriales",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/idPais"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CategoriaRecursoMaterialDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Devuelve las categorías de recursos materiales filtradas",
+        "x-stoplight": {
+          "id": "tuk9bzu0tvk8f"
+        }
+      }
+    },
+    "/comun/v1/categorias-recursos-materiales/{idCategoria}": {
+      "get": {
+        "tags": [
+          "Categoría recurso-material"
+        ],
+        "summary": "Busca la entidad correspondiente al ID introducido",
+        "operationId": "getCategoriaRecursoMaterialPorIdCategoria",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoriaRecursoMaterialDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Busca la entidad correspondiente al ID introducido",
+        "x-stoplight": {
+          "id": "igggsrpuumjww"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idCategoria"
+        }
+      ]
+    },
+    "/comun/v1/categorias-recursos-materiales/{idCategoria}/tipos-recursos-materiales": {
+      "get": {
+        "tags": [
+          "Categoría recurso-material"
+        ],
+        "summary": "Obtiene los TipoRecursoMaterial de una categoría",
+        "operationId": "getTiposRecursosMaterialesPorIdCategoria",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TipoRecursoMaterialDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene los TipoRecursoMaterial de una categoría",
+        "x-stoplight": {
+          "id": "vgjnat0nudx5i"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idCategoria"
+        }
+      ]
+    },
+    "/comun/v1/categorias-recursos-materiales/{idCategoria}/tipos-recursos-materiales/{idTipoRecursoMaterial}": {
+      "get": {
+        "tags": [
+          "Categoría recurso-material"
+        ],
+        "summary": "Obtiene el TipoRecursoMaterial de una categoría por id",
+        "operationId": "getTipoRecursoMaterialPorIdCategoriaPorIdTipoRecursoMaterial",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TipoRecursoMaterialDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene el TipoRecursoMaterial de una categoría por id",
+        "x-stoplight": {
+          "id": "gxlnggcq7pq0s"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idCategoria"
+        },
+        {
+          "$ref": "#/components/parameters/idTipoRecursoMaterial"
+        }
+      ]
+    },
+    "/comun/v1/configuraciones/zonas-horarias": {
+      "get": {
+        "tags": [
+          "Configuración"
+        ],
+        "summary": "Obtiene una lista de posibles franjas horarias a seleccionar por el usuario",
+        "operationId": "getZonasHorariasConfiguraciones",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "description": "Obtiene una lista de posibles franjas horarias a seleccionar por el usuario",
+        "x-stoplight": {
+          "id": "9oftggwfmgl0l"
+        }
+      }
+    },
+    "/comun/v1/criterios-estandar": {
+      "get": {
+        "tags": [
+          "Criterio Estándar"
+        ],
+        "summary": "Devuelve un listado con todos los criterios estándar.",
+        "operationId": "getCriteriosEstandar",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ids"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CriterioEstandarDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": false,
+        "description": "Devuelve un listado con todos los criterios estándar.",
+        "x-stoplight": {
+          "id": "8v1gl5qp78vl5"
+        }
+      }
+    },
+    "/comun/v1/empresas": {
+      "get": {
+        "tags": [
+          "Empresa"
+        ],
+        "summary": "Recupera el listado de empresas mediante unos parámetros",
+        "description": "Si no se pasan parámetros, devolverá todas las empresas",
+        "operationId": "getEmpresas",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/CIF"
+          },
+          {
+            "$ref": "#/components/parameters/filtro"
+          },
+          {
+            "$ref": "#/components/parameters/idGrupoEntornos"
+          },
+          {
+            "$ref": "#/components/parameters/infoEntornos"
+          },
+          {
+            "$ref": "#/components/parameters/listaIds"
+          },
+          {
+            "$ref": "#/components/parameters/listaIdsPais"
+          },
+          {
+            "$ref": "#/components/parameters/listaModulos"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ComunEmpresaDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- COM_0005 : No puede filtrar solo por provincia"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-stoplight": {
+          "id": "9bc3i0b2s38g9"
+        }
+      }
+    },
+    "/comun/v1/empresas/contar": {
+      "get": {
+        "tags": [
+          "Empresa"
+        ],
+        "summary": "Obtiene el numero de empresas dadas de alta en el sistema",
+        "operationId": "getContarEmpresas",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene el numero de empresas dadas de alta en el sistema",
+        "x-stoplight": {
+          "id": "u6kbvtpnz0a1v"
+        }
+      }
+    },
+    "/comun/v1/empresas/{idEmpresa}": {
+      "get": {
+        "tags": [
+          "Empresa"
+        ],
+        "summary": "Recupera una empresa por su id",
+        "operationId": "getEmpresaPorIdEmpresa",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComunEmpresaDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- COM_0017: No puede asignar un grupo de entornos que no opere en el mismo país que la empresa o el autónomo"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador",
+          "administrador_grupo_entornos"
+        ],
+        "x-permisos": false,
+        "description": "Recupera una empresa por su id",
+        "x-stoplight": {
+          "id": "jhyle0we8n6g2"
+        }
+      },
+      "put": {
+        "tags": [
+          "Empresa"
+        ],
+        "summary": "Actualiza una empresa existente",
+        "operationId": "putEmpresaPorIdEmpresa",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmpresaDtoRequestUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComunEmpresaDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- COM_0008 : No se puede modificar los datos de un autónomo"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador",
+          "administrador_grupo_entornos"
+        ],
+        "x-permisos": true,
+        "description": "Actualiza una empresa existente",
+        "x-stoplight": {
+          "id": "lvr44a9zz5wd7"
+        }
+      },
+      "delete": {
+        "tags": [
+          "Empresa"
+        ],
+        "summary": "Borra una empresa",
+        "operationId": "deleteEmpresaPorIdEmpresa",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComunEmpresaDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Borra una empresa",
+        "x-stoplight": {
+          "id": "7o8kss68pjvey"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEmpresa"
+        }
+      ]
+    },
+    "/comun/v1/empresas/{idEmpresa}/logotipo": {
+      "post": {
+        "tags": [
+          "Empresa"
+        ],
+        "summary": "Crea o modifica un logotipo para una empresa determinada",
+        "description": "Crea el archivo en BBDD en caso de no existir o lo actualizará en caso contrario",
+        "operationId": "postLogotipoPorIdEmpresa",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "file",
+                  "fileName"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "format": "binary",
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "fileName": {
+                    "minLength": 1,
+                    "type": "string"
+                  }
+                }
+              },
+              "encoding": {
+                "fileName": {
+                  "contentType": "text/plain"
+                },
+                "file": {
+                  "contentType": "application/octet-stream"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArchivoDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": false,
+        "x-stoplight": {
+          "id": "n4vfq6t7gs66m"
+        }
+      },
+      "delete": {
+        "tags": [
+          "Empresa"
+        ],
+        "summary": "Borra el logotipo de una empresa determinada",
+        "operationId": "deleteLogotipoPorIdEmpresa",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArchivoDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": false,
+        "description": "Borra el logotipo de una empresa determinada",
+        "x-stoplight": {
+          "id": "cw3bhsfr194af"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEmpresa"
+        }
+      ]
+    },
+    "/comun/v1/idiomas": {
+      "get": {
+        "tags": [
+          "Idioma"
+        ],
+        "summary": "Recupera todos los idiomas que hay en la aplicación",
+        "operationId": "getIdiomas",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IdiomaDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "description": "Recupera todos los idiomas que hay en la aplicación",
+        "x-stoplight": {
+          "id": "zktpd33tp2jy6"
+        }
+      }
+    },
+    "/comun/v1/idiomas/{idIdioma}": {
+      "get": {
+        "tags": [
+          "Idioma"
+        ],
+        "summary": "Recupera un idioma que hay en la aplicación",
+        "operationId": "getIdiomaPorIdIdioma",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IdiomaDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "description": "Recupera un idioma que hay en la aplicación",
+        "x-stoplight": {
+          "id": "incfphsmfm7z8"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idIdioma"
+        }
+      ]
+    },
+    "/comun/v1/personas": {
+      "get": {
+        "tags": [
+          "Persona"
+        ],
+        "summary": "Recupera todas las personas o la persona por el dni de su pasaporte y país",
+        "operationId": "getPersonas",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/dniPasaporte"
+          },
+          {
+            "$ref": "#/components/parameters/idPaisDni"
+          },
+          {
+            "$ref": "#/components/parameters/listaIdsPersonas"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PersonaDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Recupera todas las personas o la persona por el dni de su pasaporte y país",
+        "x-stoplight": {
+          "id": "mnuiz4g2hz76r"
+        }
+      },
+      "post": {
+        "tags": [
+          "Persona"
+        ],
+        "summary": "Crea una nueva persona",
+        "operationId": "postPersonas",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PersonaDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonaDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- COM_0004 : La persona ya existe (DNI/Pasaporte - País) pero el nombre introducido no es correcto"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Crea una nueva persona",
+        "x-stoplight": {
+          "id": "yk9clsca2sgrc"
+        }
+      }
+    },
+    "/comun/v1/personas/contar": {
+      "get": {
+        "tags": [
+          "Persona"
+        ],
+        "summary": "Cuento el numero de personas dadas de alta en el sistema",
+        "operationId": "getContarPersonas",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Cuento el numero de personas dadas de alta en el sistema",
+        "x-stoplight": {
+          "id": "oia7gn2gf6161"
+        }
+      }
+    },
+    "/comun/v1/personas/{idPersona}": {
+      "get": {
+        "tags": [
+          "Persona"
+        ],
+        "summary": "Recupera una persona por su id",
+        "operationId": "getPersonaPorIdPersona",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonaDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Recupera una persona por su id",
+        "x-stoplight": {
+          "id": "x6tkjle8grehl"
+        }
+      },
+      "put": {
+        "tags": [
+          "Persona"
+        ],
+        "summary": "Actualiza una persona existente",
+        "operationId": "putPersonaPorIdPersona",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PersonaDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonaDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Actualiza una persona existente",
+        "x-stoplight": {
+          "id": "yg1fk57skdrvd"
+        }
+      },
+      "delete": {
+        "tags": [
+          "Persona"
+        ],
+        "summary": "Borra una persona",
+        "operationId": "deletePersonaPorIdPersona",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Borra una persona",
+        "x-stoplight": {
+          "id": "ceuu9q1xg5e35"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idPersona"
+        }
+      ]
+    },
+    "/comun/v1/tipos-documentos-informatizados": {
+      "get": {
+        "tags": [
+          "Tipo Documento Informatizado"
+        ],
+        "summary": "Devuelve todos los tipo documento informatizados del sistema",
+        "operationId": "getTiposDocumentosInformatizados",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TipoDocumentoInformatizadoDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": false,
+        "description": "Devuelve todos los tipo documento informatizados del sistema",
+        "x-stoplight": {
+          "id": "rb6d7q36rsjgc"
+        }
+      }
+    },
+    "/comun/v1/tipos-documentos-informatizados/{idTipoDocumentoInformatizado}": {
+      "get": {
+        "tags": [
+          "Tipo Documento Informatizado"
+        ],
+        "summary": "Devuelve tipo documento informatizado segun el id.",
+        "operationId": "getTipoDocumentoInformatizadoPorIdTipoDocumentoInformatizado",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "idDocInformatizado": {
+                      "format": "int32",
+                      "type": "integer"
+                    },
+                    "nombre": {
+                      "type": "string"
+                    },
+                    "codigo": {
+                      "type": "string"
+                    },
+                    "observaciones": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": false,
+        "description": "Devuelve tipo documento informatizado segun el id.",
+        "x-stoplight": {
+          "id": "1p8x20mtyoao2"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idTipoDocumentoInformatizado"
+        }
+      ]
+    },
+    "/comun/v1/tipos-documentos-universales": {
+      "get": {
+        "tags": [
+          "Tipo Documento Universal"
+        ],
+        "summary": "Recupera un listado tipo documentos universales pertenecientes a los ids de paises pasados.",
+        "operationId": "getTiposDocumentosUniversales",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/idPais"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TipoDocumentoUniversalDtoResponseListado"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": false,
+        "description": "Recupera un listado tipo documentos universales pertenecientes a los ids de paises pasados.",
+        "x-stoplight": {
+          "id": "ecd4ab9dm67xq"
+        }
+      },
+      "post": {
+        "tags": [
+          "Tipo Documento Universal"
+        ],
+        "summary": "Inserta un tipo de documento universal junto al listado de sus criterios de validación.",
+        "operationId": "postTiposDocumentosUniversales",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TipoDocumentoUniversalDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VersionDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- COM_0010: Ha ocurrido un error al validar los valores de los enumerados\n - COM_0011: Actualmente no se permite crear un tipo de documento universal que no sea para España"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": false,
+        "description": "Inserta un tipo de documento universal junto al listado de sus criterios de validación.",
+        "x-stoplight": {
+          "id": "pn1qg2kva8bti"
+        }
+      }
+    },
+    "/comun/v1/tipos-documentos-universales/{idTipoDocumentoUniversal}": {
+      "get": {
+        "tags": [
+          "Tipo Documento Universal"
+        ],
+        "summary": "Recupera un tipo documento universal según el id pasado.",
+        "operationId": "getTipoDocumentoUniversalPorIdTipoDocumentoUniversal",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TipoDocumentoUniversalDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": false,
+        "description": "Recupera un tipo documento universal según el id pasado.",
+        "x-stoplight": {
+          "id": "wi2g1q0symmjg"
+        }
+      },
+      "put": {
+        "tags": [
+          "Tipo Documento Universal"
+        ],
+        "summary": "Actualiza tanto la información general de un tipo de documento universal, como sus criterios de validación.",
+        "operationId": "putTipoDocumentoUniversalPorIdTipoDocumentoUniversal",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TipoDocumentoUniversalDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TipoDocumentoUniversalDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- COM_0010: Ha ocurrido un error al validar los valores de los enumerados\n - COM_0011: Actualmente no se permite crear un tipo de documento universal que no sea para España"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": false,
+        "description": "Actualiza tanto la información general de un tipo de documento universal, como sus criterios de validación.",
+        "x-stoplight": {
+          "id": "8m92lxxj7mxds"
+        }
+      },
+      "delete": {
+        "tags": [
+          "Tipo Documento Universal"
+        ],
+        "summary": "Elimina un tipo de documento universal.",
+        "operationId": "deleteTipoDocumentoUniversalPorIdTipoDocumentoUniversal",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TipoDocumentoUniversalDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "COM_0016: No se puede eliminar un tipo de documento universal que está en uso"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": false,
+        "description": "Elimina un tipo de documento universal.",
+        "x-stoplight": {
+          "id": "8urq4xia47oks"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idTipoDocumentoUniversal"
+        }
+      ]
+    },
+    "/comun/v1/tipos-documentos-universales/{idTipoDocumentoUniversal}/aumentar-usos": {
+      "post": {
+        "tags": [
+          "Tipo Documento Universal"
+        ],
+        "summary": "Aumenta en 1 el número de usos del tipo de documento universal.",
+        "operationId": "postAumentarUsosPorIdTipoDocumentoUniversal",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "nombre": {
+                      "type": "string"
+                    },
+                    "aplicableA": {
+                      "$ref": "#/components/schemas/AplicableAEnum"
+                    },
+                    "departamentoArea": {
+                      "$ref": "#/components/schemas/DepartamentoAreaEnum"
+                    },
+                    "tipo": {
+                      "$ref": "#/components/schemas/TipoDocumentoPrlEnum"
+                    },
+                    "validez": {
+                      "format": "int32",
+                      "type": "integer"
+                    },
+                    "unidadTiempoValidez": {
+                      "$ref": "#/components/schemas/UnidadTiempoValidezEnum"
+                    },
+                    "especificidad": {
+                      "$ref": "#/components/schemas/EspecificidadEnum"
+                    },
+                    "idPais": {
+                      "format": "int32",
+                      "type": "integer"
+                    },
+                    "codigoMetabuzon": {
+                      "type": "string"
+                    },
+                    "indefinido": {
+                      "type": "boolean"
+                    },
+                    "diasPreaviso": {
+                      "format": "int32",
+                      "type": "integer"
+                    },
+                    "firmaRequerida": {
+                      "type": "boolean"
+                    },
+                    "adjuntoObligatorio": {
+                      "type": "boolean"
+                    },
+                    "idTipoDocumentoInformatizado": {
+                      "format": "int32",
+                      "type": "integer"
+                    },
+                    "idTipoDocumentoUniversal": {
+                      "format": "int32",
+                      "type": "integer"
+                    },
+                    "criteriosValidacionUltimaVersion": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/CriterioEstandarDtoResponse"
+                      }
+                    },
+                    "versiones": {
+                      "type": "array",
+                      "items": {
+                        "format": "int32",
+                        "type": "integer"
+                      }
+                    },
+                    "fechaUltimaVersion": {
+                      "$ref": "#/components/schemas/ZonedDateTime"
+                    },
+                    "usuarioUltimaVersion": {
+                      "type": "string"
+                    },
+                    "enUso": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "description": "Aumenta en 1 el número de usos del tipo de documento universal.",
+        "x-stoplight": {
+          "id": "4lx5tvxxsxqsv"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idTipoDocumentoUniversal"
+        }
+      ]
+    },
+    "/comun/v1/tipos-documentos-universales/{idTipoDocumentoUniversal}/disminuir-usos": {
+      "post": {
+        "tags": [
+          "Tipo Documento Universal"
+        ],
+        "summary": "Disminuye en 1 el número de usos del tipo de documento universal hasta un mínimo de 0 usos. Si se llama al endpoint cuando el tipo de documento universal ya tiene 0 usos, no se realiza ningún cambio.",
+        "operationId": "postDisminuirUsosPorIdTipoDocumentoUniversal",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TipoDocumentoUniversalDtoResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "description": "Disminuye en 1 el número de usos del tipo de documento universal hasta un mínimo de 0 usos. Si se llama al endpoint cuando el tipo de documento universal ya tiene 0 usos, no se realiza ningún cambio.",
+        "x-stoplight": {
+          "id": "s6njwrbwlke1s"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idTipoDocumentoUniversal"
+        }
+      ]
+    },
+    "/comun/v1/tipos-documentos-universales/{idTipoDocumentoUniversal}/versiones/{version}": {
+      "get": {
+        "tags": [
+          "Tipo Documento Universal"
+        ],
+        "summary": "Devuelve la información de una versión específica de un tipo de documento universal además de sus criterios de validación.",
+        "operationId": "getVersionPorIdTipoDocumentoUniversalPorVersion",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VersionDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": false,
+        "description": "Devuelve la información de una versión específica de un tipo de documento universal además de sus criterios de validación.",
+        "x-stoplight": {
+          "id": "6ofli44zxtzi5"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idTipoDocumentoUniversal"
+        },
+        {
+          "$ref": "#/components/parameters/version"
+        }
+      ]
+    }
+  },
+  "components": {
+    "schemas": {
+      "AplicableAEnum": {
+        "enum": [
+          "EMPRESA",
+          "EMPLEADO",
+          "RECURSO"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "3r2k90y4pccua"
+        }
+      },
+      "ArchivoDtoResponse": {
+        "required": [
+          "idTipoEntidad",
+          "idEntidad",
+          "observaciones",
+          "nombre"
+        ],
+        "type": "object",
+        "properties": {
+          "idTipoEntidad": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEntidad": {
+            "type": "string"
+          },
+          "idTipoEntidadSecundaria": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEntidadSecundaria": {
+            "type": "string"
+          },
+          "observaciones": {
+            "type": "string"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "esCreacion": {
+            "type": "boolean"
+          },
+          "extension": {
+            "type": "string"
+          },
+          "numeroPaginas": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "uuid": {
+            "type": "string"
+          },
+          "fechaInsercion": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "fechaModificacion": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "tamano": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "url": {
+            "type": "string"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "zxgspr222g37y"
+        }
+      },
+      "AutonomoDtoRequestUpdate": {
+        "required": [
+          "apellido1",
+          "apellido2",
+          "idGrupoEntornos"
+        ],
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "maxLength": 255,
+            "type": "string"
+          },
+          "apellido1": {
+            "type": "string"
+          },
+          "apellido2": {
+            "type": "string"
+          },
+          "nombreComercial": {
+            "type": "string"
+          },
+          "observaciones": {
+            "maxLength": 4096,
+            "type": "string"
+          },
+          "idGrupoEntornos": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "nefsyp094de7i"
+        }
+      },
+      "AutonomoDtoResponse": {
+        "required": [
+          "cif",
+          "paisCif",
+          "observaciones",
+          "idGrupoEntornos"
+        ],
+        "type": "object",
+        "properties": {
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "apellido1": {
+            "type": "string"
+          },
+          "apellido2": {
+            "type": "string"
+          },
+          "cif": {
+            "type": "string"
+          },
+          "paisCif": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "fechaCreacion": {
+            "type": "string"
+          },
+          "fechaUltimoAcceso": {
+            "type": "string"
+          },
+          "observaciones": {
+            "type": "string"
+          },
+          "nombreComercial": {
+            "type": "string"
+          },
+          "idGrupoEntornos": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "uuid": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "e585m3s84c3zc"
+        }
+      },
+      "CategoriaRecursoMaterialDtoResponse": {
+        "required": [
+          "nombre",
+          "observaciones",
+          "idPais",
+          "idCategoria"
+        ],
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "type": "string"
+          },
+          "observaciones": {
+            "type": "string"
+          },
+          "idPais": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idCategoria": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "cz2tgw537he7c"
+        }
+      },
+      "ComunEmpresaDtoResponse": {
+        "required": [
+          "cif",
+          "nombre",
+          "paisCif",
+          "observaciones",
+          "idGrupoEntornos"
+        ],
+        "type": "object",
+        "properties": {
+          "cif": {
+            "maxLength": 25,
+            "minLength": 3,
+            "type": "string"
+          },
+          "nombre": {
+            "maxLength": 255,
+            "minLength": 3,
+            "type": "string"
+          },
+          "paisCif": {
+            "format": "int32",
+            "maximum": 1000,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "observaciones": {
+            "maxLength": 4096,
+            "type": "string"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombreUsuario": {
+            "type": "string"
+          },
+          "apellidosUsuario": {
+            "type": "string"
+          },
+          "emailUsuario": {
+            "type": "string"
+          },
+          "tipoEmpresa": {
+            "$ref": "#/components/schemas/TipoSolicitudAltaEnum"
+          },
+          "entornos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ComunEntornoDtoResponse"
+            }
+          },
+          "fechaCreacion": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "fechaUltimoAcceso": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "razonSocial": {
+            "type": "string"
+          },
+          "zonaHoraria": {
+            "$ref": "#/components/schemas/ZoneId"
+          },
+          "uuid": {
+            "type": "string"
+          },
+          "idGrupoEntornos": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "v153wqpymtcxw"
+        }
+      },
+      "ComunEntornoDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idEntorno": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idModulo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "activo": {
+            "type": "boolean"
+          },
+          "estado": {
+            "$ref": "#/components/schemas/EntornoEstadoEnum"
+          }
+        },
+        "x-stoplight": {
+          "id": "3nnun3qrr5ac0"
+        }
+      },
+      "CriterioEstandarDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idCriterioEstandar": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "criterio": {
+            "type": "string"
+          },
+          "mensajeRechazo": {
+            "type": "string"
+          },
+          "soloUsuariosInternos": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "4iuwtizlp7ub9"
+        }
+      },
+      "DayOfWeek": {
+        "enum": [
+          "MONDAY",
+          "TUESDAY",
+          "WEDNESDAY",
+          "THURSDAY",
+          "FRIDAY",
+          "SATURDAY",
+          "SUNDAY"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "m0b0pzsgejqvl"
+        }
+      },
+      "DepartamentoAreaEnum": {
+        "enum": [
+          "PRL",
+          "ADMINISTRACION",
+          "OTROS"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "k3uq5kl5z2u4r"
+        }
+      },
+      "Duration": {
+        "format": "duration",
+        "type": "string",
+        "example": "P1D",
+        "x-stoplight": {
+          "id": "am9qqcls9c5rl"
+        }
+      },
+      "EmpresaDtoRequestUpdate": {
+        "required": [
+          "idGrupoEntornos"
+        ],
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "maxLength": 255,
+            "type": "string"
+          },
+          "observaciones": {
+            "maxLength": 4096,
+            "type": "string"
+          },
+          "idGrupoEntornos": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "tbsinoqn7ztqy"
+        }
+      },
+      "EntornoEstadoEnum": {
+        "enum": [
+          "CREADO",
+          "PENDIENTE",
+          "BORRANDO"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "w19d993yy16c9"
+        }
+      },
+      "EspecificidadEnum": {
+        "enum": [
+          "GENERICO",
+          "ESPECIFICO"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "qt888wxgoyzma"
+        }
+      },
+      "IdiomaDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idIdioma": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "codigo": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "1r5i0cce52oz8"
+        }
+      },
+      "Instant": {
+        "format": "date-time",
+        "type": "string",
+        "example": "2022-03-10T16:15:50Z",
+        "x-stoplight": {
+          "id": "0vdr0ivqi7zve"
+        }
+      },
+      "LocalDateTime": {
+        "format": "date-time",
+        "type": "string",
+        "example": "2022-03-10T12:15:50",
+        "x-stoplight": {
+          "id": "jbxaa333h5e76"
+        }
+      },
+      "LocalTime": {
+        "format": "local-time",
+        "type": "string",
+        "externalDocs": {
+          "description": "As defined by 'partial-time' in RFC3339",
+          "url": "https://www.rfc-editor.org/rfc/rfc3339.html#section-5.6"
+        },
+        "example": "13:45:30.123456789",
+        "x-stoplight": {
+          "id": "237v583pkvgh9"
+        }
+      },
+      "ModuloEnum": {
+        "enum": [
+          "ESTRUCTURA",
+          "CAE",
+          "CA",
+          "FORMULARIOS",
+          "METAMARKET",
+          "MQL",
+          "TAREAS",
+          "PROVEEDORES",
+          "PRL",
+          "GESTION_DOCUMENTAL",
+          "ADMINISTRACION",
+          "CALENDARIOS"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "amy70mndn1nim"
+        }
+      },
+      "Month": {
+        "enum": [
+          "JANUARY",
+          "FEBRUARY",
+          "MARCH",
+          "APRIL",
+          "MAY",
+          "JUNE",
+          "JULY",
+          "AUGUST",
+          "SEPTEMBER",
+          "OCTOBER",
+          "NOVEMBER",
+          "DECEMBER"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "yq0z961i2ge96"
+        }
+      },
+      "PersonaDtoRequest": {
+        "required": [
+          "dni",
+          "nombre",
+          "apellido1",
+          "apellido2",
+          "tipoDocId",
+          "idPaisDni"
+        ],
+        "type": "object",
+        "properties": {
+          "dni": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "nombre": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "apellido1": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "apellido2": {
+            "maxLength": 128,
+            "type": "string"
+          },
+          "tipoDocId": {
+            "type": "string"
+          },
+          "idPaisDni": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idPersona": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "18qp6xc78zqzx"
+        }
+      },
+      "PersonaDtoResponse": {
+        "required": [
+          "dni",
+          "nombre",
+          "apellido1",
+          "apellido2",
+          "tipoDocId",
+          "idPaisDni"
+        ],
+        "type": "object",
+        "properties": {
+          "dni": {
+            "type": "string"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "apellido1": {
+            "type": "string"
+          },
+          "apellido2": {
+            "type": "string"
+          },
+          "tipoDocId": {
+            "type": "string"
+          },
+          "idPaisDni": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idPersona": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "lg9m5jtkaylcf"
+        }
+      },
+      "TimeDefinition": {
+        "enum": [
+          "UTC",
+          "WALL",
+          "STANDARD"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "sukhfundnskrn"
+        }
+      },
+      "TipoDocumentoInformatizadoDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idDocInformatizado": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "codigo": {
+            "type": "string"
+          },
+          "observaciones": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "kfmy51xrchqwu"
+        }
+      },
+      "TipoDocumentoPrlEnum": {
+        "enum": [
+          "FORMACIONES",
+          "INFORMACIONES",
+          "EPI",
+          "RECONOCIMIENTO_MEDICO",
+          "OTROS"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "t6ycbj31lo52u"
+        }
+      },
+      "TipoDocumentoUniversalDtoRequest": {
+        "required": [
+          "nombre",
+          "aplicableA",
+          "departamentoArea",
+          "especificidad",
+          "idPais"
+        ],
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "maxLength": 255,
+            "type": "string"
+          },
+          "aplicableA": {
+            "$ref": "#/components/schemas/AplicableAEnum"
+          },
+          "departamentoArea": {
+            "$ref": "#/components/schemas/DepartamentoAreaEnum"
+          },
+          "especificidad": {
+            "$ref": "#/components/schemas/EspecificidadEnum"
+          },
+          "idPais": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "tipo": {
+            "$ref": "#/components/schemas/TipoDocumentoPrlEnum"
+          },
+          "validez": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "unidadTiempoValidez": {
+            "$ref": "#/components/schemas/UnidadTiempoValidezEnum"
+          },
+          "codigoMetabuzon": {
+            "maxLength": 32,
+            "type": "string"
+          },
+          "indefinido": {
+            "type": "boolean"
+          },
+          "diasPreaviso": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "firmaRequerida": {
+            "type": "boolean"
+          },
+          "adjuntoObligatorio": {
+            "type": "boolean"
+          },
+          "criteriosValidacion": {
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "idTipoDocumentoInformatizado": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "f4pto9u5jw6f0"
+        }
+      },
+      "TipoDocumentoUniversalDtoResponse": {
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "type": "string"
+          },
+          "aplicableA": {
+            "$ref": "#/components/schemas/AplicableAEnum"
+          },
+          "departamentoArea": {
+            "$ref": "#/components/schemas/DepartamentoAreaEnum"
+          },
+          "tipo": {
+            "$ref": "#/components/schemas/TipoDocumentoPrlEnum"
+          },
+          "validez": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "unidadTiempoValidez": {
+            "$ref": "#/components/schemas/UnidadTiempoValidezEnum"
+          },
+          "especificidad": {
+            "$ref": "#/components/schemas/EspecificidadEnum"
+          },
+          "idPais": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "codigoMetabuzon": {
+            "type": "string"
+          },
+          "indefinido": {
+            "type": "boolean"
+          },
+          "diasPreaviso": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "firmaRequerida": {
+            "type": "boolean"
+          },
+          "adjuntoObligatorio": {
+            "type": "boolean"
+          },
+          "idTipoDocumentoInformatizado": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idTipoDocumentoUniversal": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "criteriosValidacionUltimaVersion": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CriterioEstandarDtoResponse"
+            }
+          },
+          "versiones": {
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "fechaUltimaVersion": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "usuarioUltimaVersion": {
+            "type": "string"
+          },
+          "enUso": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "y3iy0uvmqn9ct"
+        }
+      },
+      "TipoDocumentoUniversalDtoResponseListado": {
+        "type": "object",
+        "properties": {
+          "idTipoDocumentoUniversal": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "aplicableA": {
+            "$ref": "#/components/schemas/AplicableAEnum"
+          },
+          "departamentoArea": {
+            "$ref": "#/components/schemas/DepartamentoAreaEnum"
+          },
+          "tipo": {
+            "$ref": "#/components/schemas/TipoDocumentoPrlEnum"
+          },
+          "validez": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "unidadTiempoValidez": {
+            "$ref": "#/components/schemas/UnidadTiempoValidezEnum"
+          },
+          "especificidad": {
+            "$ref": "#/components/schemas/EspecificidadEnum"
+          },
+          "enUso": {
+            "type": "boolean"
+          },
+          "idPais": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "indefinido": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "ghvgdy7910kdq"
+        }
+      },
+      "TipoRecursoMaterialDtoResponse": {
+        "required": [
+          "nombre",
+          "observaciones",
+          "idTipoRecursoMaterial"
+        ],
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "type": "string"
+          },
+          "observaciones": {
+            "type": "string"
+          },
+          "idTipoRecursoMaterial": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idPais": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "tieneIdentificador2": {
+            "type": "boolean"
+          },
+          "identificador1": {
+            "type": "string"
+          },
+          "identificador2": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "fjw9z9imdehau"
+        }
+      },
+      "TipoSolicitudAltaEnum": {
+        "enum": [
+          "EMPRESA",
+          "AUTONOMO"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "8rdjbdcyz3m1y"
+        }
+      },
+      "UnidadTiempoValidezEnum": {
+        "enum": [
+          "ANOS",
+          "MESES",
+          "DIAS"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "12a04p0gm4i2z"
+        }
+      },
+      "VersionDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idVersionCriterios": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "version": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "criteriosValidacion": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CriterioEstandarDtoResponse"
+            }
+          },
+          "fechaEdicion": {
+            "type": "string"
+          },
+          "usuarioEdicion": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "8lrer8a731jda"
+        }
+      },
+      "ZoneId": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "rules": {
+            "$ref": "#/components/schemas/ZoneRules"
+          }
+        },
+        "x-stoplight": {
+          "id": "vru9aamfzp23s"
+        }
+      },
+      "ZoneOffset": {
+        "type": "object",
+        "properties": {
+          "totalSeconds": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "rules": {
+            "$ref": "#/components/schemas/ZoneRules"
+          }
+        },
+        "x-stoplight": {
+          "id": "wl0v8mmha24a4"
+        }
+      },
+      "ZoneOffsetTransition": {
+        "type": "object",
+        "properties": {
+          "epochSecond": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "transition": {
+            "$ref": "#/components/schemas/LocalDateTime"
+          },
+          "offsetBefore": {
+            "$ref": "#/components/schemas/ZoneOffset"
+          },
+          "offsetAfter": {
+            "$ref": "#/components/schemas/ZoneOffset"
+          },
+          "instant": {
+            "$ref": "#/components/schemas/Instant"
+          },
+          "dateTimeBefore": {
+            "$ref": "#/components/schemas/LocalDateTime"
+          },
+          "dateTimeAfter": {
+            "$ref": "#/components/schemas/LocalDateTime"
+          },
+          "duration": {
+            "$ref": "#/components/schemas/Duration"
+          },
+          "durationSeconds": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "gap": {
+            "type": "boolean"
+          },
+          "overlap": {
+            "type": "boolean"
+          },
+          "validOffsets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ZoneOffset"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "jxky2sqcmmodv"
+        }
+      },
+      "ZoneOffsetTransitionRule": {
+        "type": "object",
+        "properties": {
+          "month": {
+            "$ref": "#/components/schemas/Month"
+          },
+          "dom": {
+            "format": "byte",
+            "type": "string"
+          },
+          "dow": {
+            "$ref": "#/components/schemas/DayOfWeek"
+          },
+          "time": {
+            "$ref": "#/components/schemas/LocalTime"
+          },
+          "timeEndOfDay": {
+            "type": "boolean"
+          },
+          "timeDefinition": {
+            "$ref": "#/components/schemas/TimeDefinition"
+          },
+          "standardOffset": {
+            "$ref": "#/components/schemas/ZoneOffset"
+          },
+          "offsetBefore": {
+            "$ref": "#/components/schemas/ZoneOffset"
+          },
+          "offsetAfter": {
+            "$ref": "#/components/schemas/ZoneOffset"
+          },
+          "dayOfMonthIndicator": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "dayOfWeek": {
+            "$ref": "#/components/schemas/DayOfWeek"
+          },
+          "localTime": {
+            "$ref": "#/components/schemas/LocalTime"
+          },
+          "midnightEndOfDay": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "s8fqgp9p3l03r"
+        }
+      },
+      "ZoneRules": {
+        "type": "object",
+        "properties": {
+          "standardTransitions": {
+            "type": "array",
+            "items": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          "standardOffsets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ZoneOffset"
+            }
+          },
+          "savingsInstantTransitions": {
+            "type": "array",
+            "items": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          "savingsLocalTransitions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LocalDateTime"
+            }
+          },
+          "wallOffsets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ZoneOffset"
+            }
+          },
+          "lastRules": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ZoneOffsetTransitionRule"
+            }
+          },
+          "fixedOffset": {
+            "type": "boolean"
+          },
+          "transitions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ZoneOffsetTransition"
+            }
+          },
+          "transitionRules": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ZoneOffsetTransitionRule"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "voz5z2qdiikso"
+        }
+      },
+      "ZonedDateTime": {
+        "format": "date-time",
+        "type": "string",
+        "example": "2022-03-10T12:15:50-04:00",
+        "x-stoplight": {
+          "id": "r2wwa07693rda"
+        }
+      }
+    },
+    "securitySchemes": {
+      "jwt": {
+        "type": "http",
+        "description": "Authentication",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "parameters": {
+      "idEmpresa": {
+        "name": "idEmpresa",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "X-Timezone": {
+        "name": "X-Timezone",
+        "in": "header",
+        "description": "Zona horaria desde la que se hace la petición",
+        "required": true,
+        "schema": {
+          "default": "Europe/Madrid",
+          "type": "string"
+        }
+      },
+      "idPais": {
+        "name": "idPais",
+        "in": "query",
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idCategoria": {
+        "name": "idCategoria",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idTipoRecursoMaterial": {
+        "name": "idTipoRecursoMaterial",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "ids": {
+        "name": "ids",
+        "in": "query",
+        "schema": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "description": "TODO: add description"
+      },
+      "CIF": {
+        "name": "CIF",
+        "in": "query",
+        "schema": {
+          "type": "string"
+        },
+        "description": "TODO: add description"
+      },
+      "filtro": {
+        "name": "filtro",
+        "in": "query",
+        "schema": {
+          "type": "string"
+        },
+        "description": "TODO: add description"
+      },
+      "idGrupoEntornos": {
+        "name": "idGrupoEntornos",
+        "in": "query",
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "infoEntornos": {
+        "name": "infoEntornos",
+        "in": "query",
+        "schema": {
+          "default": false,
+          "type": "boolean"
+        },
+        "description": "TODO: add description"
+      },
+      "listaIds": {
+        "name": "listaIds",
+        "in": "query",
+        "schema": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "description": "TODO: add description"
+      },
+      "listaIdsPais": {
+        "name": "listaIdsPais",
+        "in": "query",
+        "schema": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "description": "TODO: add description"
+      },
+      "listaModulos": {
+        "name": "listaModulos",
+        "in": "query",
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/ModuloEnum"
+          }
+        },
+        "description": "TODO: add description"
+      },
+      "idIdioma": {
+        "name": "idIdioma",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "dniPasaporte": {
+        "name": "dniPasaporte",
+        "in": "query",
+        "schema": {
+          "type": "string"
+        },
+        "description": "TODO: add description"
+      },
+      "idPaisDni": {
+        "name": "idPaisDni",
+        "in": "query",
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "listaIdsPersonas": {
+        "name": "listaIdsPersonas",
+        "in": "query",
+        "schema": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "description": "TODO: add description"
+      },
+      "idPersona": {
+        "name": "idPersona",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idTipoDocumentoInformatizado": {
+        "name": "idTipoDocumentoInformatizado",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idTipoDocumentoUniversal": {
+        "name": "idTipoDocumentoUniversal",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "version": {
+        "name": "version",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      }
+    }
+  }
+}

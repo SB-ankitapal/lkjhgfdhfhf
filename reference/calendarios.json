@@ -1,0 +1,6992 @@
+{
+  "openapi": "3.0.3",
+  "x-stoplight": {
+    "id": "89acs9vbfejaj"
+  },
+  "info": {
+    "title": "calendarios API",
+    "version": "1.0-SNAPSHOT",
+    "description": "API del microservicio de calendarios",
+    "license": {
+      "name": "Proprietary - Internal Use Only",
+      "url": "https://v4.metacontratas.com/"
+    },
+    "contact": {
+      "email": "soporte.tecnico@metadata.es",
+      "name": "Metadata S.L.",
+      "url": "https://v4.metacontratas.com/"
+    }
+  },
+  "tags": [
+    {
+      "name": "Calendarios laborales",
+      "description": "Servicio de calendarios laborales"
+    },
+    {
+      "name": "Citas",
+      "description": "Servicio de citas"
+    },
+    {
+      "name": "Estado calendario",
+      "description": "Servicio de estado del calendario"
+    },
+    {
+      "name": "Eventos",
+      "description": "Servicio de eventos"
+    },
+    {
+      "name": "Eventos programados",
+      "description": "Servicio de eventos programados"
+    },
+    {
+      "name": "Horarios",
+      "description": "Servicio de horarios"
+    },
+    {
+      "name": "Public",
+      "description": "Controller publico"
+    },
+    {
+      "name": "Tipos Eventos",
+      "description": "Servicio de tipos de eventos"
+    },
+    {
+      "name": "Usuarios Entornos",
+      "description": "Servicio de usuarios entornos"
+    }
+  ],
+  "paths": {
+    "/calendarios/v1/calendarios-laborales": {
+      "get": {
+        "tags": [
+          "Calendarios laborales"
+        ],
+        "summary": "Obtiene los calendarios laborales, el por defecto el primero y los demás ordenados por nombre",
+        "operationId": "getCalendariosLaborales",
+        "parameters": [
+          {
+            "name": "nombre",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ListadoCalendariosLaboralesDTO"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene los calendarios laborales, el por defecto el primero y los demás ordenados por nombre",
+        "x-stoplight": {
+          "id": "itzqeetuisl0c"
+        }
+      },
+      "post": {
+        "tags": [
+          "Calendarios laborales"
+        ],
+        "summary": "Crea un nuevo calendario laboral",
+        "operationId": "postCalendariosLaborales",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CalendarioLaboralDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalendarioLaboralDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0046: No puede haber dos calendarios laborales con el mismo nombre para el mismo usuario entorno."
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Crea un nuevo calendario laboral",
+        "x-stoplight": {
+          "id": "zzyfs9arpn1y2"
+        }
+      }
+    },
+    "/calendarios/v1/calendarios-laborales/{idCalendarioLaboral}": {
+      "get": {
+        "tags": [
+          "Calendarios laborales"
+        ],
+        "summary": "Obtiene un calendario laboral por su ID",
+        "operationId": "getCalendarioLaboralPorIdCalendarioLaboral",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalendarioLaboralConDiasDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene un calendario laboral por su ID",
+        "x-stoplight": {
+          "id": "mk1qt0nqyxnrp"
+        }
+      },
+      "put": {
+        "tags": [
+          "Calendarios laborales"
+        ],
+        "summary": "Edita un calendario laboral",
+        "operationId": "putCalendarioLaboralPorIdCalendarioLaboral",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CalendarioLaboralDtoRequestUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalendarioLaboralDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0046: No puede haber dos calendarios laborales con el mismo nombre para el mismo usuario entorno.\n - CAL_0101: No se puede editar el calendario laboral porque tiene eventos asignados con series sin finalizar con citas reservadas en el pasado"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Edita un calendario laboral",
+        "x-stoplight": {
+          "id": "3vcijso0ja55a"
+        }
+      },
+      "delete": {
+        "tags": [
+          "Calendarios laborales"
+        ],
+        "summary": "Elimina un calendario laboral",
+        "operationId": "deleteCalendarioLaboralPorIdCalendarioLaboral",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalendarioLaboralDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0049: No se puede borrar un calendario por defecto"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Elimina un calendario laboral",
+        "x-stoplight": {
+          "id": "xmegtdu2d16ki"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idCalendarioLaboral"
+        }
+      ]
+    },
+    "/calendarios/v1/calendarios-laborales/{idCalendarioLaboral}/dias-laborables": {
+      "post": {
+        "tags": [
+          "Calendarios laborales"
+        ],
+        "summary": "Añade o quita dias a un calendario laboral",
+        "operationId": "postDiasLaborablesPorIdCalendarioLaboral",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CalendarioLaboralDiaDTO"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CalendarioLaboralDiaDTO_Rabbit"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0101: No se puede editar el calendario laboral porque tiene eventos asignados con series sin finalizar con citas reservadas en el pasado"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Añade o quita dias a un calendario laboral",
+        "x-stoplight": {
+          "id": "92rj29d5hws7c"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idCalendarioLaboral"
+        }
+      ]
+    },
+    "/calendarios/v1/calendarios-laborales/{idCalendarioLaboral}/edicion-permitida": {
+      "get": {
+        "tags": [
+          "Calendarios laborales"
+        ],
+        "summary": "Comprueba si se puede modificar un calendario laboral",
+        "operationId": "getEdicionPermitidaPorIdCalendarioLaboral",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalendarioLaboralEventoDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Comprueba si se puede modificar un calendario laboral",
+        "x-stoplight": {
+          "id": "l6ft5ofvtscg1"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idCalendarioLaboral"
+        }
+      ]
+    },
+    "/calendarios/v1/calendarios-laborales/{idCalendarioLaboral}/por-defecto": {
+      "post": {
+        "tags": [
+          "Calendarios laborales"
+        ],
+        "summary": "Marca un calendario como por defecto",
+        "operationId": "postPorDefectoPorIdCalendarioLaboral",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalendarioLaboralDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Marca un calendario como por defecto",
+        "x-stoplight": {
+          "id": "ssk3o47fu0hbu"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idCalendarioLaboral"
+        }
+      ]
+    },
+    "/calendarios/v1/citas": {
+      "post": {
+        "tags": [
+          "Citas"
+        ],
+        "summary": "Crea una cita serie y sus citas",
+        "operationId": "postCitas",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CitaDtoRequestCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CitaSerieDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0013: Regla mal definida\n - CAL_0058: La RRULE necesita el parámetro UNTIL"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Crea una cita serie y sus citas",
+        "x-stoplight": {
+          "id": "6n2kysa5nq05a"
+        }
+      }
+    },
+    "/calendarios/v1/citas/{idCita}": {
+      "get": {
+        "tags": [
+          "Citas"
+        ],
+        "summary": "Obtiene las citas por el id de la Cita",
+        "operationId": "getCitaPorIdCita",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CitaDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0081: No tiene permisos para ver la cita solicitada\n - CAL_0086: Acción no disponible para citas disponibles"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene las citas por el id de la Cita",
+        "x-stoplight": {
+          "id": "et3ki98q3gz98"
+        }
+      },
+      "put": {
+        "tags": [
+          "Citas"
+        ],
+        "summary": "Modifica una cita",
+        "operationId": "putCitaPorIdCita",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CitaDtoRequestUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CitaDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0081: No tiene permisos para ver la cita solicitada\n - CAL_0086: Acción no disponible para citas disponibles"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Modifica una cita",
+        "x-stoplight": {
+          "id": "n3opvei5rgt5n"
+        }
+      },
+      "delete": {
+        "tags": [
+          "Citas"
+        ],
+        "summary": "Elimina una cita",
+        "operationId": "deleteCitaPorIdCita",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CitaDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0081: No tiene permisos para ver la cita solicitada\n - CAL_0086: Acción no disponible para citas disponibles"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Elimina una cita",
+        "x-stoplight": {
+          "id": "b29gta1o0gccg"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idCita"
+        }
+      ]
+    },
+    "/calendarios/v1/citas/{idCita}/asistentes": {
+      "get": {
+        "tags": [
+          "Citas"
+        ],
+        "summary": "Obtiene los asistentes a una cita por el id de la Cita",
+        "operationId": "getAsistentesPorIdCita",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AsistentesCitaDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0081: No tiene permisos para ver la cita solicitada"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene los asistentes a una cita por el id de la Cita",
+        "x-stoplight": {
+          "id": "x1yp7f33cqmxv"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idCita"
+        }
+      ]
+    },
+    "/calendarios/v1/citas/{idCita}/serie": {
+      "get": {
+        "tags": [
+          "Citas"
+        ],
+        "summary": "Obtiene la serie de una cita",
+        "operationId": "getSeriePorIdCita",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CitaSerieDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0081: No tiene permisos para ver la cita solicitada\n - CAL_0086: Acción no disponible para citas disponibles"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene la serie de una cita",
+        "x-stoplight": {
+          "id": "ccq3i7q1tg8gt"
+        }
+      },
+      "put": {
+        "tags": [
+          "Citas"
+        ],
+        "summary": "Modifica la serie de una cita",
+        "operationId": "putSeriePorIdCita",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CitaSerieDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CitaSerieDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0081: No tiene permisos para ver la cita solicitada\n - CAL_0086: Acción no disponible para citas disponibles"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Modifica la serie de una cita",
+        "x-stoplight": {
+          "id": "4c9ym4djzx8s4"
+        }
+      },
+      "delete": {
+        "tags": [
+          "Citas"
+        ],
+        "summary": "Elimina una serie de citas",
+        "operationId": "deleteSeriePorIdCita",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CitaSerieDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0081: No tiene permisos para ver la cita solicitada\n - CAL_0086: Acción no disponible para citas disponibles"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Elimina una serie de citas",
+        "x-stoplight": {
+          "id": "tiscankgxdiga"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idCita"
+        }
+      ]
+    },
+    "/calendarios/v1/estado-calendario": {
+      "get": {
+        "tags": [
+          "Estado calendario"
+        ],
+        "summary": "Obtiene todos los eventos de un calendario según un tipo de visión especificado y las citas",
+        "operationId": "getEstadoCalendario",
+        "parameters": [
+          {
+            "name": "agrupados",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "busqueda",
+            "in": "query",
+            "schema": {
+              "default": "",
+              "type": "string"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "fechaFin",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "fechaInicio",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "idCalendario",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "format": "int32",
+                "type": "integer"
+              }
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "idCalendarioLaboral",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "format": "int32",
+                "type": "integer"
+              }
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "idEvento",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "format": "int32",
+                "type": "integer"
+              }
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "idTipoEvento",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "format": "int32",
+                "type": "integer"
+              }
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "tipo",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/EventoCitasEnum"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "vision",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/VisionCalendarioEnum"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "zonaHoraria",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EstadoCalendarioDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "- CAL_0059: No se puede recuperar la lista de eventos si no se especifica el tipo de visión del calendario"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0060: No puedes filtrar eventos por calendarios que no son tuyos\n - CAL_0069: No tienes permisos para trabajar con el evento"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "calendario_publico"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene todos los eventos de un calendario según un tipo de visión especificado y las citas",
+        "x-stoplight": {
+          "id": "tr4hp6xteu5re"
+        }
+      }
+    },
+    "/calendarios/v1/eventos": {
+      "post": {
+        "tags": [
+          "Eventos"
+        ],
+        "summary": "Crea un nuevo evento",
+        "operationId": "postEventos",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventoDtoRequestCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventoDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0051: Si esta habilitado el campo 'reservar desde', el valor debe ser mayor que cero\n - CAL_0052: Si esta habilitado el campo 'enviar informe reserva', el valor debe ser mayor que cero\n - CAL_0053: Si estan habilitados los campos 'reservar desde' y 'reservar hasta', 'reservar desde' debe ser mayor que 'reservar hasta'\n - CAL_0092: En los eventos de tipo Reconocimiento médico o Formaciones, el usuario sólo puede reservar una cita\n - CAL_0093: Los eventos de tipo Reconocimiento médico no pueden ser agrupados"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Crea un nuevo evento",
+        "x-stoplight": {
+          "id": "djxukjvva0adr"
+        }
+      }
+    },
+    "/calendarios/v1/eventos-programados": {
+      "post": {
+        "tags": [
+          "Eventos programados"
+        ],
+        "summary": "Crea y programa un evento programado",
+        "operationId": "postEventosProgramados",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventoProgramadoDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CitaSerieDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0013: Regla mal definida\n - CAL_0058: La RRULE necesita el parámetro UNTIL\n - CAL_0005: Es necesario indicar un calendario que sea de tipo 'Programador de eventos'"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Crea y programa un evento programado",
+        "x-stoplight": {
+          "id": "2lxaau8dyzwq0"
+        }
+      }
+    },
+    "/calendarios/v1/eventos-programados/acciones": {
+      "get": {
+        "tags": [
+          "Eventos programados"
+        ],
+        "summary": "Obtiene todas las acciones de eventos programados",
+        "operationId": "getAccionesEventosProgramados",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AccionEventoProgramadoDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene todas las acciones de eventos programados",
+        "x-stoplight": {
+          "id": "8cb8mg0tmgzlm"
+        }
+      }
+    },
+    "/calendarios/v1/eventos/creacion": {
+      "post": {
+        "tags": [
+          "Eventos"
+        ],
+        "summary": "Crea un nuevo evento completo",
+        "operationId": "postCreacionEventos",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventoCrearDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventoCrearEditarDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0013: Regla mal definida\n - CAL_0051: Si esta habilitado el campo 'reservar desde', el valor debe ser mayor que cero\n - CAL_0052: Si esta habilitado el campo 'enviar informe reserva', el valor debe ser mayor que cero</br>CAL_0053: Si estan habilitados los campos 'reservar desde' y 'reservar hasta', 'reservar desde' debe ser mayor que 'reservar hasta'\n - CAL_0054: Un evento no agrupado solo puede tener un grupo\n - CAL_0056: No se puede modificar un evento que se encuentra en el estado 'PROCESANDO'CAL_0058: La RRULE necesita el parámetro UNTIL"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Crea un nuevo evento completo",
+        "x-stoplight": {
+          "id": "bzvni6y7sf3rx"
+        }
+      }
+    },
+    "/calendarios/v1/eventos/eventos-calendario": {
+      "get": {
+        "tags": [
+          "Eventos"
+        ],
+        "summary": "Obtiene todos los eventos de un calendario según un tipo de visión especificado",
+        "operationId": "getEventosCalendarioEventos",
+        "parameters": [
+          {
+            "name": "agrupados",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "fechaFin",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "fechaInicio",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "idCalendario",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "format": "int32",
+                "type": "integer"
+              }
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "idCalendarioLaboral",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "format": "int32",
+                "type": "integer"
+              }
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "idTipoEvento",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "format": "int32",
+                "type": "integer"
+              }
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "vision",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/VisionCalendarioEnum"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "zonaHoraria",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EventoPorDiaDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "- CAL_0059: No se puede recuperar la lista de eventos si no se especifica el tipo de visión del calendario"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0060: No puedes filtrar eventos por calendarios que no son tuyos\n - CAL_0069: No tienes permisos para trabajar con el evento"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "calendario_publico"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene todos los eventos de un calendario según un tipo de visión especificado",
+        "x-stoplight": {
+          "id": "t9daqoqr9uhi3"
+        }
+      }
+    },
+    "/calendarios/v1/eventos/{idEvento}": {
+      "get": {
+        "tags": [
+          "Eventos"
+        ],
+        "summary": "Obtiene un evento",
+        "operationId": "getEventoPorIdEvento",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventoDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0069: No tienes permisos para trabajar con el evento"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "calendario_publico"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene un evento",
+        "x-stoplight": {
+          "id": "trj2o4kpaljpr"
+        }
+      },
+      "put": {
+        "tags": [
+          "Eventos"
+        ],
+        "summary": "Modifica un evento",
+        "operationId": "putEventoPorIdEvento",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventoDtoRequestUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventoDtoRequestUpdate"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0051: Si esta habilitado el campo 'reservar desde', el valor debe ser mayor que cero\n - CAL_0052: Si esta habilitado el campo 'enviar informe reserva', el valor debe ser mayor que cero\n - CAL_0053: Si estan habilitados los campos 'reservar desde' y 'reservar hasta', 'reservar desde' debe ser mayor que 'reservar hasta'\n - CAL_0092: En los eventos de tipo Reconocimiento médico o Formaciones, el usuario sólo puede reservar una cita\n - CAL_0093: Los eventos de tipo Reconocimiento médico no pueden ser agrupados"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Modifica un evento",
+        "x-stoplight": {
+          "id": "lls1mtqns7vnl"
+        }
+      },
+      "delete": {
+        "tags": [
+          "Eventos"
+        ],
+        "summary": "Elimina un evento",
+        "operationId": "deleteEventoPorIdEvento",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventoDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0095: El evento no se puede borrar porque tiene citas reservadas en el pasado"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Elimina un evento",
+        "x-stoplight": {
+          "id": "oyycvjc8v2beo"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEvento"
+        }
+      ]
+    },
+    "/calendarios/v1/eventos/{idEvento}/asistentes": {
+      "get": {
+        "tags": [
+          "Eventos"
+        ],
+        "summary": "Obtiene la información de todos los asistentes de un evento",
+        "operationId": "getAsistentesPorIdEvento",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AsistentesEventoDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene la información de todos los asistentes de un evento",
+        "x-stoplight": {
+          "id": "7m3lemfqza43r"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEvento"
+        }
+      ]
+    },
+    "/calendarios/v1/eventos/{idEvento}/citas-disponibles": {
+      "get": {
+        "tags": [
+          "Eventos"
+        ],
+        "summary": "Recupera información de las citas disponibles",
+        "operationId": "getCitasDisponiblesPorIdEvento",
+        "parameters": [
+          {
+            "name": "fecha",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "zonaHoraria",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CitaDisponibleDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0071: Operacion no permitida en un evento agrupado\n - CAL_0080: No tiene permisos para acceder a las citas"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "calendario_publico"
+        ],
+        "x-permisos": true,
+        "description": "Recupera información de las citas disponibles",
+        "x-stoplight": {
+          "id": "w26babjyylite"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEvento"
+        }
+      ]
+    },
+    "/calendarios/v1/eventos/{idEvento}/citas-disponibles/edicion-masiva": {
+      "post": {
+        "tags": [
+          "Eventos"
+        ],
+        "summary": "Modifica las citas disponibles de un evento",
+        "operationId": "postEdicionMasivaCitasDisponiblesPorIdEvento",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestBodyTripleListaCitaDisponibleEditarDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CitasDisponiblesModificadasDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0070: Solo se pueden editar eventos no agrupados\n - CAL_0094: No se puede modificar o borrar citas pasadas reservadas\n - CAL_0098: No se pueden modificar citas que pertenecen a series finalizadas"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Modifica las citas disponibles de un evento",
+        "x-stoplight": {
+          "id": "5k0rd2hjqz2nn"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEvento"
+        }
+      ]
+    },
+    "/calendarios/v1/eventos/{idEvento}/citas-disponibles/generar": {
+      "post": {
+        "tags": [
+          "Eventos"
+        ],
+        "summary": "Genera las citas de un evento",
+        "operationId": "postGenerarCitasDisponiblesPorIdEvento",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventoDtoResponseGenerate"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0056: No se puede modificar un evento que se encuentra en el estado 'PROCESANDO'\n - CAL_0034: No se pueden generar tantas citas en un calendario"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Genera las citas de un evento",
+        "x-stoplight": {
+          "id": "bm6h8gw4754tf"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEvento"
+        }
+      ]
+    },
+    "/calendarios/v1/eventos/{idEvento}/citas-disponibles/{idCitaDisponible}/cancelar": {
+      "post": {
+        "tags": [
+          "Eventos"
+        ],
+        "summary": "Cancela una cita a un participante",
+        "operationId": "postCancelarPorIdEventoPorIdCitaDisponible",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CitaDisponibleDtoRequestCancelar"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CitaDisponibleDtoResponseCancelar"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0074: No tiene permisos para cancelar la cita\n - CAL_0075: No se puede cancelar la cita\n - CAL_0076: No se pueden cancelar citas pasadas"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "calendario_publico"
+        ],
+        "x-permisos": true,
+        "description": "Cancela una cita a un participante",
+        "x-stoplight": {
+          "id": "0r5vj23prz0mv"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idCitaDisponible"
+        },
+        {
+          "$ref": "#/components/parameters/idEvento"
+        }
+      ]
+    },
+    "/calendarios/v1/eventos/{idEvento}/citas-disponibles/{idCitaDisponible}/reservar": {
+      "post": {
+        "tags": [
+          "Eventos"
+        ],
+        "summary": "Asigna un participante a una cita disponible",
+        "operationId": "postReservarPorIdEventoPorIdCitaDisponible",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CitaDisponibleDtoRequestReservar"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CitaDisponibleDtoResponseReservar"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0062: El aforo de la cita esta completo\n - CAL_0063: Un participante solo se puede asignar a una cita una vez\n - CAL_0071: Operacion no permitida en un evento agrupado</br>CAL_0077: No se puede asignar las citas\n - CAL_0078: No se pueden asignar citas pasadas"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "calendario_publico"
+        ],
+        "x-permisos": true,
+        "description": "Asigna un participante a una cita disponible",
+        "x-stoplight": {
+          "id": "pyquuifmluuen"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idCitaDisponible"
+        },
+        {
+          "$ref": "#/components/parameters/idEvento"
+        }
+      ]
+    },
+    "/calendarios/v1/eventos/{idEvento}/citas-reservadas-pasado": {
+      "get": {
+        "tags": [
+          "Eventos"
+        ],
+        "summary": "Indica si el evento tiene alguna serie con citas reservadas en el pasado",
+        "operationId": "getCitasReservadasPasadoPorIdEvento",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CitasReservadasPasadoDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "calendario_publico"
+        ],
+        "x-permisos": true,
+        "description": "Indica si el evento tiene alguna serie con citas reservadas en el pasado",
+        "x-stoplight": {
+          "id": "sn3l9y39arh4j"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEvento"
+        }
+      ]
+    },
+    "/calendarios/v1/eventos/{idEvento}/edicion": {
+      "post": {
+        "tags": [
+          "Eventos"
+        ],
+        "summary": "Modifica un evento completo, incluyendo los grupos y series",
+        "operationId": "postEdicionPorIdEvento",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventoEditarDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventoCrearEditarDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0013: Regla mal definida\n - CAL_0051: Si esta habilitado el campo 'reservar desde', el valor debe ser mayor que cero\n - CAL_0052: Si esta habilitado el campo 'enviar informe reserva', el valor debe ser mayor que cero\n - CAL_0053: Si estan habilitados los campos 'reservar desde' y 'reservar hasta', 'reservar desde' debe ser mayor que 'reservar hasta'\n - CAL_0054: Un evento no agrupado solo puede tener un grupo\n - CAL_0056: No se puede modificar un evento que se encuentra en el estado 'PROCESANDO'CAL_0058: La RRULE necesita el parámetro UNTIL\n - CAL_0072: Operacion no permitida en un evento no agrupado\n - CAL_0100: No se puede modificar el evento porque se modificarían citas pasadas\n - CAL_0102: No se pueden modificar los grupos de un evento no agrupado"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Modifica un evento completo, incluyendo los grupos y series",
+        "x-stoplight": {
+          "id": "lskdoulvvoezr"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEvento"
+        }
+      ]
+    },
+    "/calendarios/v1/eventos/{idEvento}/fechas-disponibles": {
+      "get": {
+        "tags": [
+          "Eventos"
+        ],
+        "summary": "Obtiene las fechas en las que un evento tiene generada citas",
+        "operationId": "getFechasDisponiblesPorIdEvento",
+        "parameters": [
+          {
+            "name": "zonaHoraria",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0071: Operacion no permitida en un evento agrupado\n - CAL_0080: No tiene permisos para acceder a las citas"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "calendario_publico"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene las fechas en las que un evento tiene generada citas",
+        "x-stoplight": {
+          "id": "w55zbi45kksq8"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEvento"
+        }
+      ]
+    },
+    "/calendarios/v1/eventos/{idEvento}/grupos": {
+      "get": {
+        "tags": [
+          "Eventos"
+        ],
+        "summary": "Obtiene información de grupos por el id del evento",
+        "operationId": "getGruposPorIdEvento",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GrupoDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene información de grupos por el id del evento",
+        "x-stoplight": {
+          "id": "welv3jfzmxnpv"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEvento"
+        }
+      ]
+    },
+    "/calendarios/v1/eventos/{idEvento}/grupos/extendido": {
+      "get": {
+        "tags": [
+          "Eventos"
+        ],
+        "summary": "Obtiene información extendida de grupo",
+        "operationId": "getExtendidoGruposPorIdEvento",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GrupoDtoResponseExtendido"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0072: Operacion no permitida en un evento no agrupado\n - CAL_0079: No tiene permisos para acceder a los Grupos"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "calendario_publico"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene información extendida de grupo",
+        "x-stoplight": {
+          "id": "3jbkftb6cxo9k"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEvento"
+        }
+      ]
+    },
+    "/calendarios/v1/eventos/{idEvento}/grupos/{idGrupo}": {
+      "delete": {
+        "tags": [
+          "Eventos"
+        ],
+        "summary": "Elimina un grupo de un evento agrupado",
+        "operationId": "deleteGrupoPorIdEventoPorIdGrupo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrupoDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0072: Operacion no permitida en un evento no agrupado"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Elimina un grupo de un evento agrupado",
+        "x-stoplight": {
+          "id": "rf4wlepgc2pg3"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEvento"
+        },
+        {
+          "$ref": "#/components/parameters/idGrupo"
+        }
+      ]
+    },
+    "/calendarios/v1/eventos/{idEvento}/grupos/{idGrupo}/asistentes": {
+      "get": {
+        "tags": [
+          "Eventos"
+        ],
+        "summary": "Recupera los asistentes de un grupo",
+        "operationId": "getAsistentesPorIdEventoPorIdGrupo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AsistentesGrupoDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Recupera los asistentes de un grupo",
+        "x-stoplight": {
+          "id": "kzqdvz9dsh4dd"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEvento"
+        },
+        {
+          "$ref": "#/components/parameters/idGrupo"
+        }
+      ]
+    },
+    "/calendarios/v1/eventos/{idEvento}/grupos/{idGrupo}/reservar": {
+      "post": {
+        "tags": [
+          "Eventos"
+        ],
+        "summary": "Asigna un participante a un grupo",
+        "operationId": "postReservarPorIdEventoPorIdGrupo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CitaDisponibleDtoRequestReservar"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrupoDtoResponseReservar"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0062: El aforo de la cita esta completo\n - CAL_0063: Un participante solo se puede asignar a una cita una vez\n - CAL_0072: Operacion no permitida en un evento no agrupado</br>CAL_0077: No se puede asignar las citas\n - CAL_0078: No se pueden asignar citas pasadas"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "calendario_publico"
+        ],
+        "x-permisos": true,
+        "description": "Asigna un participante a un grupo",
+        "x-stoplight": {
+          "id": "ojcatjt7da6w4"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEvento"
+        },
+        {
+          "$ref": "#/components/parameters/idGrupo"
+        }
+      ]
+    },
+    "/calendarios/v1/eventos/{idEvento}/grupos/{idGrupo}/series": {
+      "get": {
+        "tags": [
+          "Eventos"
+        ],
+        "summary": "Obtiene las series de grupos filtrando por el id del evento y el id del grupo",
+        "operationId": "getSeriesPorIdEventoPorIdGrupo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SerieDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene las series de grupos filtrando por el id del evento y el id del grupo",
+        "x-stoplight": {
+          "id": "bgx4g7n2p0lga"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEvento"
+        },
+        {
+          "$ref": "#/components/parameters/idGrupo"
+        }
+      ]
+    },
+    "/calendarios/v1/eventos/{idEvento}/grupos/{idGrupo}/series/{idSerie}/finalizar": {
+      "post": {
+        "tags": [
+          "Eventos"
+        ],
+        "summary": "Finaliza una serie",
+        "operationId": "postFinalizarPorIdEventoPorIdGrupoPorIdSerie",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FinalizarSerieDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "CAL_0096: No se puede finalizar una serie que ya está finalizada<br>CAL_0097: No se puede finalizar una serie que no tenga citas pasadas"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Finaliza una serie",
+        "x-stoplight": {
+          "id": "hkda6ybj16478"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEvento"
+        },
+        {
+          "$ref": "#/components/parameters/idGrupo"
+        },
+        {
+          "$ref": "#/components/parameters/idSerie"
+        }
+      ]
+    },
+    "/calendarios/v1/eventos/{idEvento}/invitaciones": {
+      "get": {
+        "tags": [
+          "Eventos"
+        ],
+        "summary": "Obtiene todas las invitaciones de un evento",
+        "operationId": "getInvitacionesPorIdEvento",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InvitacionDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene todas las invitaciones de un evento",
+        "x-stoplight": {
+          "id": "xehyk8lasltuv"
+        }
+      },
+      "post": {
+        "tags": [
+          "Eventos"
+        ],
+        "summary": "Envía un correo a una persona, con una invitación para que pueda reservar una cita para el evento",
+        "operationId": "postInvitacionesPorIdEvento",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InvitacionDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvitacionDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Envía un correo a una persona, con una invitación para que pueda reservar una cita para el evento",
+        "x-stoplight": {
+          "id": "kne316h0h9oj2"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEvento"
+        }
+      ]
+    },
+    "/calendarios/v1/eventos/{idEvento}/invitaciones/{idInvitacion}": {
+      "get": {
+        "tags": [
+          "Eventos"
+        ],
+        "summary": "Obtiene información de las citas asignadas",
+        "operationId": "getInvitacionPorIdEventoPorIdInvitacion",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CitaAsignadaDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0073: Error en los atributos del JWT"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "calendario_publico"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene información de las citas asignadas",
+        "x-stoplight": {
+          "id": "f1ei75guc330i"
+        }
+      },
+      "delete": {
+        "tags": [
+          "Eventos"
+        ],
+        "summary": "Borra una invitación por el idEvento e idInvitación",
+        "operationId": "deleteInvitacionPorIdEventoPorIdInvitacion",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvitacionDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Borra una invitación por el idEvento e idInvitación",
+        "x-stoplight": {
+          "id": "7zkiikgdtipr0"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEvento"
+        },
+        {
+          "$ref": "#/components/parameters/idInvitacion"
+        }
+      ]
+    },
+    "/calendarios/v1/horarios": {
+      "get": {
+        "tags": [
+          "Horarios"
+        ],
+        "summary": "Obtiene todos los horarios ordenados dependiendo de los query params",
+        "operationId": "getHorarios",
+        "parameters": [
+          {
+            "name": "nombre",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HorarioConHorasSemanalesDTO"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene todos los horarios ordenados dependiendo de los query params",
+        "x-stoplight": {
+          "id": "yzwnfxcufe3cg"
+        }
+      },
+      "post": {
+        "tags": [
+          "Horarios"
+        ],
+        "summary": "Crea un nuevo horario",
+        "operationId": "postHorarios",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HorarioDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HorarioConDiaDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0047: Las horas de inicio y final se solapan con otro horario insertado\n - CAL_0048: No puede haber dos horarios con el mismo nombre"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Crea un nuevo horario",
+        "x-stoplight": {
+          "id": "xop9g0eoliobp"
+        }
+      }
+    },
+    "/calendarios/v1/horarios/{idHorario}": {
+      "get": {
+        "tags": [
+          "Horarios"
+        ],
+        "summary": "Obtiene un horario filtrado por su id de horario",
+        "operationId": "getHorarioPorIdHorario",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HorarioDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene un horario filtrado por su id de horario",
+        "x-stoplight": {
+          "id": "44hwb4m358wbb"
+        }
+      },
+      "put": {
+        "tags": [
+          "Horarios"
+        ],
+        "summary": "Edita un horario",
+        "operationId": "putHorarioPorIdHorario",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HorarioUpdateDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HorarioConDiaDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0048: No puede haber dos horarios con el mismo nombre"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Edita un horario",
+        "x-stoplight": {
+          "id": "f1j8h42540yg8"
+        }
+      },
+      "delete": {
+        "tags": [
+          "Horarios"
+        ],
+        "summary": "Borra un horario",
+        "operationId": "deleteHorarioPorIdHorario",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HorarioDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0050: No se puede borrar un horario por defecto"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Borra un horario",
+        "x-stoplight": {
+          "id": "ma8lm5yyhvh5m"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idHorario"
+        }
+      ]
+    },
+    "/calendarios/v1/horarios/{idHorario}/por-defecto": {
+      "post": {
+        "tags": [
+          "Horarios"
+        ],
+        "summary": "Edita un horario a por defecto",
+        "operationId": "postPorDefectoPorIdHorario",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HorarioDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Edita un horario a por defecto",
+        "x-stoplight": {
+          "id": "x8o94zmm0vtp5"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idHorario"
+        }
+      ]
+    },
+    "/calendarios/v1/public/autenticar": {
+      "post": {
+        "tags": [
+          "Public"
+        ],
+        "summary": "Obtiene un token de autenticación de público acceso a partir de un token de Metacontratas",
+        "operationId": "postAutenticarPublic",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TokenDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokensDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "description": "Obtiene un token de autenticación de público acceso a partir de un token de Metacontratas",
+        "x-stoplight": {
+          "id": "scuye5ls6m6pg"
+        }
+      }
+    },
+    "/calendarios/v1/tipos-eventos": {
+      "get": {
+        "tags": [
+          "Tipos Eventos"
+        ],
+        "summary": "Obtiene todos los tipos de cita/evento ordenados dependiendo de los query params",
+        "operationId": "getTiposEventos",
+        "parameters": [
+          {
+            "name": "nombre",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TipoEventoDTOResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene todos los tipos de cita/evento ordenados dependiendo de los query params",
+        "x-stoplight": {
+          "id": "fscyr7jamcaoi"
+        }
+      },
+      "post": {
+        "tags": [
+          "Tipos Eventos"
+        ],
+        "summary": "Crea un nuevo tipo de cita/evento",
+        "operationId": "postTiposEventos",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TipoEventoDTORequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TipoEventoDTOResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0061: No puede haber dos tipos de cita/evento con el mismo nombre"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Crea un nuevo tipo de cita/evento",
+        "x-stoplight": {
+          "id": "cckj4uk4er6p2"
+        }
+      }
+    },
+    "/calendarios/v1/tipos-eventos/{idTipoEvento}": {
+      "put": {
+        "tags": [
+          "Tipos Eventos"
+        ],
+        "summary": "Edita un tipo de cita/evento",
+        "operationId": "putTipoEventoPorIdTipoEvento",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TipoEventoDTORequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TipoEventoDTOResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0061: No puede haber dos tipos de cita/evento con el mismo nombre"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Edita un tipo de cita/evento",
+        "x-stoplight": {
+          "id": "700jbbi2ltxt4"
+        }
+      },
+      "delete": {
+        "tags": [
+          "Tipos Eventos"
+        ],
+        "summary": "Elimina un tipo de cita/evento",
+        "operationId": "deleteTipoEventoPorIdTipoEvento",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TipoEventoDTOResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0064: No se pueden borrar tipos de cita/evento que sean por defecto<br> CAL_0065: Solo se pueden borrar tipos de cita/evento que sean creados por el usuario <br> CAL_0090: No se puede borrar el tipo de evento porque se está usando por alguna cita/evento"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Elimina un tipo de cita/evento",
+        "x-stoplight": {
+          "id": "8zvxo3iixs69e"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idTipoEvento"
+        }
+      ]
+    },
+    "/calendarios/v1/tipos-eventos/{idTipoEvento}/por-defecto": {
+      "post": {
+        "tags": [
+          "Tipos Eventos"
+        ],
+        "summary": "Hace por defecto un tipo de cita/evento",
+        "operationId": "postPorDefectoPorIdTipoEvento",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TipoEventoDTOResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Hace por defecto un tipo de cita/evento",
+        "x-stoplight": {
+          "id": "m3e763du49fra"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idTipoEvento"
+        }
+      ]
+    },
+    "/calendarios/v1/usuarios-entornos": {
+      "get": {
+        "tags": [
+          "Usuarios Entornos"
+        ],
+        "summary": "Obtiene los usuarios entorno posibles para ver los calendarios",
+        "operationId": "getUsuariosEntornos",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UsuarioEntornoCorreoDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene los usuarios entorno posibles para ver los calendarios",
+        "x-stoplight": {
+          "id": "6ttxqjg7vatto"
+        }
+      }
+    },
+    "/calendarios/v1/usuarios-entornos/{idUsuarioEntorno}/calendarios": {
+      "get": {
+        "tags": [
+          "Usuarios Entornos"
+        ],
+        "summary": "Obtiene los calendarios de un usuario entorno",
+        "operationId": "getCalendariosPorIdUsuarioEntorno",
+        "parameters": [
+          {
+            "name": "nombre",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "tipo",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/TipoCalendarioEnum"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CalendarioDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0002: No puedes consultar calendarios de otro usuario entorno sin permiso"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene los calendarios de un usuario entorno",
+        "x-stoplight": {
+          "id": "vc82nc058u21z"
+        }
+      },
+      "post": {
+        "tags": [
+          "Usuarios Entornos"
+        ],
+        "summary": "Crea un nuevo calendario para un usuario entorno",
+        "operationId": "postCalendariosPorIdUsuarioEntorno",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CalendarioDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalendarioDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0001: No se puedes gestionar calendarios de los que no seas propietario\n - CAL_0046: No puede haber dos calendarios laborales con el mismo nombre para el mismo usuario entorno."
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Crea un nuevo calendario para un usuario entorno",
+        "x-stoplight": {
+          "id": "b0wq0hvx25j2e"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idUsuarioEntorno"
+        }
+      ]
+    },
+    "/calendarios/v1/usuarios-entornos/{idUsuarioEntorno}/calendarios/programador-eventos": {
+      "post": {
+        "tags": [
+          "Usuarios Entornos"
+        ],
+        "summary": "Crea un nuevo calendario de tipo programador de eventos para un usuario entorno",
+        "operationId": "postProgramadorEventosCalendariosPorIdUsuarioEntorno",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CalendarioDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalendarioDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0001: No se puedes gestionar calendarios de los que no seas propietario\n - CAL_0046: No puede haber dos calendarios laborales con el mismo nombre para el mismo usuario entorno.\n - CAL_0004: Ya existe un calendario de programador de eventos para el usuario entorno indicado."
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Crea un nuevo calendario de tipo programador de eventos para un usuario entorno",
+        "x-stoplight": {
+          "id": "svae6hx62gqbz"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idUsuarioEntorno"
+        }
+      ]
+    },
+    "/calendarios/v1/usuarios-entornos/{idUsuarioEntorno}/calendarios/{idCalendario}": {
+      "get": {
+        "tags": [
+          "Usuarios Entornos"
+        ],
+        "summary": "Obtiene un calendario de un usuario entorno",
+        "operationId": "getCalendarioPorIdUsuarioEntornoPorIdCalendario",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalendarioDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0001: No se puedes gestionar calendarios de los que no seas propietario\n - CAL_0002: No puedes consultar calendarios de otro usuario entorno sin permiso"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene un calendario de un usuario entorno",
+        "x-stoplight": {
+          "id": "d76eseqrqlrs2"
+        }
+      },
+      "put": {
+        "tags": [
+          "Usuarios Entornos"
+        ],
+        "summary": "Modifica un  calendario de un usuario entorno",
+        "operationId": "putCalendarioPorIdUsuarioEntornoPorIdCalendario",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CalendarioDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalendarioDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0001: No se puedes gestionar calendarios de los que no seas propietario\n - CAL_0003: No tiene permiso para editar el calendario\n - CAL_0046: No puede haber dos calendarios laborales con el mismo nombre para el mismo usuario entorno."
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Modifica un  calendario de un usuario entorno",
+        "x-stoplight": {
+          "id": "rv21oqqluu8y7"
+        }
+      },
+      "delete": {
+        "tags": [
+          "Usuarios Entornos"
+        ],
+        "summary": "Borra un calendario de un usuario entorno",
+        "operationId": "deleteCalendarioPorIdUsuarioEntornoPorIdCalendario",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalendarioDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0001: No se puedes gestionar calendarios de los que no seas propietario\n - CAL_0049: No se puede borrar un calendario por defecto\n - CAL_0089: No se puede borrar el calendario porque se está usando en alguna cita/evento"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Borra un calendario de un usuario entorno",
+        "x-stoplight": {
+          "id": "0k7sg8yo7kfm3"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idCalendario"
+        },
+        {
+          "$ref": "#/components/parameters/idUsuarioEntorno"
+        }
+      ]
+    },
+    "/calendarios/v1/usuarios-entornos/{idUsuarioEntorno}/calendarios/{idCalendario}/compartir/{idUsuarioEntornoCompartido}": {
+      "put": {
+        "tags": [
+          "Usuarios Entornos"
+        ],
+        "summary": "Edita permisos de un calendario a un usuario entorno",
+        "operationId": "putCompartirPorIdUsuarioEntornoPorIdCalendarioPorIdUsuarioEntornoCompartido",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompartirDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompartirDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0083: Solo el propietario del calendario puede cambiar permisos\n - CAL_0085: No se pueden borrar o modificar permisos de propietario"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Edita permisos de un calendario a un usuario entorno",
+        "x-stoplight": {
+          "id": "cdklbstvfhlod"
+        }
+      },
+      "post": {
+        "tags": [
+          "Usuarios Entornos"
+        ],
+        "summary": "Añade permisos de un calendario a un usuario entorno",
+        "operationId": "postCompartirPorIdUsuarioEntornoPorIdCalendarioPorIdUsuarioEntornoCompartido",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompartirDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompartirDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0082: Permiso del usuario entorno %1d ya existe\n - CAL_0083: Solo el propietario del calendario puede cambiar permisos"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Añade permisos de un calendario a un usuario entorno",
+        "x-stoplight": {
+          "id": "uulj1ulwolwi5"
+        }
+      },
+      "delete": {
+        "tags": [
+          "Usuarios Entornos"
+        ],
+        "summary": "Elimina el permiso de un usuario entorno al calendario",
+        "operationId": "deleteCompartirPorIdUsuarioEntornoPorIdCalendarioPorIdUsuarioEntornoCompartido",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompartirDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0083: Solo el propietario del calendario puede cambiar permisos\n - CAL_0085: No se pueden borrar o modificar permisos de propietario"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Elimina el permiso de un usuario entorno al calendario",
+        "x-stoplight": {
+          "id": "7rwby8slmondr"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idCalendario"
+        },
+        {
+          "$ref": "#/components/parameters/idUsuarioEntorno"
+        },
+        {
+          "$ref": "#/components/parameters/idUsuarioEntornoCompartido"
+        }
+      ]
+    },
+    "/calendarios/v1/usuarios-entornos/{idUsuarioEntorno}/calendarios/{idCalendario}/permisos": {
+      "get": {
+        "tags": [
+          "Usuarios Entornos"
+        ],
+        "summary": "Devuelve los permisos de un calendario",
+        "operationId": "getPermisosPorIdUsuarioEntornoPorIdCalendario",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PermisosDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0002: No puedes consultar calendarios de otro usuario entorno sin permiso"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Devuelve los permisos de un calendario",
+        "x-stoplight": {
+          "id": "x7cx7r6n5q9cx"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idCalendario"
+        },
+        {
+          "$ref": "#/components/parameters/idUsuarioEntorno"
+        }
+      ]
+    },
+    "/calendarios/v1/usuarios-entornos/{idUsuarioEntorno}/calendarios/{idCalendario}/por-defecto": {
+      "post": {
+        "tags": [
+          "Usuarios Entornos"
+        ],
+        "summary": "Pone un calendario como calendario por defecto",
+        "operationId": "postPorDefectoPorIdUsuarioEntornoPorIdCalendario",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalendarioDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- CAL_0001: No se puedes gestionar calendarios de los que no seas propietario"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Pone un calendario como calendario por defecto",
+        "x-stoplight": {
+          "id": "ldhv58gq58qxd"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idCalendario"
+        },
+        {
+          "$ref": "#/components/parameters/idUsuarioEntorno"
+        }
+      ]
+    }
+  },
+  "components": {
+    "schemas": {
+      "AccionEventoProgramadoDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idAccionEventoProgramado": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "abe0rb8ch6m72"
+        }
+      },
+      "AsistenteCitaDto": {
+        "type": "object",
+        "properties": {
+          "empleado": {
+            "$ref": "#/components/schemas/EmpleadoDto"
+          },
+          "idParticipante": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "correo": {
+            "type": "string"
+          },
+          "estado": {
+            "$ref": "#/components/schemas/EstadoParticipanteEnum"
+          }
+        },
+        "x-stoplight": {
+          "id": "8vwsqfqoe40ow"
+        }
+      },
+      "AsistenteDto": {
+        "type": "object",
+        "properties": {
+          "empleado": {
+            "$ref": "#/components/schemas/EmpleadoDto"
+          },
+          "idParticipante": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "correo": {
+            "type": "string"
+          },
+          "estado": {
+            "$ref": "#/components/schemas/EstadoParticipanteEnum"
+          },
+          "cuentaParaAforo": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "otb9i8tscgwta"
+        }
+      },
+      "AsistenteGrupoDto": {
+        "type": "object",
+        "properties": {
+          "empleado": {
+            "$ref": "#/components/schemas/EmpleadoDto"
+          },
+          "idParticipante": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "correo": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "2fws31jt1mnuw"
+        }
+      },
+      "AsistenteInvitacionDto": {
+        "type": "object",
+        "properties": {
+          "empleado": {
+            "$ref": "#/components/schemas/EmpleadoDto"
+          },
+          "correo": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "bmmmiezbcxa56"
+        }
+      },
+      "AsistentesCitaDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idCita": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idCitaSerie": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "numeroAsistentesConfirmados": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "asistentes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AsistenteCitaDto"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "xsz7ehm6p7x90"
+        }
+      },
+      "AsistentesEventoDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idEvento": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "aforo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "numeroAsistentesConfirmados": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "asistentes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AsistenteGrupoDto"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "ltdepp09qjt80"
+        }
+      },
+      "AsistentesGrupoDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idGrupo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEvento": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "aforo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "numeroAsistentesConfirmados": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "asistentes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AsistenteGrupoDto"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "i6uv1y7jr4b4y"
+        }
+      },
+      "AvisosCitaDto": {
+        "type": "object",
+        "properties": {
+          "usuarioAntesReserva": {
+            "$ref": "#/components/schemas/InformacionAvisoDiasDto"
+          }
+        },
+        "x-stoplight": {
+          "id": "689trhiwl5j8m"
+        }
+      },
+      "AvisosDto": {
+        "type": "object",
+        "properties": {
+          "gestorReservas": {
+            "type": "boolean"
+          },
+          "gestorInformeReservas": {
+            "$ref": "#/components/schemas/InformacionAvisoDiasDto"
+          },
+          "usuarioAntesReserva": {
+            "$ref": "#/components/schemas/InformacionAvisoDiasDto"
+          },
+          "gestorCitasDisponibles": {
+            "$ref": "#/components/schemas/InformacionAvisoCitasDto"
+          }
+        },
+        "x-stoplight": {
+          "id": "cth425lngeawo"
+        }
+      },
+      "CalendarioDtoRequest": {
+        "required": [
+          "nombre"
+        ],
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "uemjn9di9zya0"
+        }
+      },
+      "CalendarioDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idCalendario": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "porDefecto": {
+            "type": "boolean"
+          },
+          "permiso": {
+            "$ref": "#/components/schemas/PermisoEnum"
+          },
+          "tipo": {
+            "$ref": "#/components/schemas/TipoCalendarioEnum"
+          }
+        },
+        "x-stoplight": {
+          "id": "7aylxnd290l7h"
+        }
+      },
+      "CalendarioLaboralConDiasDtoResponse": {
+        "required": [
+          "nombre"
+        ],
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "idCalendarioLaboral": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "porDefecto": {
+            "type": "boolean"
+          },
+          "lunes": {
+            "type": "boolean"
+          },
+          "martes": {
+            "type": "boolean"
+          },
+          "miercoles": {
+            "type": "boolean"
+          },
+          "jueves": {
+            "type": "boolean"
+          },
+          "viernes": {
+            "type": "boolean"
+          },
+          "sabado": {
+            "type": "boolean"
+          },
+          "domingo": {
+            "type": "boolean"
+          },
+          "dias": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CalendarioLaboralDiaDTO"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "pciympvyeybkt"
+        }
+      },
+      "CalendarioLaboralDiaDTO": {
+        "required": [
+          "nombre",
+          "dia",
+          "tipo"
+        ],
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "maxLength": 128,
+            "type": "string"
+          },
+          "dia": {
+            "type": "string"
+          },
+          "tipo": {
+            "$ref": "#/components/schemas/TipoDiaEnum"
+          }
+        },
+        "x-stoplight": {
+          "id": "wdcy8rrmvgx49"
+        }
+      },
+      "CalendarioLaboralDiaDTO_Rabbit": {
+        "type": "object",
+        "properties": {
+          "idCalendarioLaboral": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "listadoInsertar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CalendarioLaboralDiaDTO"
+            }
+          },
+          "listadoActualizar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CalendarioLaboralDiaDTO"
+            }
+          },
+          "listadoEliminar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CalendarioLaboralDiaDTO"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "o0ta6gzibopxm"
+        }
+      },
+      "CalendarioLaboralDtoRequest": {
+        "required": [
+          "nombre"
+        ],
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "maxLength": 128,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "lunes": {
+            "type": "boolean"
+          },
+          "martes": {
+            "type": "boolean"
+          },
+          "miercoles": {
+            "type": "boolean"
+          },
+          "jueves": {
+            "type": "boolean"
+          },
+          "viernes": {
+            "type": "boolean"
+          },
+          "sabado": {
+            "type": "boolean"
+          },
+          "domingo": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "tjgitl36cgia6"
+        }
+      },
+      "CalendarioLaboralDtoRequestUpdate": {
+        "required": [
+          "nombre"
+        ],
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "maxLength": 128,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "lunes": {
+            "type": "boolean"
+          },
+          "martes": {
+            "type": "boolean"
+          },
+          "miercoles": {
+            "type": "boolean"
+          },
+          "jueves": {
+            "type": "boolean"
+          },
+          "viernes": {
+            "type": "boolean"
+          },
+          "sabado": {
+            "type": "boolean"
+          },
+          "domingo": {
+            "type": "boolean"
+          },
+          "modoDeEdicion": {
+            "$ref": "#/components/schemas/ModoEdicionCalendarioLaboralEnum"
+          }
+        },
+        "x-stoplight": {
+          "id": "329kivk6x5erz"
+        }
+      },
+      "CalendarioLaboralDtoResponse": {
+        "required": [
+          "nombre"
+        ],
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "idCalendarioLaboral": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "porDefecto": {
+            "type": "boolean"
+          },
+          "lunes": {
+            "type": "boolean"
+          },
+          "martes": {
+            "type": "boolean"
+          },
+          "miercoles": {
+            "type": "boolean"
+          },
+          "jueves": {
+            "type": "boolean"
+          },
+          "viernes": {
+            "type": "boolean"
+          },
+          "sabado": {
+            "type": "boolean"
+          },
+          "domingo": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "6uxb365n8vtyt"
+        }
+      },
+      "CalendarioLaboralEventoDtoResponse": {
+        "type": "object",
+        "properties": {
+          "eventos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EventoNombreDtoResponse"
+            }
+          },
+          "puedeEditar": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "sujvr0jbg2g7r"
+        }
+      },
+      "CitaAsignadaDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idEvento": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "agrupado": {
+            "type": "boolean"
+          },
+          "idInvitacion": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "citas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CitaDisponibleParticipanteDtoResponse"
+            }
+          },
+          "asistente": {
+            "$ref": "#/components/schemas/PayloadDto"
+          }
+        },
+        "x-stoplight": {
+          "id": "b8d9ha1bvlf2q"
+        }
+      },
+      "CitaDisponibleDtoRequestCancelar": {
+        "required": [
+          "idParticipante"
+        ],
+        "type": "object",
+        "properties": {
+          "idParticipante": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "enviarAviso": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "x1mqd93vh5hrq"
+        }
+      },
+      "CitaDisponibleDtoRequestReservar": {
+        "type": "object",
+        "properties": {
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEmpleado": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "correo": {
+            "type": "string"
+          },
+          "enviarAviso": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "qkls2w7zxvj5q"
+        }
+      },
+      "CitaDisponibleDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idCitaDisponible": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idSerie": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idGrupo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idRegla": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEvento": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "aforo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "numeroAsistentesConfirmados": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "fechaDesde": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "fechaHasta": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "asistentes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AsistenteDto"
+            }
+          },
+          "serieFinalizada": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "evqasj6odnrfy"
+        }
+      },
+      "CitaDisponibleDtoResponseCancelar": {
+        "type": "object",
+        "properties": {
+          "idEvento": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idCitaDisponible": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idParticipante": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "enviarAviso": {
+            "type": "boolean"
+          },
+          "numeroCitasCanceladas": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "empleado": {
+            "$ref": "#/components/schemas/EmpleadoDto"
+          }
+        },
+        "x-stoplight": {
+          "id": "0gcamutieg11o"
+        }
+      },
+      "CitaDisponibleDtoResponseReservar": {
+        "type": "object",
+        "properties": {
+          "idEvento": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idCitaDisponible": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEmpleado": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "correo": {
+            "type": "string"
+          },
+          "enviarAviso": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "2lx38qt8j2kdi"
+        }
+      },
+      "CitaDisponibleEditarDto": {
+        "required": [
+          "fechaDesde",
+          "fechaHasta"
+        ],
+        "type": "object",
+        "properties": {
+          "idCitaDisponible": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "fechaDesde": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "fechaHasta": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          }
+        },
+        "x-stoplight": {
+          "id": "oo6784zx8xcvg"
+        }
+      },
+      "CitaDisponibleParticipanteDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idCitaDisponible": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idCita": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idGrupo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idParticipante": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "estadoParticipante": {
+            "$ref": "#/components/schemas/EstadoParticipanteEnum"
+          },
+          "cuentaParaAforo": {
+            "type": "boolean"
+          },
+          "fechaDesde": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "fechaHasta": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          }
+        },
+        "x-stoplight": {
+          "id": "hju4ljmvzvswn"
+        }
+      },
+      "CitaDtoRequestCreate": {
+        "required": [
+          "nombre",
+          "color",
+          "informacion",
+          "idCalendarioDestino",
+          "idTipoEvento",
+          "tipoRepeticion",
+          "regla",
+          "duracion",
+          "avisos",
+          "zonaHorariaPersonalizada",
+          "zonaHoraria"
+        ],
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "maxLength": 128,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "color": {
+            "maxLength": 45,
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "informacion": {
+            "maxLength": 1024,
+            "type": "string"
+          },
+          "idCalendarioDestino": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idCalendarioLaboral": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idTipoEvento": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "tipoRepeticion": {
+            "$ref": "#/components/schemas/TipoRepeticionEnum"
+          },
+          "regla": {
+            "maxLength": 1024,
+            "minLength": 1,
+            "type": "string"
+          },
+          "duracion": {
+            "format": "int32",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "avisos": {
+            "$ref": "#/components/schemas/AvisosCitaDto"
+          },
+          "diaCompleto": {
+            "type": "boolean"
+          },
+          "zonaHorariaPersonalizada": {
+            "type": "boolean"
+          },
+          "zonaHoraria": {
+            "pattern": "\\S",
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "o4kx8x0mle29q"
+        }
+      },
+      "CitaDtoRequestUpdate": {
+        "required": [
+          "nombre",
+          "informacion",
+          "fechaDesde",
+          "fechaHasta",
+          "zonaHorariaPersonalizada",
+          "zonaHoraria"
+        ],
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "maxLength": 128,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "informacion": {
+            "maxLength": 1024,
+            "type": "string"
+          },
+          "fechaDesde": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "fechaHasta": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "diaCompleto": {
+            "type": "boolean"
+          },
+          "zonaHorariaPersonalizada": {
+            "type": "boolean"
+          },
+          "zonaHoraria": {
+            "pattern": "\\S",
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "vgbjzwjn3vcgc"
+        }
+      },
+      "CitaDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idCita": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "modificada": {
+            "type": "boolean"
+          },
+          "idCalendarioLaboral": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idTipoEvento": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "fechaDesde": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "fechaHasta": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "idCitaSerie": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "informacion": {
+            "type": "string"
+          },
+          "diaCompleto": {
+            "type": "boolean"
+          },
+          "zonaHorariaPersonalizada": {
+            "type": "boolean"
+          },
+          "zonaHoraria": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "y04nv429ezmlr"
+        }
+      },
+      "CitaPorDiaDtoResponse": {
+        "required": [
+          "idCita"
+        ],
+        "type": "object",
+        "properties": {
+          "idCita": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "color": {
+            "type": "string"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "fechaDesde": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "fechaHasta": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "idCalendario": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idTipoEvento": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "modificada": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "bfzohllcm0g78"
+        }
+      },
+      "CitaSerieDtoRequest": {
+        "required": [
+          "nombre",
+          "color",
+          "informacion",
+          "idCalendarioDestino",
+          "idTipoEvento",
+          "tipoRepeticion",
+          "regla",
+          "duracion",
+          "avisos"
+        ],
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "maxLength": 128,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "color": {
+            "maxLength": 45,
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "informacion": {
+            "maxLength": 1024,
+            "type": "string"
+          },
+          "idCalendarioDestino": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idCalendarioLaboral": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idTipoEvento": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "tipoRepeticion": {
+            "$ref": "#/components/schemas/TipoRepeticionEnum"
+          },
+          "regla": {
+            "maxLength": 1024,
+            "minLength": 1,
+            "type": "string"
+          },
+          "duracion": {
+            "format": "int32",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "avisos": {
+            "$ref": "#/components/schemas/AvisosCitaDto"
+          },
+          "diaCompleto": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "bd6m6tif3jwvi"
+        }
+      },
+      "CitaSerieDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idCitaSerie": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "numCitasGeneradas": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "color": {
+            "type": "string"
+          },
+          "informacion": {
+            "type": "string"
+          },
+          "idCalendarioDestino": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idCalendarioLaboral": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idTipoEvento": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "tipoRepeticion": {
+            "$ref": "#/components/schemas/TipoRepeticionEnum"
+          },
+          "regla": {
+            "type": "string"
+          },
+          "duracion": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "avisos": {
+            "$ref": "#/components/schemas/AvisosCitaDto"
+          },
+          "diaCompleto": {
+            "type": "boolean"
+          },
+          "fechaDesde": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "recuento": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "8hn9720v7ql1i"
+        }
+      },
+      "CitasDisponiblesModificadasDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idEvento": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "listadoInsertar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CitaDisponibleEditarDto"
+            }
+          },
+          "listadoModificar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CitaDisponibleEditarDto"
+            }
+          },
+          "listadoEliminar": {
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "xr9mwm9c0zxun"
+        }
+      },
+      "CitasReservadasPasadoDtoResponse": {
+        "type": "object",
+        "properties": {
+          "citasReservadasPasado": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "8uvm0e6ksa66d"
+        }
+      },
+      "CompartirDtoRequest": {
+        "type": "object",
+        "properties": {
+          "permiso": {
+            "$ref": "#/components/schemas/PermisoEnum"
+          }
+        },
+        "x-stoplight": {
+          "id": "qilripgwo3vb1"
+        }
+      },
+      "CompartirDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idUsuarioEntorno": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idUsuarioEntornoCompartido": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idCalendario": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "permiso": {
+            "$ref": "#/components/schemas/PermisoEnum"
+          }
+        },
+        "x-stoplight": {
+          "id": "or1qn0ctektpm"
+        }
+      },
+      "DiaSemanaEnum": {
+        "enum": [
+          "LUNES",
+          "MARTES",
+          "MIERCOLES",
+          "JUEVES",
+          "VIERNES",
+          "SABADO",
+          "DOMINGO"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "j43eb2cdmsv93"
+        }
+      },
+      "DuracionCitaUnidadEnum": {
+        "enum": [
+          "MINUTOS",
+          "HORAS"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "hf9ajvrlxxj1t"
+        }
+      },
+      "EmpleadoDto": {
+        "type": "object",
+        "properties": {
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEmpleado": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "dni": {
+            "type": "string"
+          },
+          "nombre": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "vc51yesmr4f45"
+        }
+      },
+      "EmpleadoInvitacionDtoRequest": {
+        "type": "object",
+        "properties": {
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEmpleado": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "gohaovmyvkzsn"
+        }
+      },
+      "EstadoCalendarioDtoResponse": {
+        "type": "object",
+        "properties": {
+          "listaEventos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EventoPorDiaDtoResponse"
+            }
+          },
+          "listaCitas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CitaPorDiaDtoResponse"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "hi8aia6slevpm"
+        }
+      },
+      "EstadoParticipanteEnum": {
+        "enum": [
+          "ACEPTADA",
+          "PENDIENTE",
+          "RECHAZADA"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "pa3k5ky404o8n"
+        }
+      },
+      "EventoCitasEnum": {
+        "enum": [
+          "CITAS",
+          "EVENTOS"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "wf5nur0ckyxu5"
+        }
+      },
+      "EventoCrearDtoRequest": {
+        "required": [
+          "nombre",
+          "color",
+          "informacion",
+          "idCalendarioDestino",
+          "idTipoEvento",
+          "zonaHorariaPersonalizada",
+          "zonaHoraria"
+        ],
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "maxLength": 128,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "color": {
+            "maxLength": 45,
+            "type": "string"
+          },
+          "informacion": {
+            "maxLength": 1024,
+            "type": "string"
+          },
+          "idCalendarioDestino": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idCalendarioLaboral": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "citasMaximasUsuario": {
+            "format": "int32",
+            "minimum": 1,
+            "type": "integer"
+          },
+          "agrupado": {
+            "type": "boolean"
+          },
+          "duracion": {
+            "format": "int32",
+            "minimum": 1,
+            "type": "integer"
+          },
+          "duracionUnidad": {
+            "$ref": "#/components/schemas/DuracionCitaUnidadEnum"
+          },
+          "idTipoEvento": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "permisos": {
+            "$ref": "#/components/schemas/PermisosDto"
+          },
+          "avisos": {
+            "$ref": "#/components/schemas/AvisosDto"
+          },
+          "grupos": {
+            "$ref": "#/components/schemas/RequestBodyTripleListaGrupoCrearEditarDto"
+          },
+          "zonaHorariaPersonalizada": {
+            "type": "boolean"
+          },
+          "zonaHoraria": {
+            "pattern": "\\S",
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "81iyar8i7hjta"
+        }
+      },
+      "EventoCrearEditarDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idEvento": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "color": {
+            "type": "string"
+          },
+          "informacion": {
+            "type": "string"
+          },
+          "idCalendarioDestino": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idCalendarioLaboral": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "citasMaximasUsuario": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "agrupado": {
+            "type": "boolean"
+          },
+          "duracion": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "duracionUnidad": {
+            "$ref": "#/components/schemas/DuracionCitaUnidadEnum"
+          },
+          "idTipoEvento": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "permisos": {
+            "$ref": "#/components/schemas/PermisosDto"
+          },
+          "avisos": {
+            "$ref": "#/components/schemas/AvisosDto"
+          },
+          "grupos": {
+            "$ref": "#/components/schemas/RequestBodyTripleListaGrupoCrearEditarDto"
+          },
+          "zonaHorariaPersonalizada": {
+            "type": "boolean"
+          },
+          "zonaHoraria": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "wslv7r323yjpj"
+        }
+      },
+      "EventoDtoRequestCreate": {
+        "required": [
+          "nombre",
+          "color",
+          "informacion",
+          "idCalendarioDestino",
+          "idTipoEvento",
+          "zonaHorariaPersonalizada",
+          "zonaHoraria"
+        ],
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "maxLength": 128,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "color": {
+            "maxLength": 45,
+            "type": "string"
+          },
+          "informacion": {
+            "maxLength": 1024,
+            "type": "string"
+          },
+          "idCalendarioDestino": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idCalendarioLaboral": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "citasMaximasUsuario": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "agrupado": {
+            "type": "boolean"
+          },
+          "duracion": {
+            "format": "int32",
+            "minimum": 1,
+            "type": "integer"
+          },
+          "duracionUnidad": {
+            "$ref": "#/components/schemas/DuracionCitaUnidadEnum"
+          },
+          "idTipoEvento": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "permisos": {
+            "$ref": "#/components/schemas/PermisosDto"
+          },
+          "avisos": {
+            "$ref": "#/components/schemas/AvisosDto"
+          },
+          "zonaHorariaPersonalizada": {
+            "type": "boolean"
+          },
+          "zonaHoraria": {
+            "pattern": "\\S",
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "06h1hylh8gc3m"
+        }
+      },
+      "EventoDtoRequestUpdate": {
+        "required": [
+          "nombre",
+          "color",
+          "informacion",
+          "idCalendarioDestino"
+        ],
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "maxLength": 128,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "color": {
+            "maxLength": 45,
+            "type": "string"
+          },
+          "informacion": {
+            "maxLength": 1024,
+            "type": "string"
+          },
+          "idCalendarioDestino": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idCalendarioLaboral": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "citasMaximasUsuario": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "duracion": {
+            "format": "int32",
+            "minimum": 1,
+            "type": "integer"
+          },
+          "duracionUnidad": {
+            "$ref": "#/components/schemas/DuracionCitaUnidadEnum"
+          },
+          "permisos": {
+            "$ref": "#/components/schemas/PermisosDto"
+          },
+          "avisos": {
+            "$ref": "#/components/schemas/AvisosDto"
+          }
+        },
+        "x-stoplight": {
+          "id": "xcmmcxt02st5r"
+        }
+      },
+      "EventoDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idEvento": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "color": {
+            "type": "string"
+          },
+          "informacion": {
+            "type": "string"
+          },
+          "idCalendarioDestino": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idCalendarioLaboral": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "citasMaximasUsuario": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "agrupado": {
+            "type": "boolean"
+          },
+          "duracion": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "duracionUnidad": {
+            "$ref": "#/components/schemas/DuracionCitaUnidadEnum"
+          },
+          "idTipoEvento": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "permisos": {
+            "$ref": "#/components/schemas/PermisosDto"
+          },
+          "avisos": {
+            "$ref": "#/components/schemas/AvisosDto"
+          },
+          "idEntidadOrigen": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "zonaHorariaPersonalizada": {
+            "type": "boolean"
+          },
+          "zonaHoraria": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "bzx64ertw9x5g"
+        }
+      },
+      "EventoDtoResponseGenerate": {
+        "type": "object",
+        "properties": {
+          "idEvento": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "numCitasGeneradas": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "up5s4rala81hv"
+        }
+      },
+      "EventoEditarDtoRequest": {
+        "required": [
+          "nombre",
+          "color",
+          "informacion",
+          "idCalendarioDestino"
+        ],
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "maxLength": 128,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "color": {
+            "maxLength": 45,
+            "type": "string"
+          },
+          "informacion": {
+            "maxLength": 1024,
+            "type": "string"
+          },
+          "idCalendarioDestino": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idCalendarioLaboral": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "citasMaximasUsuario": {
+            "format": "int32",
+            "minimum": 1,
+            "type": "integer"
+          },
+          "duracion": {
+            "format": "int32",
+            "minimum": 1,
+            "type": "integer"
+          },
+          "duracionUnidad": {
+            "$ref": "#/components/schemas/DuracionCitaUnidadEnum"
+          },
+          "permisos": {
+            "$ref": "#/components/schemas/PermisosDto"
+          },
+          "avisos": {
+            "$ref": "#/components/schemas/AvisosDto"
+          },
+          "grupos": {
+            "$ref": "#/components/schemas/RequestBodyTripleListaGrupoCrearEditarDto"
+          }
+        },
+        "x-stoplight": {
+          "id": "lpb362bi4x05j"
+        }
+      },
+      "EventoNombreDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idEvento": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "wu2ck4ieha6uc"
+        }
+      },
+      "EventoPorDiaDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idEvento": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idCalendario": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idGrupo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "color": {
+            "type": "string"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "agrupado": {
+            "type": "boolean"
+          },
+          "aforo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "numCitasOcupadas": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "fechaDesde": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "fechaHasta": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "idTipoEvento": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "33qm22wmjbiu3"
+        }
+      },
+      "EventoProgramadoDtoRequest": {
+        "required": [
+          "nombre",
+          "color",
+          "idCalendarioDestino",
+          "tipoRepeticion",
+          "regla",
+          "zonaHorariaPersonalizada",
+          "zonaHoraria",
+          "idAccionEventoProgramado"
+        ],
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "maxLength": 128,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "color": {
+            "maxLength": 45,
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "idCalendarioDestino": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idCalendarioLaboral": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "tipoRepeticion": {
+            "$ref": "#/components/schemas/TipoRepeticionEnum"
+          },
+          "regla": {
+            "maxLength": 1024,
+            "minLength": 1,
+            "type": "string"
+          },
+          "diaCompleto": {
+            "type": "boolean"
+          },
+          "zonaHorariaPersonalizada": {
+            "type": "boolean"
+          },
+          "zonaHoraria": {
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "idAccionEventoProgramado": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "jy13vyh5yeiwt"
+        }
+      },
+      "FinalizarSerieDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idEvento": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idGrupo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idSerie": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "7cnc0tmnwjwal"
+        }
+      },
+      "GrupoCrearEditarDto": {
+        "required": [
+          "nombre"
+        ],
+        "type": "object",
+        "properties": {
+          "idGrupo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "maxLength": 128,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "aforo": {
+            "format": "int32",
+            "minimum": 1,
+            "type": "integer"
+          },
+          "series": {
+            "$ref": "#/components/schemas/RequestBodyTripleListaSerieCrearEditarDto"
+          }
+        },
+        "x-stoplight": {
+          "id": "rallihdshusgu"
+        }
+      },
+      "GrupoDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idGrupo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEvento": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "aforo": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "lxnmeaw78s08q"
+        }
+      },
+      "GrupoDtoResponseExtendido": {
+        "type": "object",
+        "properties": {
+          "idGrupo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEvento": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "aforo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "duracion": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "duracionUnidad": {
+            "$ref": "#/components/schemas/DuracionCitaUnidadEnum"
+          },
+          "fechaDesde": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "fechaHasta": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "numeroAsistentesConfirmados": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "0dnyg9xxqh506"
+        }
+      },
+      "GrupoDtoResponseReservar": {
+        "type": "object",
+        "properties": {
+          "idEvento": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idGrupo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEmpleado": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "correo": {
+            "type": "string"
+          },
+          "enviarAviso": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "h19ciulhraim8"
+        }
+      },
+      "HorarioConDiaDtoResponse": {
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "type": "string"
+          },
+          "idHorario": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "porDefecto": {
+            "type": "boolean"
+          },
+          "dias": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HorarioDiaDtoResponse"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "oqwfj1qtk2h48"
+        }
+      },
+      "HorarioConHorasSemanalesDTO": {
+        "required": [
+          "nombre"
+        ],
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "maxLength": 128,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "idHorario": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "porDefecto": {
+            "type": "boolean"
+          },
+          "numeroHorasSemanales": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "4flvtquol8ai0"
+        }
+      },
+      "HorarioDiaDtoRequest": {
+        "required": [
+          "dia",
+          "horaDesde",
+          "horaHasta"
+        ],
+        "type": "object",
+        "properties": {
+          "dia": {
+            "$ref": "#/components/schemas/DiaSemanaEnum"
+          },
+          "horaDesde": {
+            "type": "string"
+          },
+          "horaHasta": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "q8c1r14nxr4tb"
+        }
+      },
+      "HorarioDiaDtoResponse": {
+        "required": [
+          "dia",
+          "horaDesde",
+          "horaHasta"
+        ],
+        "type": "object",
+        "properties": {
+          "dia": {
+            "$ref": "#/components/schemas/DiaSemanaEnum"
+          },
+          "horaDesde": {
+            "type": "string"
+          },
+          "horaHasta": {
+            "type": "string"
+          },
+          "idHorarioDia": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "tg8gjnri3aycb"
+        }
+      },
+      "HorarioDtoRequest": {
+        "required": [
+          "nombre"
+        ],
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "maxLength": 128,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "dias": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HorarioDiaDtoRequest"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "9s50pasmtd7tj"
+        }
+      },
+      "HorarioDtoResponse": {
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "type": "string"
+          },
+          "idHorario": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "porDefecto": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "rgla4zvfnjtpx"
+        }
+      },
+      "HorarioUpdateDtoRequest": {
+        "required": [
+          "nombre"
+        ],
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "maxLength": 128,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "dias": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HorarioDiaDtoRequest"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "yr0xcu9v8inxl"
+        }
+      },
+      "InformacionAvisoCitasDto": {
+        "required": [
+          "citas"
+        ],
+        "type": "object",
+        "properties": {
+          "habilitado": {
+            "type": "boolean"
+          },
+          "citas": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "tlp39c07sid16"
+        }
+      },
+      "InformacionAvisoDiasDto": {
+        "type": "object",
+        "properties": {
+          "habilitado": {
+            "type": "boolean"
+          },
+          "dias": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "y9k68tb927pn5"
+        }
+      },
+      "InformacionPermisoDto": {
+        "type": "object",
+        "properties": {
+          "habilitado": {
+            "type": "boolean"
+          },
+          "unidad": {
+            "$ref": "#/components/schemas/UnidadEnum"
+          },
+          "valor": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "8pa4ecjgnntu7"
+        }
+      },
+      "InvitacionDtoRequest": {
+        "type": "object",
+        "properties": {
+          "empleado": {
+            "$ref": "#/components/schemas/EmpleadoInvitacionDtoRequest"
+          },
+          "correo": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "tz384zdd9cdvc"
+        }
+      },
+      "InvitacionDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idEvento": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idInvitacion": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "enviada": {
+            "type": "boolean"
+          },
+          "fechaEnvio": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "asistente": {
+            "$ref": "#/components/schemas/AsistenteInvitacionDto"
+          }
+        },
+        "x-stoplight": {
+          "id": "0xkqhgt3uqeuu"
+        }
+      },
+      "ListadoCalendariosLaboralesDTO": {
+        "required": [
+          "nombre"
+        ],
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "maxLength": 128,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "idCalendarioLaboral": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "porDefecto": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "o6dazwssie3nw"
+        }
+      },
+      "ModoEdicionCalendarioLaboralEnum": {
+        "enum": [
+          "MANTENER",
+          "SOBRESCRIBIR"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "2i8lcbokvkv11"
+        }
+      },
+      "PayloadDto": {
+        "type": "object",
+        "properties": {
+          "empleado": {
+            "$ref": "#/components/schemas/EmpleadoDto"
+          },
+          "correo": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "csg5r6km6ough"
+        }
+      },
+      "PermisoEnum": {
+        "enum": [
+          "COMPARTIDO",
+          "PROPIETARIO"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "car8xo5x6viil"
+        }
+      },
+      "PermisosDto": {
+        "type": "object",
+        "properties": {
+          "reservarDesde": {
+            "$ref": "#/components/schemas/InformacionPermisoDto"
+          },
+          "reservarHasta": {
+            "$ref": "#/components/schemas/InformacionPermisoDto"
+          },
+          "cancelarHasta": {
+            "$ref": "#/components/schemas/InformacionPermisoDto"
+          }
+        },
+        "x-stoplight": {
+          "id": "o3dz6iiftte7j"
+        }
+      },
+      "PermisosDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idUsuarioEntorno": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "permiso": {
+            "$ref": "#/components/schemas/PermisoEnum"
+          }
+        },
+        "x-stoplight": {
+          "id": "njfflvrnqe30q"
+        }
+      },
+      "ReglaCrearEditarDto": {
+        "required": [
+          "regla"
+        ],
+        "type": "object",
+        "properties": {
+          "idRegla": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "regla": {
+            "maxLength": 1500,
+            "minLength": 1,
+            "pattern": "\\S",
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "q4905eb8ham0i"
+        }
+      },
+      "ReglaDtoResponse": {
+        "required": [
+          "idRegla"
+        ],
+        "type": "object",
+        "properties": {
+          "idRegla": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "regla": {
+            "maxLength": 1500,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "89i8053n49wwy"
+        }
+      },
+      "RequestBodyTripleListaCitaDisponibleEditarDto": {
+        "required": [
+          "listadoInsertar",
+          "listadoModificar",
+          "listadoEliminar"
+        ],
+        "type": "object",
+        "properties": {
+          "listadoInsertar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CitaDisponibleEditarDto"
+            }
+          },
+          "listadoModificar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CitaDisponibleEditarDto"
+            }
+          },
+          "listadoEliminar": {
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "ym3d0lnez80es"
+        }
+      },
+      "RequestBodyTripleListaGrupoCrearEditarDto": {
+        "required": [
+          "listadoInsertar",
+          "listadoModificar",
+          "listadoEliminar"
+        ],
+        "type": "object",
+        "properties": {
+          "listadoInsertar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GrupoCrearEditarDto"
+            }
+          },
+          "listadoModificar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GrupoCrearEditarDto"
+            }
+          },
+          "listadoEliminar": {
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "z25hfzy7gsnff"
+        }
+      },
+      "RequestBodyTripleListaReglaCrearEditarDto": {
+        "required": [
+          "listadoInsertar",
+          "listadoModificar",
+          "listadoEliminar"
+        ],
+        "type": "object",
+        "properties": {
+          "listadoInsertar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReglaCrearEditarDto"
+            }
+          },
+          "listadoModificar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReglaCrearEditarDto"
+            }
+          },
+          "listadoEliminar": {
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "8cv6kdb845kh1"
+        }
+      },
+      "RequestBodyTripleListaSerieCrearEditarDto": {
+        "required": [
+          "listadoInsertar",
+          "listadoModificar",
+          "listadoEliminar"
+        ],
+        "type": "object",
+        "properties": {
+          "listadoInsertar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SerieCrearEditarDto"
+            }
+          },
+          "listadoModificar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SerieCrearEditarDto"
+            }
+          },
+          "listadoEliminar": {
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "fuwcretho5w1z"
+        }
+      },
+      "SerieCrearEditarDto": {
+        "required": [
+          "tipoRepeticion",
+          "regla"
+        ],
+        "type": "object",
+        "properties": {
+          "idSerie": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "tipoRepeticion": {
+            "$ref": "#/components/schemas/TipoRepeticionEnum"
+          },
+          "reglas": {
+            "$ref": "#/components/schemas/RequestBodyTripleListaReglaCrearEditarDto"
+          },
+          "regla": {
+            "maxLength": 1500,
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "tcibg626faxkq"
+        }
+      },
+      "SerieDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idEvento": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idGrupo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idSerie": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "tipoRepeticion": {
+            "$ref": "#/components/schemas/TipoRepeticionEnum"
+          },
+          "reglas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReglaDtoResponse"
+            }
+          },
+          "regla": {
+            "type": "string"
+          },
+          "finalizada": {
+            "type": "boolean"
+          },
+          "citasReservadasPasadas": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "jk7c4jctquipb"
+        }
+      },
+      "TipoCalendarioEnum": {
+        "enum": [
+          "CITAS",
+          "PROGRAMADOR_EVENTOS"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "fpk6ybc32m8ww"
+        }
+      },
+      "TipoDiaEnum": {
+        "enum": [
+          "LABORAL",
+          "NO_LABORAL"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "8yhyeokjr7rto"
+        }
+      },
+      "TipoEventoDTORequest": {
+        "required": [
+          "nombre"
+        ],
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "maxLength": 128,
+            "pattern": "\\S",
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "mtho0n7sqd389"
+        }
+      },
+      "TipoEventoDTOResponse": {
+        "required": [
+          "nombre"
+        ],
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "idTipoEvento": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "interna": {
+            "type": "boolean"
+          },
+          "porDefecto": {
+            "type": "boolean"
+          },
+          "modulo": {
+            "$ref": "#/components/schemas/TipoEventoModuloEnum"
+          }
+        },
+        "x-stoplight": {
+          "id": "gb1dznbbgnequ"
+        }
+      },
+      "TipoEventoModuloEnum": {
+        "enum": [
+          "COMUN",
+          "PRL",
+          "QUARTZ"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "1kyq43k3has99"
+        }
+      },
+      "TipoRepeticionEnum": {
+        "enum": [
+          "DIAS_SUELTOS",
+          "SEMANAL",
+          "MENSUAL",
+          "DIARIO"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "k7e1tvq231si0"
+        }
+      },
+      "TokenDtoRequest": {
+        "required": [
+          "token"
+        ],
+        "type": "object",
+        "properties": {
+          "token": {
+            "maxLength": 128,
+            "minLength": 128,
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "ww641wo6u2hgs"
+        }
+      },
+      "TokensDtoResponse": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string"
+          },
+          "expiresIn": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "refreshToken": {
+            "type": "string"
+          },
+          "idToken": {
+            "type": "string"
+          },
+          "numeroErrores": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "nvac1kordq2uv"
+        }
+      },
+      "UnidadEnum": {
+        "enum": [
+          "DIAS",
+          "HORAS"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "falgvh3sv1ijl"
+        }
+      },
+      "UsuarioEntornoCorreoDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idUsuario": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idUsuarioEntorno": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "correo": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "xsx4exvjntiry"
+        }
+      },
+      "VisionCalendarioEnum": {
+        "enum": [
+          "MENSUAL",
+          "SEMANAL",
+          "DIARIO",
+          "EVENTO"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "mqwjwfxr0g0gf"
+        }
+      },
+      "ZonedDateTime": {
+        "format": "date-time",
+        "type": "string",
+        "example": "2022-03-10T12:15:50-04:00",
+        "x-stoplight": {
+          "id": "yskqusnr07k0w"
+        }
+      }
+    },
+    "securitySchemes": {
+      "jwt": {
+        "type": "http",
+        "description": "Authentication",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "parameters": {
+      "X-Timezone": {
+        "name": "X-Timezone",
+        "in": "header",
+        "description": "Zona horaria desde la que se hace la petición",
+        "required": true,
+        "schema": {
+          "default": "Europe/Madrid",
+          "type": "string"
+        }
+      },
+      "idCalendarioLaboral": {
+        "name": "idCalendarioLaboral",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idCita": {
+        "name": "idCita",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idEvento": {
+        "name": "idEvento",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idCitaDisponible": {
+        "name": "idCitaDisponible",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idGrupo": {
+        "name": "idGrupo",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idSerie": {
+        "name": "idSerie",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idInvitacion": {
+        "name": "idInvitacion",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idHorario": {
+        "name": "idHorario",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idTipoEvento": {
+        "name": "idTipoEvento",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idUsuarioEntorno": {
+        "name": "idUsuarioEntorno",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idCalendario": {
+        "name": "idCalendario",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idUsuarioEntornoCompartido": {
+        "name": "idUsuarioEntornoCompartido",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      }
+    }
+  }
+}

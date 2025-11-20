@@ -1,0 +1,3186 @@
+{
+  "openapi": "3.0.3",
+  "x-stoplight": {
+    "id": "stop5ly9g6izp"
+  },
+  "info": {
+    "title": "metaia API",
+    "version": "1.0-SNAPSHOT",
+    "description": "API del microservicio de metaia",
+    "license": {
+      "name": "Proprietary - Internal Use Only",
+      "url": "https://v4.metacontratas.com/"
+    },
+    "contact": {
+      "email": "soporte.tecnico@metadata.es",
+      "name": "Metadata S.L.",
+      "url": "https://v4.metacontratas.com/"
+    }
+  },
+  "tags": [
+    {
+      "name": "Clasificar",
+      "description": "Servicio de clasificación"
+    },
+    {
+      "name": "ConfiguracionNumeroPaginas",
+      "description": "Servicio de configuración de número de páginas"
+    },
+    {
+      "name": "Contexto",
+      "description": "Servicio de contexto"
+    },
+    {
+      "name": "Criterio",
+      "description": "Servicio de criterio"
+    },
+    {
+      "name": "CriterioEjemplo",
+      "description": "Servicio de criterio ejemplo"
+    },
+    {
+      "name": "DocumentoEjemplo",
+      "description": "Servicio de documentos de ejemplo"
+    },
+    {
+      "name": "LogProcesamiento",
+      "description": "Servicio de logs de procesamiento"
+    },
+    {
+      "name": "PipelineClasificacion",
+      "description": "Servicio de pipeline de clasificación"
+    },
+    {
+      "name": "PipelineValidacion",
+      "description": "Servicio de pipeline validación"
+    },
+    {
+      "name": "Prompt",
+      "description": "Servicio de prompt"
+    },
+    {
+      "name": "Validar",
+      "description": "Servicio de validación"
+    }
+  ],
+  "paths": {
+    "/metaia/v1/clasificar": {
+      "post": {
+        "tags": [
+          "Clasificar"
+        ],
+        "summary": "Encola una solicitud de clasificación de un documento para procesar posteriormente",
+        "operationId": "postClasificar",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "file",
+                  "idDocumento",
+                  "idEmpresa"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "format": "binary",
+                    "type": "string"
+                  },
+                  "aplicacion": {
+                    "$ref": "#/components/schemas/AplicacionEnum"
+                  },
+                  "idDocumento": {
+                    "format": "int32",
+                    "type": "integer"
+                  },
+                  "idEmpresa": {
+                    "format": "int32",
+                    "type": "integer"
+                  }
+                }
+              },
+              "encoding": {
+                "file": {
+                  "contentType": "application/octet-stream"
+                },
+                "idDocumento": {
+                  "contentType": "text/plain"
+                },
+                "aplicacion": {
+                  "contentType": "text/plain"
+                },
+                "idEmpresa": {
+                  "contentType": "text/plain"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "aplicacion": {
+                      "$ref": "#/components/schemas/AplicacionEnum"
+                    },
+                    "idDocumento": {
+                      "format": "int32",
+                      "type": "integer"
+                    },
+                    "idEmpresa": {
+                      "format": "int32",
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- MIA_0002 :  El archivo supera el tamaño máximo permitido para procesarse"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Encola una solicitud de clasificación de un documento para procesar posteriormente",
+        "x-stoplight": {
+          "id": "e8yv4ag9wzer6"
+        }
+      }
+    },
+    "/metaia/v1/configuracion-numero-paginas": {
+      "get": {
+        "tags": [
+          "ConfiguracionNumeroPaginas"
+        ],
+        "summary": "Obtiene todos las configuraciones de numero de paginas",
+        "operationId": "getConfiguracionNumeroPaginas",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ConfiguracionNumeroPaginasDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene todos las configuraciones de numero de paginas",
+        "x-stoplight": {
+          "id": "xulm6gjt78q14"
+        }
+      },
+      "post": {
+        "tags": [
+          "ConfiguracionNumeroPaginas"
+        ],
+        "summary": "Crear una configuracion de numero de paginas",
+        "operationId": "postConfiguracionNumeroPaginas",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConfiguracionNumeroPaginasDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConfiguracionNumeroPaginasDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- MIA_0010 :  Ya existe una configuracion de numero de paginas con ese idTipoDocumentoUniversal"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Crear una configuracion de numero de paginas",
+        "x-stoplight": {
+          "id": "7g6zgwlz75rix"
+        }
+      }
+    },
+    "/metaia/v1/configuracion-numero-paginas/{idConfiguracionNumeroPaginas}": {
+      "get": {
+        "tags": [
+          "ConfiguracionNumeroPaginas"
+        ],
+        "summary": "Obtiene una configuracion de numero de paginas por su ID",
+        "operationId": "getConfiguracionNumeroPaginaPorIdConfiguracionNumeroPaginas",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConfiguracionNumeroPaginasDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene una configuracion de numero de paginas por su ID",
+        "x-stoplight": {
+          "id": "9yvmdp3cmdwew"
+        }
+      },
+      "put": {
+        "tags": [
+          "ConfiguracionNumeroPaginas"
+        ],
+        "summary": "Edita una configuracion de numero de paginas por su ID",
+        "operationId": "putConfiguracionNumeroPaginaPorIdConfiguracionNumeroPaginas",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConfiguracionNumeroPaginasDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConfiguracionNumeroPaginasDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Edita una configuracion de numero de paginas por su ID",
+        "x-stoplight": {
+          "id": "dato9a2pxy9p5"
+        }
+      },
+      "delete": {
+        "tags": [
+          "ConfiguracionNumeroPaginas"
+        ],
+        "summary": "Elimina una configuracion de numero de paginas por su ID",
+        "operationId": "deleteConfiguracionNumeroPaginaPorIdConfiguracionNumeroPaginas",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConfiguracionNumeroPaginasDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Elimina una configuracion de numero de paginas por su ID",
+        "x-stoplight": {
+          "id": "pnc6uquxjd3id"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idConfiguracionNumeroPaginas"
+        }
+      ]
+    },
+    "/metaia/v1/contexto": {
+      "get": {
+        "tags": [
+          "Contexto"
+        ],
+        "summary": "Obtiene todos los contextos",
+        "operationId": "getContexto",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ContextoDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene todos los contextos",
+        "x-stoplight": {
+          "id": "szrcbnec65zcv"
+        }
+      },
+      "post": {
+        "tags": [
+          "Contexto"
+        ],
+        "summary": "Crear un contexto",
+        "operationId": "postContexto",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContextoDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContextoDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- MIA_0004 :  Ya existe un contexto con ese idTipoDocumentoUniversal"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Crear un contexto",
+        "x-stoplight": {
+          "id": "npmstr9ed7qlv"
+        }
+      }
+    },
+    "/metaia/v1/contexto/{idContexto}": {
+      "get": {
+        "tags": [
+          "Contexto"
+        ],
+        "summary": "Obtiene un contexto por su ID",
+        "operationId": "getContextoPorIdContexto",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContextoDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene un contexto por su ID",
+        "x-stoplight": {
+          "id": "mo6n95axaccq2"
+        }
+      },
+      "put": {
+        "tags": [
+          "Contexto"
+        ],
+        "summary": "Edita el texto de un contexto por su ID",
+        "operationId": "putContextoPorIdContexto",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContextoDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContextoDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Edita el texto de un contexto por su ID",
+        "x-stoplight": {
+          "id": "94qqm9d7xj8tf"
+        }
+      },
+      "delete": {
+        "tags": [
+          "Contexto"
+        ],
+        "summary": "Elimina un contexto por su ID",
+        "operationId": "deleteContextoPorIdContexto",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContextoDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Elimina un contexto por su ID",
+        "x-stoplight": {
+          "id": "xr8h352p37qzz"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idContexto"
+        }
+      ]
+    },
+    "/metaia/v1/criterio": {
+      "get": {
+        "tags": [
+          "Criterio"
+        ],
+        "summary": "Obtiene todos los criterios",
+        "operationId": "getCriterio",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CriterioDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene todos los criterios",
+        "x-stoplight": {
+          "id": "40io64rcpjpzn"
+        }
+      },
+      "post": {
+        "tags": [
+          "Criterio"
+        ],
+        "summary": "Crear un criterio",
+        "operationId": "postCriterio",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CriterioDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CriterioDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- MIA_0003 :  Ya existe un criterio con ese nombre"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Crear un criterio",
+        "x-stoplight": {
+          "id": "mqab58dgfi21u"
+        }
+      }
+    },
+    "/metaia/v1/criterio/{idCriterio}": {
+      "get": {
+        "tags": [
+          "Criterio"
+        ],
+        "summary": "Obtiene un criterio por su ID",
+        "operationId": "getCriterioPorIdCriterio",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CriterioDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene un criterio por su ID",
+        "x-stoplight": {
+          "id": "w424ub5bx16e9"
+        }
+      },
+      "put": {
+        "tags": [
+          "Criterio"
+        ],
+        "summary": "Edita un criterio por su ID",
+        "operationId": "putCriterioPorIdCriterio",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CriterioDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CriterioDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- MIA_0003 :  Ya existe un criterio con ese nombre"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Edita un criterio por su ID",
+        "x-stoplight": {
+          "id": "2kwnftq0ushvy"
+        }
+      },
+      "delete": {
+        "tags": [
+          "Criterio"
+        ],
+        "summary": "Elimina un criterio por su ID",
+        "operationId": "deleteCriterioPorIdCriterio",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CriterioDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Elimina un criterio por su ID",
+        "x-stoplight": {
+          "id": "fmjr1pa21qmtt"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idCriterio"
+        }
+      ]
+    },
+    "/metaia/v1/criterios-ejemplo": {
+      "get": {
+        "tags": [
+          "CriterioEjemplo"
+        ],
+        "summary": "Obtiene todos los criterios ejemplo",
+        "operationId": "getCriteriosEjemplo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CriterioEjemploDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene todos los criterios ejemplo",
+        "x-stoplight": {
+          "id": "t8ztp3bqqyeum"
+        }
+      },
+      "post": {
+        "tags": [
+          "CriterioEjemplo"
+        ],
+        "summary": "Crear un criterio ejemplo",
+        "operationId": "postCriteriosEjemplo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CriterioEjemploDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CriterioEjemploDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- MIA_0005 :  Un ejemplo de criterio de tipo extracción debe definir únicamente 'obtenido', pudiendo ser nulo\n - MIA_0006 :  Un ejemplo de criterio de tipo texto debe definir únicamente 'motivo' y 'valido', y no ser nulos\n - MIA_0007 :  El documento de ejemplo ya tiene asociado un criterio de ejemplo para el mismo criterio"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Crear un criterio ejemplo",
+        "x-stoplight": {
+          "id": "vxjk88co6tccq"
+        }
+      }
+    },
+    "/metaia/v1/criterios-ejemplo/{idCriterioEjemplo}": {
+      "get": {
+        "tags": [
+          "CriterioEjemplo"
+        ],
+        "summary": "Obtiene un criterio ejemplo por su ID",
+        "operationId": "getCriterioEjemploPorIdCriterioEjemplo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CriterioEjemploDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene un criterio ejemplo por su ID",
+        "x-stoplight": {
+          "id": "ps9y9wrkgi9rb"
+        }
+      },
+      "put": {
+        "tags": [
+          "CriterioEjemplo"
+        ],
+        "summary": "Edita un criterio ejemplo por su ID",
+        "operationId": "putCriterioEjemploPorIdCriterioEjemplo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CriterioEjemploDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CriterioEjemploDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- MIA_0005 :  Un ejemplo de criterio de tipo extracción debe definir únicamente 'obtenido', pudiendo ser nulo\n - MIA_0006 :  Un ejemplo de criterio de tipo texto debe definir únicamente 'motivo' y 'valido', y no ser nulos\n - MIA_0007 :  El documento de ejemplo ya tiene asociado un criterio de ejemplo para el mismo criterio"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Edita un criterio ejemplo por su ID",
+        "x-stoplight": {
+          "id": "lotw39gnym57z"
+        }
+      },
+      "delete": {
+        "tags": [
+          "CriterioEjemplo"
+        ],
+        "summary": "Elimina un criterio de ejemplo por su ID",
+        "operationId": "deleteCriterioEjemploPorIdCriterioEjemplo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CriterioEjemploDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Elimina un criterio de ejemplo por su ID",
+        "x-stoplight": {
+          "id": "vyr6sljuv7vl3"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idCriterioEjemplo"
+        }
+      ]
+    },
+    "/metaia/v1/documentos-ejemplo": {
+      "get": {
+        "tags": [
+          "DocumentoEjemplo"
+        ],
+        "summary": "Obtiene todos los documentos de ejemplo",
+        "operationId": "getDocumentosEjemplo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DocumentoEjemploDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene todos los documentos de ejemplo",
+        "x-stoplight": {
+          "id": "v9d6wu6ay6ytq"
+        }
+      },
+      "post": {
+        "tags": [
+          "DocumentoEjemplo"
+        ],
+        "summary": "Crear un documento de ejemplo sin criterios de ejemplo",
+        "operationId": "postDocumentosEjemplo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentoEjemploDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentoEjemploDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Crear un documento de ejemplo sin criterios de ejemplo",
+        "x-stoplight": {
+          "id": "lyb4k722ytjes"
+        }
+      }
+    },
+    "/metaia/v1/documentos-ejemplo/{idDocumentoEjemplo}": {
+      "get": {
+        "tags": [
+          "DocumentoEjemplo"
+        ],
+        "summary": "Obtiene un documento de ejemplo por su ID",
+        "operationId": "getDocumentoEjemploPorIdDocumentoEjemplo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentoEjemploDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene un documento de ejemplo por su ID",
+        "x-stoplight": {
+          "id": "gpmuc1y7v467l"
+        }
+      },
+      "put": {
+        "tags": [
+          "DocumentoEjemplo"
+        ],
+        "summary": "Edita un documento de ejemplo por su ID",
+        "operationId": "putDocumentoEjemploPorIdDocumentoEjemplo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentoEjemploDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentoEjemploDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Edita un documento de ejemplo por su ID",
+        "x-stoplight": {
+          "id": "lm1we1vw257iv"
+        }
+      },
+      "delete": {
+        "tags": [
+          "DocumentoEjemplo"
+        ],
+        "summary": "Elimina un documento ejemplo por su ID",
+        "operationId": "deleteDocumentoEjemploPorIdDocumentoEjemplo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentoEjemploDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Elimina un documento ejemplo por su ID",
+        "x-stoplight": {
+          "id": "ojqhq27kg1uot"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idDocumentoEjemplo"
+        }
+      ]
+    },
+    "/metaia/v1/logs-procesamiento": {
+      "get": {
+        "tags": [
+          "LogProcesamiento"
+        ],
+        "summary": "Obtiene logs de procesamiento en función de la identificación de un documento y el número de fases reportadas",
+        "operationId": "getLogsProcesamiento",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/aplicacion"
+          },
+          {
+            "$ref": "#/components/parameters/idDocumento"
+          },
+          {
+            "$ref": "#/components/parameters/idEmpresa"
+          },
+          {
+            "$ref": "#/components/parameters/idTipoDocumentoUniversal"
+          },
+          {
+            "$ref": "#/components/parameters/soloIncompletos"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LogProcesamientoDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene logs de procesamiento en función de la identificación de un documento y el número de fases reportadas",
+        "x-stoplight": {
+          "id": "hp8dgh1ga7cux"
+        }
+      }
+    },
+    "/metaia/v1/pipeline-clasificacion": {
+      "get": {
+        "tags": [
+          "PipelineClasificacion"
+        ],
+        "summary": "Obtiene una pipeline de clasificación por su ID",
+        "operationId": "getPipelineClasificacion",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PipelineClasificacionDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene una pipeline de clasificación por su ID",
+        "x-stoplight": {
+          "id": "u2ayy8psbkhdk"
+        }
+      },
+      "post": {
+        "tags": [
+          "PipelineClasificacion"
+        ],
+        "summary": "Crea una pipeline de clasificación, estableciéndose como actual si actual = true",
+        "operationId": "postPipelineClasificacion",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PipelineClasificacionDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CriterioDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Crea una pipeline de clasificación, estableciéndose como actual si actual = true",
+        "x-stoplight": {
+          "id": "4zeuhp7s3nfep"
+        }
+      }
+    },
+    "/metaia/v1/pipeline-clasificacion/{idPipelineClasificacion}": {
+      "get": {
+        "tags": [
+          "PipelineClasificacion"
+        ],
+        "summary": "Obtiene una pipeline de clasificación por su ID",
+        "operationId": "getPipelineClasificacionPorIdPipelineClasificacion",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PipelineClasificacionDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene una pipeline de clasificación por su ID",
+        "x-stoplight": {
+          "id": "ksz4mvr9dn1jf"
+        }
+      },
+      "put": {
+        "tags": [
+          "PipelineClasificacion"
+        ],
+        "summary": "Edita una pipeline de clasificación por su ID, estableciéndose como actual si actual = true",
+        "operationId": "putPipelineClasificacionPorIdPipelineClasificacion",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PipelineClasificacionDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PipelineClasificacionDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Edita una pipeline de clasificación por su ID, estableciéndose como actual si actual = true",
+        "x-stoplight": {
+          "id": "cp86gqxpbtwbo"
+        }
+      },
+      "delete": {
+        "tags": [
+          "PipelineClasificacion"
+        ],
+        "summary": "Elimina una pipeline de clasificación por su ID",
+        "operationId": "deletePipelineClasificacionPorIdPipelineClasificacion",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PipelineClasificacionDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Elimina una pipeline de clasificación por su ID",
+        "x-stoplight": {
+          "id": "15ka937c8dked"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idPipelineClasificacion"
+        }
+      ]
+    },
+    "/metaia/v1/pipeline-validacion": {
+      "get": {
+        "tags": [
+          "PipelineValidacion"
+        ],
+        "summary": "Obtiene todas las pipelines validacion",
+        "operationId": "getPipelineValidacion",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PipelineValidacionDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene todas las pipelines validacion",
+        "x-stoplight": {
+          "id": "o2c70diigd7xd"
+        }
+      },
+      "post": {
+        "tags": [
+          "PipelineValidacion"
+        ],
+        "summary": "Crear una pipeline validacion",
+        "operationId": "postPipelineValidacion",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PipelineValidacionDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PipelineValidacionDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- MIA_0009 :  Ya existe una pipeline validación con ese idTipoDocumentoUniversal"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Crear una pipeline validacion",
+        "x-stoplight": {
+          "id": "we3xt3k9l764o"
+        }
+      }
+    },
+    "/metaia/v1/pipeline-validacion/{idPipelineValidacion}": {
+      "get": {
+        "tags": [
+          "PipelineValidacion"
+        ],
+        "summary": "Obtiene una pipeline validacion por su ID",
+        "operationId": "getPipelineValidacionPorIdPipelineValidacion",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PipelineValidacionDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene una pipeline validacion por su ID",
+        "x-stoplight": {
+          "id": "buqw4vsipk08q"
+        }
+      },
+      "put": {
+        "tags": [
+          "PipelineValidacion"
+        ],
+        "summary": "Edita una pipeline validacion por su ID",
+        "operationId": "putPipelineValidacionPorIdPipelineValidacion",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PipelineValidacionDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PipelineValidacionDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Edita una pipeline validacion por su ID",
+        "x-stoplight": {
+          "id": "irhl3mvrffkln"
+        }
+      },
+      "delete": {
+        "tags": [
+          "PipelineValidacion"
+        ],
+        "summary": "Elimina una pipeline validacion por su ID",
+        "operationId": "deletePipelineValidacionPorIdPipelineValidacion",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PipelineValidacionDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Elimina una pipeline validacion por su ID",
+        "x-stoplight": {
+          "id": "ksyuf2a58plh5"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idPipelineValidacion"
+        }
+      ]
+    },
+    "/metaia/v1/prompt-template": {
+      "get": {
+        "tags": [
+          "Prompt"
+        ],
+        "summary": "Obtiene todos los  prompt template",
+        "operationId": "getPromptTemplate",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PromptTemplateValidacionDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene todos los  prompt template",
+        "x-stoplight": {
+          "id": "59ywjhkjxkrz8"
+        }
+      },
+      "post": {
+        "tags": [
+          "Prompt"
+        ],
+        "summary": "Crear un prompt template",
+        "operationId": "postPromptTemplate",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PromptTemplateValidacionDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PromptTemplateValidacionDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- MIA_0001 :  Ya existe un prompt template con ese idTipoDocumentoUniversal, LLM y acción"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Crear un prompt template",
+        "x-stoplight": {
+          "id": "oa3ghfcrjmg7c"
+        }
+      }
+    },
+    "/metaia/v1/prompt-template/{idPromptTemplate}": {
+      "get": {
+        "tags": [
+          "Prompt"
+        ],
+        "summary": "Obtiene un prompt template por su ID",
+        "operationId": "getPromptTemplatePorIdPromptTemplate",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PromptTemplateValidacionDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene un prompt template por su ID",
+        "x-stoplight": {
+          "id": "9rxuytinbva1k"
+        }
+      },
+      "put": {
+        "tags": [
+          "Prompt"
+        ],
+        "summary": "Edita el texto de un prompt template por su ID",
+        "operationId": "putPromptTemplatePorIdPromptTemplate",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PromptTemplateValidacionModificadoDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PromptTemplateValidacionDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Edita el texto de un prompt template por su ID",
+        "x-stoplight": {
+          "id": "pnr6mn5cfwauj"
+        }
+      },
+      "delete": {
+        "tags": [
+          "Prompt"
+        ],
+        "summary": "Elimina un prompt template por su ID",
+        "operationId": "deletePromptTemplatePorIdPromptTemplate",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PromptTemplateValidacionDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Elimina un prompt template por su ID",
+        "x-stoplight": {
+          "id": "4my1ks8gj9sh7"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idPromptTemplate"
+        }
+      ]
+    },
+    "/metaia/v1/validar": {
+      "post": {
+        "tags": [
+          "Validar"
+        ],
+        "summary": "Encola una solicitud de validación de un documento para procesar posteriormente",
+        "operationId": "postValidar",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "file",
+                  "idDocumento",
+                  "idEmpresa",
+                  "idTipoDocumentoUniversal"
+                ],
+                "type": "object",
+                "properties": {
+                  "aplicacion": {
+                    "$ref": "#/components/schemas/AplicacionEnum"
+                  },
+                  "file": {
+                    "format": "binary",
+                    "type": "string"
+                  },
+                  "criteriosNoValor": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "criteriosValor": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/CriterioValorDtoRequest"
+                    }
+                  },
+                  "idDocumento": {
+                    "format": "int32",
+                    "type": "integer"
+                  },
+                  "idEmpresa": {
+                    "format": "int32",
+                    "type": "integer"
+                  },
+                  "idTipoDocumentoUniversal": {
+                    "format": "int32",
+                    "type": "integer"
+                  }
+                }
+              },
+              "encoding": {
+                "file": {
+                  "contentType": "application/octet-stream"
+                },
+                "criteriosNoValor": {
+                  "contentType": "application/json"
+                },
+                "idDocumento": {
+                  "contentType": "text/plain"
+                },
+                "idTipoDocumentoUniversal": {
+                  "contentType": "text/plain"
+                },
+                "aplicacion": {
+                  "contentType": "text/plain"
+                },
+                "criteriosValor": {
+                  "contentType": "application/json"
+                },
+                "idEmpresa": {
+                  "contentType": "text/plain"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "aplicacion": {
+                      "$ref": "#/components/schemas/AplicacionEnum"
+                    },
+                    "criteriosNoValor": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "criteriosValor": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/CriterioValorDtoRequest"
+                      }
+                    },
+                    "idDocumento": {
+                      "format": "int32",
+                      "type": "integer"
+                    },
+                    "idEmpresa": {
+                      "format": "int32",
+                      "type": "integer"
+                    },
+                    "idTipoDocumentoUniversal": {
+                      "format": "int32",
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- MIA_0002 :  El archivo supera el tamaño máximo permitido para procesarse\n- MIA_0008 :  El archivo tiene que ser un PDF"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Encola una solicitud de validación de un documento para procesar posteriormente",
+        "x-stoplight": {
+          "id": "dt1nukthjp3pz"
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AplicacionEnum": {
+        "enum": [
+          "V3",
+          "V4"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "od2lh6pcrl0pc"
+        }
+      },
+      "ConfiguracionNumeroPaginasDtoRequest": {
+        "type": "object",
+        "properties": {
+          "idTipoDocumentoUniversal": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "minimoNumeroPaginas": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "maximoNumeroPaginas": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "tep123cfwj03l"
+        }
+      },
+      "ConfiguracionNumeroPaginasDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idConfiguracionNumeroPaginas": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idTipoDocumentoUniversal": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "minimoNumeroPaginas": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "maximoNumeroPaginas": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "g0s2t6qgetv4k"
+        }
+      },
+      "ContextoDtoRequest": {
+        "required": [
+          "texto",
+          "idTipoDocumentoUniversal"
+        ],
+        "type": "object",
+        "properties": {
+          "texto": {
+            "type": "string"
+          },
+          "idTipoDocumentoUniversal": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "tqn36x0bi1fhj"
+        }
+      },
+      "ContextoDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idContexto": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "texto": {
+            "type": "string"
+          },
+          "idTipoDocumentoUniversal": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "tpcc80580uu7r"
+        }
+      },
+      "CriterioDtoRequest": {
+        "type": "object",
+        "properties": {
+          "nombreCriterio": {
+            "type": "string"
+          },
+          "prompt": {
+            "type": "string"
+          },
+          "tipo": {
+            "$ref": "#/components/schemas/TipoCriterioEnum"
+          }
+        },
+        "x-stoplight": {
+          "id": "9hbwgf3csnrf1"
+        }
+      },
+      "CriterioDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idCriterio": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombreCriterio": {
+            "type": "string"
+          },
+          "prompt": {
+            "type": "string"
+          },
+          "tipo": {
+            "$ref": "#/components/schemas/TipoCriterioEnum"
+          }
+        },
+        "x-stoplight": {
+          "id": "wdg7ankbi8jn7"
+        }
+      },
+      "CriterioEjemploDtoRequest": {
+        "required": [
+          "idCriterio",
+          "idDocumentoEjemplo"
+        ],
+        "type": "object",
+        "properties": {
+          "idCriterio": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idDocumentoEjemplo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "obtenido": {
+            "type": "string"
+          },
+          "motivo": {
+            "type": "string"
+          },
+          "valido": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "mdw5xe4vudry1"
+        }
+      },
+      "CriterioEjemploDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idCriterioEjemplo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idCriterio": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idDocumentoEjemplo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "obtenido": {
+            "type": "string"
+          },
+          "motivo": {
+            "type": "string"
+          },
+          "valido": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "1rkkrt0yy1y6o"
+        }
+      },
+      "CriterioValorDtoRequest": {
+        "required": [
+          "clave"
+        ],
+        "type": "object",
+        "properties": {
+          "clave": {
+            "type": "string"
+          },
+          "valor": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "v6lg9vj9ul542"
+        }
+      },
+      "DocumentoEjemploDtoRequest": {
+        "required": [
+          "texto",
+          "idTipoDocumentoUniversal"
+        ],
+        "type": "object",
+        "properties": {
+          "texto": {
+            "type": "string"
+          },
+          "idTipoDocumentoUniversal": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "wefgxib0tt4rw"
+        }
+      },
+      "DocumentoEjemploDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idDocumentoEjemplo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "texto": {
+            "type": "string"
+          },
+          "idTipoDocumentoUniversal": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "criteriosEjemplo": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CriterioEjemploDtoResponse"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "gvkyvmy0dhebr"
+        }
+      },
+      "EstadoFaseEnum": {
+        "enum": [
+          "OK",
+          "ERROR",
+          "SALTADO"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "eplhdfx2ptpnm"
+        }
+      },
+      "FaseValidacionEnum": {
+        "enum": [
+          "ENCOLADO",
+          "OCR",
+          "EXTRACCION",
+          "COMPARACION",
+          "TEXTO",
+          "FUNCION_NUMERO_PAGINAS",
+          "FUNCION_CALIDAD_DOCUMENTO",
+          "FUNCION_ORIENTACION_DOCUMENTO"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "ohnh1dtdnvs27"
+        }
+      },
+      "LlmEnum": {
+        "enum": [
+          "GEMINI_1_0_PRO",
+          "GEMINI_1_5_PRO",
+          "CHATGPT_3_5_TURBO",
+          "CHATGPT_4_O"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "q41mmy8yy6vf8"
+        }
+      },
+      "LogProcesamientoDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idLogProcesamiento": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "fase": {
+            "$ref": "#/components/schemas/FaseValidacionEnum"
+          },
+          "nombreProveedor": {
+            "type": "string"
+          },
+          "costeEntrada": {
+            "type": "number"
+          },
+          "costeSalida": {
+            "type": "number"
+          },
+          "costeTotal": {
+            "type": "number"
+          },
+          "aplicacion": {
+            "$ref": "#/components/schemas/AplicacionEnum"
+          },
+          "idDocumento": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idTipoDocumentoUniversal": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "fechaInicio": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "fechaFin": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "estado": {
+            "$ref": "#/components/schemas/EstadoFaseEnum"
+          },
+          "mensajeError": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "vnjwvczacbl8e"
+        }
+      },
+      "OcrEnum": {
+        "enum": [
+          "AZURE_AI",
+          "GOOGLE_DOCUMENT_AI",
+          "AMAZON_TEXTRACT"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "mza3uzdwyp7uk"
+        }
+      },
+      "PipelineClasificacionDtoRequest": {
+        "type": "object",
+        "properties": {
+          "ocr": {
+            "$ref": "#/components/schemas/OcrEnum"
+          },
+          "llm": {
+            "$ref": "#/components/schemas/LlmEnum"
+          },
+          "numeroPaginasPdf": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "actual": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "7fwgcl0n77s3h"
+        }
+      },
+      "PipelineClasificacionDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idPipelineClasificacion": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "ocr": {
+            "$ref": "#/components/schemas/OcrEnum"
+          },
+          "llm": {
+            "$ref": "#/components/schemas/LlmEnum"
+          },
+          "numeroPaginasPdf": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "actual": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "xzqsl099xp34w"
+        }
+      },
+      "PipelineValidacionDtoRequest": {
+        "type": "object",
+        "properties": {
+          "idTipoDocumentoUniversal": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "ocr": {
+            "$ref": "#/components/schemas/OcrEnum"
+          },
+          "llmExtraccion": {
+            "$ref": "#/components/schemas/LlmEnum"
+          },
+          "llmComparacion": {
+            "$ref": "#/components/schemas/LlmEnum"
+          },
+          "llmTexto": {
+            "$ref": "#/components/schemas/LlmEnum"
+          },
+          "numeroPaginasPdf": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "numeroEjemplosExtraccion": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "numeroEjemplosTexto": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "ekui3u76c3n5k"
+        }
+      },
+      "PipelineValidacionDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idPipelineValidacion": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idTipoDocumentoUniversal": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "ocr": {
+            "$ref": "#/components/schemas/OcrEnum"
+          },
+          "llmExtraccion": {
+            "$ref": "#/components/schemas/LlmEnum"
+          },
+          "llmComparacion": {
+            "$ref": "#/components/schemas/LlmEnum"
+          },
+          "llmTexto": {
+            "$ref": "#/components/schemas/LlmEnum"
+          },
+          "numeroPaginasPdf": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "numeroEjemplosExtraccion": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "numeroEjemplosTexto": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "s8t89nd17b1po"
+        }
+      },
+      "PromptTemplateValidacionDtoRequest": {
+        "required": [
+          "tipo",
+          "idTipoDocumentoUniversal",
+          "llm",
+          "texto"
+        ],
+        "type": "object",
+        "properties": {
+          "tipo": {
+            "$ref": "#/components/schemas/TipoPromptEnum"
+          },
+          "idTipoDocumentoUniversal": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "llm": {
+            "$ref": "#/components/schemas/LlmEnum"
+          },
+          "texto": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "795mqv3ry7h2o"
+        }
+      },
+      "PromptTemplateValidacionDtoResponse": {
+        "type": "object",
+        "properties": {
+          "tipo": {
+            "$ref": "#/components/schemas/TipoPromptEnum"
+          },
+          "idPromptTemplateValidacion": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idTipoDocumentoUniversal": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "llm": {
+            "$ref": "#/components/schemas/LlmEnum"
+          },
+          "texto": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "4mv19p7hr7gy6"
+        }
+      },
+      "PromptTemplateValidacionModificadoDtoRequest": {
+        "required": [
+          "texto"
+        ],
+        "type": "object",
+        "properties": {
+          "texto": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "mi0lj0bctsq3u"
+        }
+      },
+      "TipoCriterioEnum": {
+        "enum": [
+          "EXTRACCION",
+          "TEXTO",
+          "FUNCION"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "ux96czx6s8u8z"
+        }
+      },
+      "TipoPromptEnum": {
+        "enum": [
+          "EXTRACCION",
+          "COMPARACION",
+          "TEXTO"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "r4yfphpfq0h5z"
+        }
+      },
+      "ZonedDateTime": {
+        "format": "date-time",
+        "type": "string",
+        "example": "2022-03-10T12:15:50-04:00",
+        "x-stoplight": {
+          "id": "xh9ztnep9h1lj"
+        }
+      }
+    },
+    "securitySchemes": {
+      "jwt": {
+        "type": "http",
+        "description": "Authentication",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "parameters": {
+      "X-Timezone": {
+        "name": "X-Timezone",
+        "in": "header",
+        "description": "Zona horaria desde la que se hace la petición",
+        "required": true,
+        "schema": {
+          "default": "Europe/Madrid",
+          "type": "string"
+        }
+      },
+      "idConfiguracionNumeroPaginas": {
+        "name": "idConfiguracionNumeroPaginas",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idContexto": {
+        "name": "idContexto",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idCriterio": {
+        "name": "idCriterio",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idCriterioEjemplo": {
+        "name": "idCriterioEjemplo",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idDocumentoEjemplo": {
+        "name": "idDocumentoEjemplo",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "aplicacion": {
+        "name": "aplicacion",
+        "in": "query",
+        "schema": {
+          "$ref": "#/components/schemas/AplicacionEnum"
+        },
+        "description": "TODO: add description"
+      },
+      "idDocumento": {
+        "name": "idDocumento",
+        "in": "query",
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idEmpresa": {
+        "name": "idEmpresa",
+        "in": "query",
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idTipoDocumentoUniversal": {
+        "name": "idTipoDocumentoUniversal",
+        "in": "query",
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "soloIncompletos": {
+        "name": "soloIncompletos",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "boolean"
+        },
+        "description": "TODO: add description"
+      },
+      "idPipelineClasificacion": {
+        "name": "idPipelineClasificacion",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idPipelineValidacion": {
+        "name": "idPipelineValidacion",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idPromptTemplate": {
+        "name": "idPromptTemplate",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      }
+    }
+  }
+}

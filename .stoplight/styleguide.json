@@ -1,0 +1,456 @@
+{
+  "name": "MetaContratas V4 - API",
+  "description": "",
+  "spectralExtends": [],
+  "extends": [],
+  "formats": [
+    "oas2",
+    "oas3",
+    "oas3.0",
+    "oas3.1"
+  ],
+  "aliases": {
+    "Operation_Object_Post": {
+      "id": "ryn3_d_30YXcrfVUjRp4M",
+      "name": "Operation_Object_Post",
+      "targets": [
+        {
+          "formats": [
+            "oas2"
+          ],
+          "given": "#Path_Item[post]"
+        },
+        {
+          "formats": [
+            "oas3"
+          ],
+          "given": "#Path_Item[post]"
+        }
+      ]
+    },
+    "Operation_Object_Delete": {
+      "id": "NhEqSxVnajgRy04UjMTti",
+      "name": "Operation_Object_Delete",
+      "targets": [
+        {
+          "formats": [
+            "oas2"
+          ],
+          "given": "#Path_Item[delete]"
+        },
+        {
+          "formats": [
+            "oas3"
+          ],
+          "given": "#Path_Item[delete]"
+        }
+      ]
+    },
+    "Schemas": {
+      "id": "CUggVuF62Ohn7tdtBvcq5",
+      "name": "Schemas",
+      "targets": [
+        {
+          "formats": [
+            "oas2"
+          ],
+          "given": "$.components.schemas[*]"
+        },
+        {
+          "formats": [
+            "oas3"
+          ],
+          "given": "$.components.schemas[*]"
+        }
+      ]
+    }
+  },
+  "rules": {
+    "operation-checkTimezoneHeaderParam": {
+      "id": "sMoJOhzHzdwUkRH7cpZ7X",
+      "given": [
+        "#Operation_Object"
+      ],
+      "severity": "warn",
+      "then": {
+        "function": "checkTimezoneHeaderParam"
+      },
+      "name": "operation-checkTimezoneHeaderParam",
+      "description": "Esta regla valida que cada operación HTTP defina un parámetro en la cabecera llamado `X-Timezone` de la siguiente forma:\r\n\r\n```json\r\n{\r\n  \"name\": \"X-Timezone\",\r\n  \"in\": \"header\",\r\n  \"description\": \"Zona horaria desde la que se hace la petición\",\r\n  \"required\": true,\r\n  \"schema\": {\r\n    \"type\": \"string\",\r\n    \"default\": \"Europe/Madrid\"\r\n  }\r\n}\r\n```\r\n",
+      "message": "{{error}}",
+      "resolved": true
+    },
+    "operation-schemaIfPresent-x-permisos": {
+      "id": "QKfOZVo-Bm34x8d5k0Ozh",
+      "given": [
+        "#Operation_Object"
+      ],
+      "severity": "error",
+      "then": {
+        "function": "schemaIfPresent",
+        "functionOptions": {
+          "schema": {
+            "type": "boolean"
+          }
+        },
+        "field": "x-permisos"
+      },
+      "name": "operation-schemaIfPresent-x-permisos",
+      "description": "Esta regla valida que, si la extensión `x-permisos` está presente en una operación HTTP, su valor sea estrictamente un booleano (`true` o `false`).\r\n\r\nEjemplo válido:\r\n\r\n```json\r\n\"x-permisos\": true\r\n```\r\n\r\nEsta extensión permite indicar de forma explícita si una operación requiere permisos especiales o no. Su uso facilita el análisis y control de acceso de los distintos endpoints de la API.\r\n\r\n✅ La regla **no obliga** a que la extensión `x-permisos` esté presente en todas las operaciones. Pero si se incluye, su valor debe ser un booleano válido (`true` o `false`), sin excepciones.\r\n",
+      "message": "Extensión \"x-permisos\" inválida: {{error}}."
+    },
+    "operation-schemaIfPresent-x-roles": {
+      "id": "Rxmnk3h_AY48cSIXerT2C",
+      "given": [
+        "#Operation_Object"
+      ],
+      "severity": "error",
+      "then": {
+        "function": "schemaIfPresent",
+        "functionOptions": {
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "activar_usuario",
+                "superadministrador",
+                "no_administrador",
+                "calendario_publico",
+                "dios",
+                "empleado_externo",
+                "empleado_interno",
+                "empresa_externo",
+                "empresa_interno",
+                "firmar_informacion",
+                "reset_password",
+                "reconocimiento_medico",
+                "firma_pantalla_publica",
+                "administrador_grupo_entornos"
+              ]
+            }
+          }
+        },
+        "field": "x-roles"
+      },
+      "name": "operation-schemaIfPresent-x-roles",
+      "description": "Esta regla valida que, si la extensión `x-roles` está presente en una operación HTTP, su valor sea una lista de cadenas (strings) que pertenezcan a un conjunto de valores predefinidos (enum).\r\n\r\nEjemplo válido:\r\n\r\n```json\r\n\"x-roles\": [\r\n  \"superadministrador\",\r\n  \"empleado_interno\",\r\n  \"empresa_externo\"\r\n]\r\n```\r\n\r\nLos valores permitidos son: `\"activar_usuario\"`, `\"superadministrador\"`, `\"no_administrador\"`, `\"calendario_publico\"`, `\"dios\"`, `\"empleado_externo\"`, `\"empleado_interno\"`, `\"empresa_externo\"`, `\"empresa_interneo\"`, `\"firmar_informacion\"`, `\"reset_password\"`, `\"reconocimiento_medico\"`, `\"firma_pantalla_publica\"` y `\"administrador_grupo_entornos\"`.\r\n\r\n✅ Esta regla **no obliga** a que la extensión `x-roles` esté presente en todas las operaciones. Pero si se incluye, su valor debe cumplir estrictamente con el formato y contenido esperado para garantizar una gestión coherente de roles en la API.",
+      "message": "Extensión \"x-roles\" inválida: {{error}}."
+    },
+    "operation-require401IfJwt": {
+      "id": "tg7eB-0uLCE2Ep7hYXr3S",
+      "given": [
+        "#Operation_Object"
+      ],
+      "severity": "warn",
+      "then": {
+        "function": "require401IfJwt"
+      },
+      "name": "operation-require401IfJwt",
+      "description": "Valida que cualquier operación protegida mediante autenticación JWT incluya una respuesta `401 Unauthorized`.",
+      "message": "{{error}}"
+    },
+    "operation_post-require400IfPostWithBody": {
+      "id": "DnZq4GL1VZGznSZO6Yvbo",
+      "given": [
+        "#Operation_Object_Post"
+      ],
+      "severity": "warn",
+      "then": {
+        "function": "require400IfPostWithBody"
+      },
+      "name": "operation_post-require400IfPostWithBody",
+      "description": "Valida que todas las operaciones `POST` que incluyan un cuerpo en la petición (`requestBody`) definan también una respuesta `400 Bad Request`.",
+      "message": "{{error}}"
+    },
+    "path-require404IfGetWithPathParams": {
+      "id": "e2KNigcPfI6_SlDpunBJf",
+      "given": [
+        "#Path_Item"
+      ],
+      "severity": "warn",
+      "then": {
+        "function": "require404IfGetWithPathParams"
+      },
+      "name": "path-require404IfGetWithPathParams",
+      "description": "Valida que cualquier operación `GET` que incluya parámetros de ruta (`path parameters`) defina también una respuesta `404 Not Found`.",
+      "message": "{{error}}"
+    },
+    "operation_post-require200or201IfPost": {
+      "id": "oV6qv37CXWgdzlExlKOHh",
+      "given": [
+        "#Operation_Object_Post"
+      ],
+      "severity": "warn",
+      "then": {
+        "function": "require200or201IfPost"
+      },
+      "name": "operation_post-require200or201IfPost",
+      "description": "Valida que todas las operaciones `POST` incluyan una respuesta de éxito `200 OK` o `201 Created`.",
+      "message": "{{error}}"
+    },
+    "operation_delete-200-require200IfDelete": {
+      "id": "pfQseuyBB6kgRFfsdHEv4",
+      "given": [
+        "#Operation_Object_Delete"
+      ],
+      "severity": "warn",
+      "then": {
+        "function": "require200IfDelete"
+      },
+      "name": "operation_delete-200-require200IfDelete",
+      "description": "Valida que todas las operaciones `DELETE` incluyan una respuesta de éxito `200 OK`.",
+      "message": "{{error}}"
+    },
+    "operation_requireJwtSecurity": {
+      "id": "lAOuco0lN7tr90VK3Uk15",
+      "given": [
+        "#Operation_Object"
+      ],
+      "severity": "info",
+      "then": {
+        "function": "requireJwtSecurity"
+      },
+      "name": "operation_requireJwtSecurity",
+      "description": "Valida que todas las operaciones de la API estén protegidas mediante autenticación JWT.\r\n\r\n✅ Para que la regla se cumpla, cada operación (`GET`, `POST`, `PUT`, `DELETE`, etc.) debe incluir el campo `security` definido de la forma:\r\n\r\n```json\r\n\"security\": [\r\n  {\r\n    \"jwt\": []\r\n  }\r\n]\r\n```",
+      "message": "{{error}}"
+    },
+    "schemas-validateDobleListaObjeto": {
+      "id": "3wwiv3whDzYS_MmqseMdc",
+      "given": [
+        "#Schemas"
+      ],
+      "severity": "error",
+      "then": {
+        "function": "validateDobleListaObjeto"
+      },
+      "name": "schemas-validateDobleListaObjeto",
+      "description": "Esta regla valida que los esquemas que contienen únicamente las propiedades `listadoInsertar` y `listadoEliminar` tengan un nombre coherente con los tipos que contienen.\r\nEsta regla está relacionada con las clase `RequestBodyDobleListaObjeto.java` del back-end.\r\n\r\n---\r\n\r\n✅ La regla se aplica si:\r\n- El nombre del esquema contiene la cadena `\"RequestBodyDobleListaObjeto\"`, **o**\r\n- El esquema tiene **exactamente dos propiedades**: `listadoInsertar` y `listadoEliminar`\r\n- `listadoEliminar` **no** es un array de enteros (en este último caso se aplicará la regla `schemas-validateDobleLista`).\r\n\r\n---\r\n\r\n✅ Si se aplica:\r\n- Ambas propiedades deben ser arrays\r\n- Se identifica el nombre de los DTOs definidos en los `items` de cada lista\r\n- El nombre del esquema debe ser: `RequestBodyDobleListaObjeto<InsertarDTO><EliminarDTO>`\r\n\r\n---\r\n\r\n❌ Si el nombre no coincide con los tipos internos, la regla fallará indicando el nombre esperado.",
+      "message": "Error DobleListaObjeto: {{error}}\n"
+    },
+    "schemas-validateDobleLista": {
+      "id": "U2OpU8kO68w3hVnVReoXU",
+      "given": [
+        "#Schemas"
+      ],
+      "severity": "error",
+      "then": {
+        "function": "validateDobleLista"
+      },
+      "name": "schemas-validateDobleLista",
+      "description": "Esta regla valida que los esquemas que contienen únicamente las propiedades `listadoInsertar` y `listadoEliminar` tengan un nombre coherente con los tipos que contienen.  \r\nEstá relacionada con la clase `RequestBodyDobleLista.java` del back-end.\r\n\r\n---\r\n\r\n✅ **La regla se aplica si**:\r\n- El nombre del esquema contiene la cadena `\"RequestBodyDobleLista\"` **y no** contiene `\"RequestBodyDobleListaObjeto\"`, **o**\r\n- El esquema tiene exactamente dos propiedades: `listadoInsertar` y `listadoEliminar`.\r\n- La propiedad `listadoEliminar` **es** un array de enteros.\r\n\r\n---\r\n\r\n✅ **Si se aplica**:\r\n- Las dos propiedades deben ser arrays.\r\n- `listadoEliminar` debe ser un array de enteros (`type: integer`).\r\n- Se identifica el tipo del DTO usado en `listadoInsertar`.\r\n- El nombre del esquema debe ser: `RequestBodyDobleLista<InsertarDTO>`\r\n\r\n---\r\n\r\n❌ **La regla fallará si**:\r\n- Alguna propiedad no es un array.\r\n- `listadoEliminar` no es de enteros.\r\n- El tipo de `listadoInsertar` no se puede identificar.\r\n- El nombre del esquema no coincide con el esperado.\r\n",
+      "message": "Error DobleLista: {{error}}"
+    },
+    "schemas-validateTripleListaObjeto": {
+      "id": "NnQUPNbDIaXQ-qgeZksXI",
+      "given": [
+        "#Schemas"
+      ],
+      "severity": "error",
+      "then": {
+        "function": "validateTripleListaObjeto"
+      },
+      "name": "schemas-validateTripleListaObjeto",
+      "description": "Esta regla valida que los esquemas que contienen únicamente las propiedades `listadoInsertar`, `listadoEliminar` y `listadoModificar` tengan un nombre coherente con los tipos que contienen.  \r\nEsta regla está relacionada con la clase `RequestBodyTripleListaObjeto.java` del back-end.\r\n\r\n---\r\n\r\n✅ **La regla se aplica si**:\r\n- El nombre del esquema contiene la cadena `\"RequestBodyTripleListaObjeto\"`, **o**\r\n- El esquema tiene **exactamente tres propiedades**: `listadoInsertar`, `listadoEliminar` y `listadoModificar`.\r\n- `listadoEliminar` **no** es un array de enteros (en este último caso se aplicará la regla `schemas-validateTripleListaObjeto`).\r\n\r\n---\r\n\r\n✅ **Si se aplica**:\r\n- Las tres propiedades deben ser arrays.\r\n- Se identifican los nombres de los DTOs definidos en los `items` de cada lista.\r\n- **`listadoInsertar` y `listadoModificar` deben ser del mismo tipo**.\r\n- El nombre del esquema debe ser: `RequestBodyTripleListaObjeto<InsertarYModificarDTO><EliminarDTO><InsertarYModificarDTO>`\r\n\r\n---\r\n\r\n❌ **Si el nombre no coincide** con los tipos internos o si el tipo de `listadoInsertar` y `listadoModificar` difiere, la regla fallará indicando el nombre o la relación esperada.\r\n",
+      "message": "Error TripleListaObjeto: {{error}}"
+    },
+    "schemas-validateTripleLista": {
+      "id": "V8us94VMZ_7Tm3jASKsKt",
+      "given": [
+        "#Schemas"
+      ],
+      "severity": "error",
+      "then": {
+        "function": "validateTripleLista"
+      },
+      "name": "schemas-validateTripleLista",
+      "description": "Esta regla valida que los esquemas que contienen exactamente las propiedades `listadoInsertar`, `listadoEliminar` y `listadoModificar` tengan un nombre coherente con los tipos que contienen.  \r\nEstá relacionada con la clase `RequestBodyTripleLista.java` del back-end.\r\n\r\n---\r\n\r\n✅ **La regla se aplica si**:\r\n- El nombre del esquema contiene la cadena `\"RequestBodyTripleLista\"` **y no** contiene `\"RequestBodyTripleListaObjeto\"`, **o**\r\n- El esquema tiene exactamente tres propiedades: `listadoInsertar`, `listadoEliminar` y `listadoModificar`.\r\n- La propiedad `listadoEliminar` **es** un array de enteros (`type: integer`).\r\n\r\n---\r\n\r\n✅ **Si se aplica**:\r\n- Las tres propiedades deben ser arrays.\r\n- `listadoEliminar` debe ser un array de enteros.\r\n- `listadoInsertar` y `listadoModificar` deben ser arrays del **mismo tipo**.\r\n- Se identifica el tipo del DTO usado en `listadoInsertar` y `listadoModificar`.\r\n- El nombre del esquema debe ser: `RequestBodyTripleLista<InsertarYModificarDTO>`\r\n\r\n---\r\n\r\n❌ **La regla fallará si**:\r\n- Alguna de las propiedades no es un array.\r\n- `listadoEliminar` no es de enteros.\r\n- `listadoInsertar` y `listadoModificar` no son del mismo tipo.\r\n- El tipo de DTO no se puede identificar.\r\n- El nombre del esquema no coincide con el esperado.\r\n",
+      "message": "Error TripleLista: {{error}}"
+    },
+    "operation-validateOperationId": {
+      "id": "VDmyQINWafb2lZjul5VGz",
+      "given": [
+        "#Operation_Object"
+      ],
+      "severity": "hint",
+      "then": {
+        "function": "validateOperationId"
+      },
+      "name": "operation-validateOperationId",
+      "description": "La regla valida que el campo `operationId` de cada operación esté construido siguiendo una convención basada en el método HTTP y la estructura de la URL. El `operationId` comienza con el verbo HTTP en minúsculas, seguido del nombre de la entidad afectada, y termina con los identificadores del path precedidos por \"Por\".\r\n\r\nPara obtener la entidad, se analiza la URL y se extraen los segmentos relevantes en función de la posición del último parámetro. El proceso sigue estos pasos:\r\n\r\n- Se eliminan los segmentos iniciales de la URL que representan el microservicio y la versión.  \r\n  *Ejemplo: `/cae/v1/empresas/{idEmpresa}` → `[\"empresas\", \"{idEmpresa}\"]`*\r\n\r\n- Se identifica el último parámetro del path (por ejemplo, `{idEmpresa}`).  \r\n  *Ejemplo: en `/empresas/{idEmpresa}/recursos/{idRecurso}/relaciones-contratacion`, el último parámetro es `{idRecurso}`*\r\n\r\n- En función de su posición:\r\n  - Si no hay parámetros, se toman todos los segmentos de texto (literals) desde el final hacia el inicio.  \r\n    *Ejemplo: `/actividades/num-relacionados` → entidad: `NumRelacionadosActividades`*\r\n  - Si hay parámetros y estos tienen segmentos de texto a su derecha, se toman esos literales desde el final hasta el parámetro.  \r\n    *Ejemplo: `/empresas/{idEmpresa}/tipos-documentos/{idTipoDocumento}/firma` → entidad: `Firma`*\r\n  - Si hay parámetros pero no hay literales a su derecha, se toman los literales a la izquierda del parámetro, hasta otro parámetro o el inicio.  \r\n    *Ejemplo: `/empresas/{idEmpresa}` → entidad: `Empresa`*\r\n\r\n- Cada literal compuesto por guiones (por ejemplo, `tipos-documentos`) se separa en palabras.  \r\n  *Ejemplo: `tipos-documentos` → `[\"tipos\", \"documentos\"]`*\r\n\r\n- Si alguna palabra termina en \"ar\", \"er\" o \"ir\", se considera un verbo y no se modifica.  \r\n  *Ejemplo: `calcular` → se mantiene tal cual*\r\n\r\n- Si no hay verbos, se singulariza cada palabra eliminando la terminación \"es\" o \"s\".  \r\n  *Ejemplo: `[\"tipos\", \"documentos\"]` → `[\"tipo\", \"documento\"]`*\r\n\r\n- Finalmente, todas las palabras se unen y se convierten a PascalCase para formar el nombre de la entidad.  \r\n  *Ejemplo: `[\"tipo\", \"documento\"]` → `TipoDocumento`*\r\n\r\nEste nombre de entidad se concatena al verbo HTTP (en minúsculas), y se añaden los identificadores de los parámetros (`PorIdEmpresa`, `PorIdGrupo`, etc.), también en PascalCase.  \r\n*Ejemplo completo: `getTipoDocumentoPorIdEmpresaPorIdTipoDocumento`*\r\n\r\n\r\n\r\nEste procedimiento garantiza que todos los `operationId` sigan una estructura predecible, coherente y fácil de mantener.\r\n",
+      "message": "Error operationId: {{error}}"
+    },
+    "responses-validateResponseDescription-200": {
+      "id": "PYal_BbgurObbHlG9LX9m",
+      "given": [
+        "#Response_All_Object"
+      ],
+      "severity": "warn",
+      "then": {
+        "function": "validateResponseDescription",
+        "functionOptions": {
+          "statusCode": "200",
+          "expectedDescription": "OK"
+        }
+      },
+      "name": "responses-validateResponseDescription-200",
+      "description": "Valida que las respuestas con código 200 tengan la descripción exacta \"OK\".",
+      "message": "{{error}}"
+    },
+    "responses-validateResponseDescription-404": {
+      "id": "4ES31Wy-nhvQaj1gocr-k",
+      "given": [
+        "#Response_All_Object"
+      ],
+      "severity": "warn",
+      "then": {
+        "function": "validateResponseDescription",
+        "functionOptions": {
+          "statusCode": "404",
+          "expectedDescription": "Not Found"
+        }
+      },
+      "name": "responses-validateResponseDescription-404",
+      "description": "Valida que las respuestas con código 404 tengan la descripción exacta \"Not Found\".",
+      "message": "{{error}}"
+    },
+    "responses-validateResponseDescription-400": {
+      "id": "ar_eEbJpPrjK0EBtlDs2q",
+      "given": [
+        "#Response_All_Object"
+      ],
+      "severity": "warn",
+      "then": {
+        "function": "validateResponseDescription",
+        "functionOptions": {
+          "statusCode": "400",
+          "expectedDescription": "Bad Request"
+        }
+      },
+      "name": "responses-validateResponseDescription-400",
+      "description": "Valida que las respuestas con código 400 tengan la descripción exacta \"Bad Request\".",
+      "message": "{{error}}"
+    },
+    "responses-validateResponseDescription-401": {
+      "id": "VpXoMZLqv9u0b-iiCuJFl",
+      "given": [
+        "#Response_All_Object"
+      ],
+      "severity": "warn",
+      "then": {
+        "function": "validateResponseDescription",
+        "functionOptions": {
+          "statusCode": "401",
+          "expectedDescription": "Unauthorized"
+        }
+      },
+      "name": "responses-validateResponseDescription-401",
+      "description": "Valida que las respuestas con código 401 tengan la descripción exacta \"Unauthorized\".",
+      "message": "{{error}}"
+    },
+    "responses-validateResponseDescription-201": {
+      "id": "jm-hKqDKmqvcw1QjQPZOd",
+      "given": [
+        "#Response_All_Object"
+      ],
+      "severity": "warn",
+      "then": {
+        "function": "validateResponseDescription",
+        "functionOptions": {
+          "statusCode": "201",
+          "expectedDescription": "Created"
+        }
+      },
+      "name": "responses-validateResponseDescription-201",
+      "description": "Valida que las respuestas con código 201 tengan la descripción exacta \"Created\".",
+      "message": "{{error}}"
+    }
+  },
+  "x-embeddedFunctions": [
+    {
+      "id": "tcDzj115POKgJe8Dq_pvM",
+      "extendedFrom": "",
+      "name": "checkTimezoneHeaderParam",
+      "content": "import { createRulesetFunction } from '@stoplight/spectral-core';\n\nexport default createRulesetFunction(\n  {\n    input: {\n      type: 'object',\n    },\n    options: null,\n  },\n  function checkTimezoneHeaderParam(targetVal, _opts, { path }) {\n    const parameters = targetVal?.parameters;\n    if (!Array.isArray(parameters)) return;\n\n    const timezoneParam = parameters.find(\n      (param) =>\n        param?.name === 'X-Timezone' &&\n        param?.in === 'header' &&\n        param?.required === true &&\n        param?.schema?.type === 'string' &&\n        param?.schema?.default === 'Europe/Madrid'\n    );\n\n    if (!timezoneParam) {\n      return [\n        {\n          message: \"Path debe definir cabecera 'X-Timezone' (default: 'Europe/Madrid').\",\n          path: [...path, 'parameters'],\n        },\n      ];\n    }\n  }\n);"
+    },
+    {
+      "id": "F9zJMYfj69AcsJKioDrgF",
+      "extendedFrom": "",
+      "name": "schemaIfPresent",
+      "content": "// .stoplight/custom-functions/validateSchemaIfPresent.js\nimport { createRulesetFunction } from '@stoplight/spectral-core';\nimport { schema as schemaFn } from '@stoplight/spectral-functions';\n\nexport default createRulesetFunction(\n  {\n    input: {\n      type: ['object', 'array', 'string', 'number', 'boolean', 'null'],\n    },\n    options: {\n      type: 'object',\n      required: ['schema'],\n      additionalProperties: false,\n      properties: {\n        schema: {\n          // This allows any valid JSON Schema as the value\n          type: 'object',\n        },\n      },\n    },\n  },\n  async function schemaIfPresent(targetVal, opts, context) {\n    if (typeof targetVal === 'undefined') {\n      return;\n    }\n\n    return schemaFn(targetVal, opts, context);\n  }\n);"
+    },
+    {
+      "id": "nApMYgmBG3LxFUOcga61b",
+      "extendedFrom": "",
+      "name": "require401IfJwt",
+      "content": "import { createRulesetFunction } from '@stoplight/spectral-core';\n\nexport default createRulesetFunction(\n  {\n    input: {\n      type: \"object\"\n    },\n    options: null,\n  },\n  function require401IfJwt(operation, _opts, { path }) {\n    const hasJwtSecurity =\n      Array.isArray(operation.security) &&\n      operation.security.some((s) => s && typeof s === 'object' && 'jwt' in s);\n\n    if (!hasJwtSecurity) {\n      return;\n    }\n\n    const responses = operation.responses;\n    if (!responses || typeof responses !== 'object') {\n      return [\n        {\n          message: \"Operación con JWT debe definir respuesta 401.\",\n          path: [...path, 'responses'],\n        },\n      ];\n    }\n\n    const response401 = responses['401'];\n    if (!response401) {\n      return [\n        {\n          message: \"Operación con JWT debe incluir respuesta 401.\",\n          path: [...path, 'responses'],\n        },\n      ];\n    }\n\n    // const description = response401.description;\n    // if (description !== 'Unauthorized') {\n    //   return [\n    //     {\n    //       message: \"Operación debe definir respuesta 401 con descripción 'Unauthorized'.\",\n    //       path: [...path, 'responses', '401', 'description'],\n    //     },\n    //   ];\n    // }\n  }\n);"
+    },
+    {
+      "id": "q2CjxPn409orP8VkFAjhS",
+      "extendedFrom": "",
+      "name": "require400IfPostWithBody",
+      "content": "import { createRulesetFunction } from '@stoplight/spectral-core';\n\nexport default createRulesetFunction(\n  {\n    input: {\n      type: 'object',\n    },\n    options: null,\n  },\n  function require400IfPostWithBody(operation, _opts, { path }) {\n    const methodName = path[path.length - 1];\n\n    if (methodName !== 'post') {\n      return;\n    }\n\n    const hasRequestBody = !!operation.requestBody;\n    if (!hasRequestBody) {\n      return;\n    }\n\n    const responses = operation.responses;\n    if (!responses || typeof responses !== 'object') {\n      return [\n        {\n          message: \"Operación POST con request body debe definir debe definir respuesta 400.\",\n          path: [...path, 'responses'],\n        },\n      ];\n    }\n\n    const response400 = responses['400'];\n    if (!response400) {\n      return [\n        {\n          message: \"Operación POST con request body debe incluir debe definir respuesta 400.\",\n          path: [...path, 'responses'],\n        },\n      ];\n    }\n\n    // const description = response400.description;\n    // if (description !== 'Bad Request') {\n    //   return [\n    //     {\n    //       message: \"Operación POST debe definir debe definir respuesta 400 con descripción 'Bad Request'.\",\n    //       path: [...path, 'responses', '400', 'description'],\n    //     },\n    //   ];\n    // }\n  }\n);"
+    },
+    {
+      "id": "oIeIkOoyhlR3nUfkAXumV",
+      "extendedFrom": "",
+      "name": "require404IfGetWithPathParams",
+      "content": "import { createRulesetFunction } from '@stoplight/spectral-core';\n\nexport default createRulesetFunction(\n  {\n    input: {\n      type: \"object\"\n    },\n    options: null,\n  },\n  function require404IfGetWithPathParams(pathItem, _opts, { path }) {\n    const pathParameters = Array.isArray(pathItem.parameters)\n      ? pathItem.parameters\n      : [];\n\n    const hasPathParam = pathParameters.some(\n      (param) =>\n        param &&\n        (param.in === 'path' || (param.$ref && param.$ref.includes('parameters/')))\n    );\n\n    if (!hasPathParam || typeof pathItem.get !== 'object') {\n      return;\n    }\n\n    const responses = pathItem.get.responses;\n    if (!responses || typeof responses !== 'object') {\n      return [\n        {\n          message: \"Operación GET con path params debe definir respuesta 404.\",\n          path: [...path, 'get', 'responses'],\n        },\n      ];\n    }\n\n    const response404 = responses['404'];\n    if (!response404) {\n      return [\n        {\n          message: \"Operación GET con path params debe incluir respuesta 404.\",\n          path: [...path, 'get', 'responses'],\n        },\n      ];\n    }\n\n    // const description = response404.description;\n    // if (description !== 'Not Found') {\n    //   return [\n    //     {\n    //       message: \"Operación GET debe incluir respuesta 404 con descripción 'Not Found'.\",\n    //       path: [...path, 'get', 'responses', '404', 'description'],\n    //     },\n    //   ];\n    // }\n  }\n);"
+    },
+    {
+      "id": "2LxQtin-gpmdX9-xVjOh-",
+      "extendedFrom": "",
+      "name": "require200or201IfPost",
+      "content": "import { createRulesetFunction } from '@stoplight/spectral-core';\n\nexport default createRulesetFunction(\n  {\n    input: {\n      type: \"object\"\n    },\n    options: null,\n  },\n  function require200or201IfPost(operation, _opts, { path }) {\n    const method = path[path.length - 1];\n    if (method !== 'post') {\n      return;\n    }\n\n    const errors = [];\n\n    const responses = operation.responses;\n    if (!responses || typeof responses !== 'object') {\n      return [\n        {\n          message: \"Operación POST debe definir respuesta 200 o 201.\",\n          path: [...path, 'responses'],\n        },\n      ];\n    }\n\n    if (errors.length > 0) {\n      return errors;\n    }\n\n    const response200 = responses['200'];\n    const response201 = responses['201'];\n\n    const has200 = !!response200;\n    const has201 = !!response201;\n\n    if (!has200 && !has201) {\n      errors.push({\n        message: \"Operación POST debe incluir respuesta 200 o respuesta 201.\",\n        path: [...path, 'responses'],\n      });\n    }\n  }\n);"
+    },
+    {
+      "id": "gMsJmeau4m_xvcwVeuQWE",
+      "extendedFrom": "",
+      "name": "require200IfDelete",
+      "content": "import { createRulesetFunction } from '@stoplight/spectral-core';\n\nexport default createRulesetFunction(\n  {\n    input: {\n      type: 'object',\n    },\n    options: null,\n  },\n  function require200IfDelete(operation, _opts, { path }) {\n    const method = path[path.length - 1];\n    if (method !== 'delete') {\n      return;\n    }\n\n    const responses = operation.responses;\n    if (!responses || typeof responses !== 'object') {\n      return [\n        {\n          message: \"Operación DELETE debe definir respuesta 200.\",\n          path: [...path, 'responses'],\n        },\n      ];\n    }\n\n    const response200 = responses['200'];\n    if (!response200) {\n      return [\n        {\n          message: \"Operación DELETE debe incluir respuesta 200.\",\n          path: [...path, 'responses'],\n        },\n      ];\n    }\n\n    // if (response200.description !== 'OK') {\n    //   return [\n    //     {\n    //       message: \"Operación DELETE debe incluir respuesta 200 con descripción 'OK'.\",\n    //       path: [...path, 'responses', '200', 'description'],\n    //     },\n    //   ];\n    // }\n  }\n);"
+    },
+    {
+      "id": "tGte-OSaXz7k7eSRZ7t-Z",
+      "extendedFrom": "",
+      "name": "requireJwtSecurity",
+      "content": "import { createRulesetFunction } from '@stoplight/spectral-core';\n\nexport default createRulesetFunction(\n  {\n    input: {\n      type: \"object\"\n    },\n    options: null,\n  },\n  function requireJwtSecurity(operation, _opts, { path }) {\n    const hasJwtSecurity =\n      Array.isArray(operation.security) &&\n      operation.security.some(\n        (sec) => sec && typeof sec === 'object' && Object.prototype.hasOwnProperty.call(sec, 'jwt')\n      );\n\n    if (!hasJwtSecurity) {\n      return [\n        {\n          message: \"La operación no tiene seguridad.\",\n          path: [...path, 'security'],\n        },\n      ];\n    }\n  }\n);"
+    },
+    {
+      "id": "q9JKmW9GWVrUGgHf4CsUv",
+      "extendedFrom": "",
+      "name": "validateDobleListaObjeto",
+      "content": "import { createRulesetFunction } from '@stoplight/spectral-core';\n\n// Compara esquemas por estructura (basado solo en nombres de propiedades)\nfunction isEqualSchema(a, b) {\n  const aProps = Object.keys(a?.properties ?? {}).sort();\n  const bProps = Object.keys(b?.properties ?? {}).sort();\n  return JSON.stringify(aProps) === JSON.stringify(bProps);\n}\n\n// Devuelve una lista de nombres de esquemas que coincidan estructuralmente\nfunction findMatchingSchemaNames(allSchemas, candidateSchema) {\n  return Object.entries(allSchemas)\n    .filter(([_, schema]) => isEqualSchema(schema, candidateSchema))\n    .map(([name]) => name);\n}\n\n// Determina si la regla se aplica\nfunction applies(schemaName, schemaObject) {\n  const props = schemaObject?.properties ?? {};\n  const keys = Object.keys(props);\n\n  // El tipo de \"listadoEliminar no es \"integer\"\n  const listadoEliminar = props.listadoEliminar;\n  if (\n    listadoEliminar &&\n    listadoEliminar.items && \n    listadoEliminar.items?.type === 'integer') {\n    return false;\n  }\n\n  // Contiene cadena \"RequestBodyDobleListaObjeto\" en el nombre\n  if (schemaName.includes(\"RequestBodyDobleListaObjeto\")) {\n    return true;\n  }\n\n  // Solo tiene \"listadoInsertar\" y \"listadoEliminar\"\n  if (\n    keys.length !== 2 ||\n    !keys.includes('listadoInsertar') ||\n    !keys.includes('listadoEliminar')\n  ) {\n    return false;\n  }\n\n  return true;\n}\n\nexport default createRulesetFunction(\n  {\n    input: {\n      type: 'object',\n    },\n    options: null,\n  },\n  function validateDobleListaObjeto(schemaObject, _opts, context) {\n    const schemaName = context.path[context.path.length - 1];\n    const allSchemas = context.document.data.components?.schemas ?? {};\n    const props = schemaObject.properties ?? {};\n    let errors = [];\n\n    // Salir si no aplica\n    if (!applies(schemaName, schemaObject)) {\n      return;\n    }\n\n    const insertarNames = [];\n    const eliminarNames = [];\n\n    // Comprobar que \"listadoInsertar\" existe\n    if (!props.listadoInsertar) {\n      errors.push({\n        message: \"'listadoInsertar' debe estar definido.\",\n        path: [...context.path, 'properties'],\n      });\n    }\n    \n    // Comprobar que \"listadoEliminar\" existe\n    if (!props.listadoEliminar) {\n      errors.push({\n        message: \"'listadoEliminar' debe estar definido.\",\n        path: [...context.path, 'properties'],\n      });\n    }\n\n    if (errors.length > 0) {\n      return errors;\n    }\n\n    // Comprobar que \"listadoInsertar\" es un array\n    if (props.listadoInsertar.type !== 'array') {\n      errors.push(\n        {\n          message: \"'listadoInsertar' debe ser un array.\",\n          path: [...context.path, 'properties', 'listadoInsertar'],\n        }\n      );\n    }\n\n    // Comprobar que \"listadoEliminar\" es un array\n    if (props.listadoEliminar.type !== 'array') {\n      errors.push(\n        {\n          message: \"'listadoEliminar' debe ser un array.\",\n          path: [...context.path, 'properties', 'listadoEliminar'],\n        }\n      );\n    }\n\n    if (errors.length > 0) {\n      return errors;\n    }\n\n    const listadoInsertarItemsSchema = props.listadoInsertar.items;\n    const listadoEliminarItemsSchema = props.listadoEliminar.items;\n\n    // Obtener nombre del schema del array de \"listadoInsertar\"\n    if (listadoInsertarItemsSchema?.type === \"string\") {\n      insertarNames.push(\"String\");\n    } else if (listadoInsertarItemsSchema?.type === \"integer\") {\n      insertarNames.push(\"Integer\");\n    } else if (\n      listadoInsertarItemsSchema?.type === \"object\" &&\n      listadoInsertarItemsSchema.properties &&\n      Object.keys(listadoInsertarItemsSchema.properties).length > 0\n    ) {\n      insertarNames.push(...findMatchingSchemaNames(allSchemas, listadoInsertarItemsSchema));\n    } else {\n      errors.push({\n        message: \"Tipo inválido para array de 'listadoInsertar': \" + listadoInsertarItemsSchema?.type,\n        path: [...context.path, 'properties', 'listadoInsertar', 'items'],\n      });\n    }\n\n    // Obtener nombre del schema de \"listadoEliminar\"\n    if (listadoEliminarItemsSchema?.type === \"string\") {\n      eliminarNames.push(\"String\");\n    } else if (listadoEliminarItemsSchema?.type === \"integer\") {\n      eliminarNames.push(\"Integer\");\n    } else if (\n      listadoEliminarItemsSchema?.type === \"object\" &&\n      listadoEliminarItemsSchema.properties &&\n      Object.keys(listadoEliminarItemsSchema.properties).length > 0\n    ) {\n      eliminarNames.push(...findMatchingSchemaNames(allSchemas, listadoEliminarItemsSchema));\n    } else {\n      errors.push({\n        message: \"Tipo inválido para array de 'listadoEliminar': \" + listadoEliminarItemsSchema?.type,\n        path: [...context.path, 'properties', 'listadoEliminar', 'items'],\n      });\n    }\n\n    if (errors.length > 0) {\n      return errors;\n    }\n\n    if (insertarNames.length === 0) {\n      errors.push({\n        message: \"No se encuentra el DTO en 'listadoInsertar'.\",\n        path: [...context.path, 'properties', 'listadoInsertar', 'items'],\n      });\n    }\n    if (eliminarNames.length === 0) {\n      errors.push({\n        message: \"No se encuentra el DTO en 'listadoEliminar'.\",\n        path: [...context.path, 'properties', 'listadoEliminar', 'items'],\n      });\n    }\n\n    if (errors.length > 0) {\n      return errors;\n    }\n\n    // Construir todos los posibles nombres y comprobar que alguno coincide\n    const possibleNames = [];\n    for (const dtoInsertar of insertarNames) {\n      for (const dtoEliminar of eliminarNames) {\n        possibleNames.push(`RequestBodyDobleListaObjeto${dtoInsertar}${dtoEliminar}`);\n      }\n    }\n\n    if (!possibleNames.includes(schemaName)) {\n      errors.push(\n        {\n          message: `Nombre inválido, esperados: ${possibleNames.join(', ')}`,\n          path: [...context.path],\n        },\n      );\n    }\n\n    if (errors.length > 0) {\n      return errors;\n    }\n  }\n);"
+    },
+    {
+      "id": "OAREBkmQfGNjdJz3S-Sk-",
+      "extendedFrom": "",
+      "name": "validateDobleLista",
+      "content": "import { createRulesetFunction } from '@stoplight/spectral-core';\n\n// Compara esquemas por estructura (basado solo en nombres de propiedades)\nfunction isEqualSchema(a, b) {\n  const aProps = Object.keys(a?.properties ?? {}).sort();\n  const bProps = Object.keys(b?.properties ?? {}).sort();\n  return JSON.stringify(aProps) === JSON.stringify(bProps);\n}\n\n// Devuelve una lista de nombres de esquemas que coincidan estructuralmente\nfunction findMatchingSchemaNames(allSchemas, candidateSchema) {\n  return Object.entries(allSchemas)\n    .filter(([_, schema]) => isEqualSchema(schema, candidateSchema))\n    .map(([name]) => name);\n}\n\n// Determina si la regla se aplica\nfunction applies(schemaName, schemaObject) {\n  const props = schemaObject?.properties ?? {};\n  const keys = Object.keys(props);\n\n  // Contiene \"RequestBodyDobleLista\" y no \"RequestBodyDobleListaObjeto\"\n  if (\n    schemaName.includes(\"RequestBodyDobleLista\") &&\n    !schemaName.includes(\"RequestBodyDobleListaObjeto\")\n  ) {\n    return true;\n  }\n\n  // Solo tiene \"listadoInsertar\" y \"listadoEliminar\"\n  if (\n    keys.length !== 2 ||\n    !keys.includes('listadoInsertar') ||\n    !keys.includes('listadoEliminar')\n  ) {\n    return false;\n  }\n\n  // El tipo de \"listadoEliminar es \"integer\"\n  const listadoEliminar = props.listadoEliminar;\n  if (\n    listadoEliminar &&\n    listadoEliminar.items &&\n    listadoEliminar.items?.type === 'integer'\n  ) {\n    return true;\n  } else {\n    return false;\n  }\n}\n\nexport default createRulesetFunction(\n  {\n    input: {\n      type: \"object\"\n    },\n    options: null,\n  },\n  function validateDobleLista(schemaObject, _opts, context) {\n    const schemaName = context.path[context.path.length - 1];\n    const allSchemas = context.document.data.components?.schemas ?? {};\n    const props = schemaObject.properties ?? {};\n    let errors = [];\n\n    // Salir si no aplica\n    if (!applies(schemaName, schemaObject)) {\n      return;\n    }\n\n    const insertarNames = [];\n\n    // Comprobar que \"listadoInsertar\" existe\n    if (!props.listadoInsertar) {\n      errors.push({\n        message: \"'listadoInsertar' debe estar definido.\",\n        path: [...context.path, 'properties'],\n      });\n    }\n    \n    // Comprobar que \"listadoEliminar\" existe\n    if (!props.listadoEliminar) {\n      errors.push({\n        message: \"'listadoEliminar' debe estar definido.\",\n        path: [...context.path, 'properties'],\n      });\n    }\n\n    if (errors.length > 0) {\n      return errors;\n    }\n\n    // Comprobar que \"listadoInsertar\" es un array\n    if (props.listadoInsertar.type !== 'array') {\n      errors.push(\n        {\n          message: \"'listadoInsertar' debe ser un array.\",\n          path: [...context.path, 'properties', 'listadoInsertar'],\n        }\n      );\n    }\n\n    // Comprobar que \"listadoEliminar\" es un array\n    if (props.listadoEliminar.type !== 'array') {\n      errors.push(\n        {\n          message: \"'listadoEliminar' debe ser un array.\",\n          path: [...context.path, 'properties', 'listadoEliminar'],\n        }\n      );\n    }\n\n    if (errors.length > 0) {\n      return errors;\n    }\n\n    const listadoInsertarItemsSchema = props.listadoInsertar.items;\n    const listadoEliminarItemsSchema = props.listadoEliminar.items;\n\n    // Obtener nombre del schema del array de \"listadoInsertar\"\n    if (listadoInsertarItemsSchema?.type === \"string\") {\n      insertarNames.push(\"String\");\n    } else if (listadoInsertarItemsSchema?.type === \"integer\") {\n      insertarNames.push(\"Integer\");\n    } else if (\n      listadoInsertarItemsSchema?.type === \"object\" &&\n      listadoInsertarItemsSchema.properties &&\n      Object.keys(listadoInsertarItemsSchema.properties).length > 0\n    ) {\n      insertarNames.push(...findMatchingSchemaNames(allSchemas, listadoInsertarItemsSchema));\n    } else {\n      errors.push({\n        message: \"Tipo inválido para array de 'listadoInsertar': \" + listadoInsertarItemsSchema?.type,\n        path: [...context.path, 'properties', 'listadoInsertar', 'items'],\n      });\n    }\n\n    // Comprobar que el schema del array de \"listadoEliminar\" es \"integer\"\n    if (listadoEliminarItemsSchema?.type !== \"integer\") {\n      errors.push({\n        message: \"'listadoEliminar' debe ser un array de enteros.\",\n        path: [...context.path, 'properties', 'listadoEliminar', 'items'],\n      });\n    }\n\n    if (errors.length > 0) {\n      return errors;\n    }\n\n    if (insertarNames.length === 0) {\n      errors.push({\n        message: \"No se encuentra el DTO en 'listadoInsertar'.\",\n        path: [...context.path, 'properties', 'listadoInsertar', 'items'],\n      });\n    }\n\n    if (errors.length > 0) {\n      return errors;\n    }\n\n    // Construir todos los posibles nombres y comprobar que alguno coincide\n    const possibleNames = [];\n    for (const dtoInsertar of insertarNames) {\n      possibleNames.push(`RequestBodyDobleLista${dtoInsertar}`);\n    }\n\n    if (!possibleNames.includes(schemaName)) {\n      errors.push(\n        {\n          message: `Nombre inválido, esperados: ${possibleNames.join(', ')}`,\n          path: [...context.path],\n        },\n      );\n    }\n\n    if (errors.length > 0) {\n      return errors;\n    }\n  }\n);"
+    },
+    {
+      "id": "v9ovErKS0-sctvf1cRNHQ",
+      "extendedFrom": "",
+      "name": "validateTripleListaObjeto",
+      "content": "import { createRulesetFunction } from '@stoplight/spectral-core';\n\n// Compara esquemas por estructura (basado solo en nombres de propiedades)\nfunction isEqualSchema(a, b) {\n  const aProps = Object.keys(a?.properties ?? {}).sort();\n  const bProps = Object.keys(b?.properties ?? {}).sort();\n  return JSON.stringify(aProps) === JSON.stringify(bProps);\n}\n\n// Devuelve una lista de nombres de esquemas que coincidan estructuralmente\nfunction findMatchingSchemaNames(allSchemas, candidateSchema) {\n  return Object.entries(allSchemas)\n    .filter(([_, schema]) => isEqualSchema(schema, candidateSchema))\n    .map(([name]) => name);\n}\n\n// Determina si la regla se aplica\nfunction applies(schemaName, schemaObject) {\n  const props = schemaObject?.properties ?? {};\n  const keys = Object.keys(props);\n\n  // El tipo de \"listadoEliminar\" no puede ser \"integer\"\n  const listadoEliminar = props.listadoEliminar;\n  if (\n    listadoEliminar &&\n    listadoEliminar.items &&\n    listadoEliminar.items?.type === 'integer'\n  ) {\n    return false;\n  }\n\n  // Contiene cadena \"RequestBodyTripleListaObjeto\" en el nombre\n  if (schemaName.includes(\"RequestBodyTripleListaObjeto\")) {\n    return true;\n  }\n\n  // Solo tiene \"listadoInsertar\", \"listadoEliminar\" y \"listadoModificar\"\n  if (\n    keys.length !== 3 ||\n    !keys.includes('listadoInsertar') ||\n    !keys.includes('listadoEliminar') ||\n    !keys.includes('listadoModificar')\n  ) {\n    return false;\n  }\n\n  return true;\n}\n\nexport default createRulesetFunction(\n  {\n    input: {\n      type: \"object\"\n    },\n    options: null,\n  },\n  function validateTripleListaObjeto(schemaObject, _opts, context) {\n    const schemaName = context.path[context.path.length - 1];\n    const allSchemas = context.document.data.components?.schemas ?? {};\n    const props = schemaObject.properties ?? {};\n    let errors = [];\n\n    // Salir si no aplica\n    if (!applies(schemaName, schemaObject)) {\n      return;\n    }\n\n    const insertarNames = [];\n    const eliminarNames = [];\n    const modificarNames = [];\n\n    // Comprobar que \"listadoInsertar\" existe\n    if (!props.listadoInsertar) {\n      errors.push({\n        message: \"'listadoInsertar' debe estar definido.\",\n        path: [...context.path, 'properties'],\n      });\n    }\n\n    // Comprobar que \"listadoEliminar\" existe\n    if (!props.listadoEliminar) {\n      errors.push({\n        message: \"'listadoEliminar' debe estar definido.\",\n        path: [...context.path, 'properties'],\n      });\n    }\n\n    // Comprobar que \"listadoModificar\" existe\n    if (!props.listadoModificar) {\n      errors.push({\n        message: \"'listadoModificar' debe estar definido.\",\n        path: [...context.path, 'properties'],\n      });\n    }\n\n    if (errors.length > 0) {\n      return errors;\n    }\n\n    // Comprobar que \"listadoInsertar\" es un array\n    if (props.listadoInsertar.type !== 'array') {\n      errors.push({\n        message: \"'listadoInsertar' debe ser un array.\",\n        path: [...context.path, 'properties', 'listadoInsertar'],\n      });\n    }\n\n    // Comprobar que \"listadoEliminar\" es un array\n    if (props.listadoEliminar.type !== 'array') {\n      errors.push({\n        message: \"'listadoEliminar' debe ser un array.\",\n        path: [...context.path, 'properties', 'listadoEliminar'],\n      });\n    }\n\n    // Comprobar que \"listadoModificar\" es un array\n    if (props.listadoModificar.type !== 'array') {\n      errors.push({\n        message: \"'listadoModificar' debe ser un array.\",\n        path: [...context.path, 'properties', 'listadoModificar'],\n      });\n    }\n\n    if (errors.length > 0) {\n      return errors;\n    }\n\n    const listadoInsertarItemsSchema = props.listadoInsertar.items;\n    const listadoEliminarItemsSchema = props.listadoEliminar.items;\n    const listadoModificarItemsSchema = props.listadoModificar.items;\n\n    // Obtener nombre del schema del array de \"listadoInsertar\"\n    if (listadoInsertarItemsSchema?.type === \"string\") {\n      insertarNames.push(\"String\");\n    } else if (listadoInsertarItemsSchema?.type === \"integer\") {\n      insertarNames.push(\"Integer\");\n    } else if (\n      listadoInsertarItemsSchema?.type === \"object\" &&\n      listadoInsertarItemsSchema.properties &&\n      Object.keys(listadoInsertarItemsSchema.properties).length > 0\n    ) {\n      insertarNames.push(\n        ...findMatchingSchemaNames(allSchemas, listadoInsertarItemsSchema)\n      );\n    } else {\n      errors.push({\n        message:\n          \"Tipo inválido para array de 'listadoInsertar': \" +\n          listadoInsertarItemsSchema?.type,\n        path: [...context.path, 'properties', 'listadoInsertar', 'items'],\n      });\n    }\n\n    // Obtener nombre del schema del array de \"listadoEliminar\"\n    if (listadoEliminarItemsSchema?.type === \"string\") {\n      eliminarNames.push(\"String\");\n    } else if (listadoEliminarItemsSchema?.type === \"integer\") {\n      eliminarNames.push(\"Integer\");\n    } else if (\n      listadoEliminarItemsSchema?.type === \"object\" &&\n      listadoEliminarItemsSchema.properties &&\n      Object.keys(listadoEliminarItemsSchema.properties).length > 0\n    ) {\n      eliminarNames.push(\n        ...findMatchingSchemaNames(allSchemas, listadoEliminarItemsSchema)\n      );\n    } else {\n      errors.push({\n        message:\n          \"Tipo inválido para array de 'listadoEliminar': \" +\n          listadoEliminarItemsSchema?.type,\n        path: [...context.path, 'properties', 'listadoEliminar', 'items'],\n      });\n    }\n\n    // Obtener nombre del schema del array de \"listadoModificar\"\n    if (listadoModificarItemsSchema?.type === \"string\") {\n      modificarNames.push(\"String\");\n    } else if (listadoModificarItemsSchema?.type === \"integer\") {\n      modificarNames.push(\"Integer\");\n    } else if (\n      listadoModificarItemsSchema?.type === \"object\" &&\n      listadoModificarItemsSchema.properties &&\n      Object.keys(listadoModificarItemsSchema.properties).length > 0\n    ) {\n      modificarNames.push(\n        ...findMatchingSchemaNames(allSchemas, listadoModificarItemsSchema)\n      );\n    } else {\n      errors.push({\n        message:\n          \"Tipo inválido para array de 'listadoModificar': \" +\n          listadoModificarItemsSchema?.type,\n        path: [...context.path, 'properties', 'listadoModificar', 'items'],\n      });\n    }\n\n    if (errors.length > 0) {\n      return errors;\n    }\n\n    // Asegurarse de que tenemos al menos un nombre en cada lista\n    if (insertarNames.length === 0) {\n      errors.push({\n        message: \"No se encuentra el DTO en 'listadoInsertar'.\",\n        path: [...context.path, 'properties', 'listadoInsertar', 'items'],\n      });\n    }\n    if (eliminarNames.length === 0) {\n      errors.push({\n        message: \"No se encuentra el DTO en 'listadoEliminar'.\",\n        path: [...context.path, 'properties', 'listadoEliminar', 'items'],\n      });\n    }\n    if (modificarNames.length === 0) {\n      errors.push({\n        message: \"No se encuentra el DTO en 'listadoModificar'.\",\n        path: [...context.path, 'properties', 'listadoModificar', 'items'],\n      });\n    }\n\n    if (errors.length > 0) {\n      return errors;\n    }\n\n    // Validar que \"listadoInsertar\" y \"listadoModificar\" sean el mismo tipo\n    const insertarModificarNames = insertarNames.filter((type) =>\n      modificarNames.includes(type)\n    );\n    if (insertarModificarNames.length === 0) {\n      errors.push({\n        message: \"Los arrays 'listadoInsertar' y 'listadoModificar' deben ser del mismo tipo.\",\n        path: [...context.path],\n      });\n      return errors;\n    }\n\n    // Construir todos los posibles nombres y comprobar que alguno coincide\n    const possibleNames = [];\n    for (const dtoInsertarModificar of insertarModificarNames) {\n      for (const dtoEliminar of eliminarNames) {\n        possibleNames.push(\n          `RequestBodyTripleListaObjeto${dtoInsertarModificar}${dtoEliminar}`\n        );\n      }\n    }\n\n    if (!possibleNames.includes(schemaName)) {\n      errors.push({\n        message: `Nombre inválido, esperados: ${possibleNames.join(', ')}`,\n        path: [...context.path],\n      });\n    }\n\n    if (errors.length > 0) {\n      return errors;\n    }\n  }\n);"
+    },
+    {
+      "id": "PVPnLpYSHQdqbSqcKvkGT",
+      "extendedFrom": "",
+      "name": "validateTripleLista",
+      "content": "import { createRulesetFunction } from '@stoplight/spectral-core';\n\n// Compara esquemas por estructura (basado solo en nombres de propiedades)\nfunction isEqualSchema(a, b) {\n  const aProps = Object.keys(a?.properties ?? {}).sort();\n  const bProps = Object.keys(b?.properties ?? {}).sort();\n  return JSON.stringify(aProps) === JSON.stringify(bProps);\n}\n\n// Devuelve una lista de nombres de esquemas que coincidan estructuralmente\nfunction findMatchingSchemaNames(allSchemas, candidateSchema) {\n  return Object.entries(allSchemas)\n    .filter(([_, schema]) => isEqualSchema(schema, candidateSchema))\n    .map(([name]) => name);\n}\n\n// Determina si la regla se aplica\nfunction applies(schemaName, schemaObject) {\n  const props = schemaObject?.properties ?? {};\n  const keys = Object.keys(props);\n\n  // Contiene \"RequestBodyTripleLista\" y no \"RequestBodyTripleListaObjeto\"\n  if (\n    schemaName.includes(\"RequestBodyTripleLista\") &&\n    !schemaName.includes(\"RequestBodyTripleListaObjeto\")\n  ) {\n    return true;\n  }\n\n  // Solo tiene \"listadoInsertar\", \"listadoEliminar\" y \"listadoModificar\"\n  if (\n    keys.length !== 3 ||\n    !keys.includes('listadoInsertar') ||\n    !keys.includes('listadoEliminar') ||\n    !keys.includes('listadoModificar')\n  ) {\n    return false;\n  }\n\n  // El tipo de \"listadoEliminar\" debe ser \"integer\"\n  const listadoEliminar = props.listadoEliminar;\n  if (\n    listadoEliminar &&\n    listadoEliminar.items &&\n    listadoEliminar.items?.type === 'integer'\n  ) {\n    return true;\n  } else {\n    return false;\n  }\n}\n\nexport default createRulesetFunction(\n  {\n    input: {\n      type: \"object\"\n    },\n    options: null,\n  },\n  function validateTripleLista(schemaObject, _opts, context) {\n    const schemaName = context.path[context.path.length - 1];\n    const allSchemas = context.document.data.components?.schemas ?? {};\n    const props = schemaObject.properties ?? {};\n    let errors = [];\n\n    // Salir si no aplica\n    if (!applies(schemaName, schemaObject)) {\n      return;\n    }\n\n    const insertarNames = [];\n    const modificarNames = [];\n\n    // Comprobar existencia\n    if (!props.listadoInsertar) {\n      errors.push({\n        message: \"'listadoInsertar' debe estar definido.\",\n        path: [...context.path, 'properties'],\n      });\n    }\n    if (!props.listadoEliminar) {\n      errors.push({\n        message: \"'listadoEliminar' debe estar definido.\",\n        path: [...context.path, 'properties'],\n      });\n    }\n    if (!props.listadoModificar) {\n      errors.push({\n        message: \"'listadoModificar' debe estar definido.\",\n        path: [...context.path, 'properties'],\n      });\n    }\n\n    if (errors.length > 0) {\n      return errors;\n    }\n\n    // Comprobar que son arrays\n    if (props.listadoInsertar.type !== 'array') {\n      errors.push({\n        message: \"'listadoInsertar' debe ser un array.\",\n        path: [...context.path, 'properties', 'listadoInsertar'],\n      });\n    }\n    if (props.listadoEliminar.type !== 'array') {\n      errors.push({\n        message: \"'listadoEliminar' debe ser un array.\",\n        path: [...context.path, 'properties', 'listadoEliminar'],\n      });\n    }\n    if (props.listadoModificar.type !== 'array') {\n      errors.push({\n        message: \"'listadoModificar' debe ser un array.\",\n        path: [...context.path, 'properties', 'listadoModificar'],\n      });\n    }\n\n    if (errors.length > 0) {\n      return errors;\n    }\n\n    const listadoInsertarItemsSchema = props.listadoInsertar.items;\n    const listadoEliminarItemsSchema = props.listadoEliminar.items;\n    const listadoModificarItemsSchema = props.listadoModificar.items;\n\n    // Obtener nombre del schema del array de \"listadoInsertar\"\n    if (listadoInsertarItemsSchema?.type === \"string\") {\n      insertarNames.push(\"String\");\n    } else if (listadoInsertarItemsSchema?.type === \"integer\") {\n      insertarNames.push(\"Integer\");\n    } else if (\n      listadoInsertarItemsSchema?.type === \"object\" &&\n      listadoInsertarItemsSchema.properties &&\n      Object.keys(listadoInsertarItemsSchema.properties).length > 0\n    ) {\n      insertarNames.push(...findMatchingSchemaNames(allSchemas, listadoInsertarItemsSchema));\n    } else {\n      errors.push({\n        message: \"Tipo inválido para array de 'listadoInsertar': \" + listadoInsertarItemsSchema?.type,\n        path: [...context.path, 'properties', 'listadoInsertar', 'items'],\n      });\n    }\n\n    // Comprobar que el schema del array de \"listadoEliminar\" es \"integer\"\n    if (listadoEliminarItemsSchema?.type !== \"integer\") {\n      errors.push({\n        message: \"'listadoEliminar' debe ser un array de enteros.\",\n        path: [...context.path, 'properties', 'listadoEliminar', 'items'],\n      });\n    }\n\n    // Obtener nombre del schema del array de \"listadoModificar\"\n    if (listadoModificarItemsSchema?.type === \"string\") {\n      modificarNames.push(\"String\");\n    } else if (listadoModificarItemsSchema?.type === \"integer\") {\n      modificarNames.push(\"Integer\");\n    } else if (\n      listadoModificarItemsSchema?.type === \"object\" &&\n      listadoModificarItemsSchema.properties &&\n      Object.keys(listadoModificarItemsSchema.properties).length > 0\n    ) {\n      modificarNames.push(\n        ...findMatchingSchemaNames(allSchemas, listadoModificarItemsSchema)\n      );\n    } else {\n      errors.push({\n        message:\n          \"Tipo inválido para array de 'listadoModificar': \" +\n          listadoModificarItemsSchema?.type,\n        path: [...context.path, 'properties', 'listadoModificar', 'items'],\n      });\n    }\n\n    if (errors.length > 0) {\n      return errors;\n    }\n\n    // Asegurarse de que tenemos al menos un nombre en cada lista\n    if (insertarNames.length === 0) {\n      errors.push({\n        message: \"No se encuentra el DTO en 'listadoInsertar'.\",\n        path: [...context.path, 'properties', 'listadoInsertar', 'items'],\n      });\n    }\n    if (modificarNames.length === 0) {\n      errors.push({\n        message: \"No se encuentra el DTO en 'listadoModificar'.\",\n        path: [...context.path, 'properties', 'listadoModificar', 'items'],\n      });\n    }\n\n    if (errors.length > 0) {\n      return errors;\n    }\n\n    // Validar que \"listadoInsertar\" y \"listadoModificar\" sean el mismo tipo\n    const insertarModificarNames = insertarNames.filter((type) =>\n      modificarNames.includes(type)\n    );\n    if (insertarModificarNames.length === 0) {\n      errors.push({\n        message: \"Los arrays 'listadoInsertar' y 'listadoModificar' deben ser del mismo tipo.\",\n        path: [...context.path],\n      });\n      return errors;\n    }\n\n    if (errors.length > 0) {\n      return errors;\n    }\n\n    // Construir todos los posibles nombres esperados y comprobar que alguno coincide\n    const possibleNames = [];\n    for (const dtoInsertarModificar of insertarModificarNames) {\n      possibleNames.push(`RequestBodyTripleLista${dtoInsertarModificar}`);\n    }\n\n    if (!possibleNames.includes(schemaName)) {\n      errors.push({\n        message: `Nombre inválido, esperados: ${possibleNames.join(', ')}`,\n        path: [...context.path],\n      });\n    }\n\n    if (errors.length > 0) {\n      return errors;\n    }\n  }\n);"
+    },
+    {
+      "id": "UZ_5CGpCIS_c_J5ZZgBz1",
+      "extendedFrom": "",
+      "name": "validateOperationId",
+      "content": "import { createRulesetFunction } from '@stoplight/spectral-core';\n\nfunction computeExpectedOperationId(url, method) {\n  // Dividir URL en segmentos, omitir microservicio y versión\n  const segments = url.replace(/^\\/+/, '').split('/');\n  const allSegments = segments.slice(2);\n\n  // Guardar parámetros\n  const paramNames = [];\n  for (const seg of allSegments) {\n    if (isParam(seg)) {\n      paramNames.push(seg.slice(1, -1));\n    }\n  }\n\n  // Buscar índice del último parámetro\n  let lastParamIndex = -1;\n  for (let i = allSegments.length - 1; i >= 0; i--) {\n    if (isParam(allSegments[i])) {\n      lastParamIndex = i;\n      break;\n    }\n  }\n\n  // Construir la entidad\n  let entityParts = [];\n\n  if (lastParamIndex === -1) { // No hay parámetros\n    for (let i = allSegments.length - 1; i >= 0; i--) {\n      if (!isParam(allSegments[i])) {\n        entityParts.push(allSegments[i]);\n      }\n    }\n  } else if (lastParamIndex < allSegments.length - 1) { // Parámetro con literales a la derecha\n    for (let i = allSegments.length - 1; i > lastParamIndex; i--) {\n      if (!isParam(allSegments[i])) {\n        entityParts.push(allSegments[i]);\n      }\n    }\n  } else { // Parámetro sin literales a la derecha\n    for (let i = lastParamIndex - 1; i >= 0; i--) {\n      if (isParam(allSegments[i])) {\n        break;\n      }\n      entityParts.push(allSegments[i]);\n    }\n  }\n\n  // Construir entity\n  const lastSegmentIsParam = isParam(allSegments[allSegments.length - 1]);\n  let entity = \"\";\n\n  if (lastSegmentIsParam) { // El último segmento del path es path param -> singularizar\n    const singularized = entityParts.map(part => {\n      const words = part.split('-');\n      const hasVerb = words.some(word => word.endsWith('ar') || word.endsWith('er') || word.endsWith('ir'));\n      if (hasVerb) {\n        return part;\n      } else {\n        return words.map(singularize).join('-');\n      }\n    });\n    entity = toPascalCase(singularized.join('-'));\n  } else { // El último segmento no es path param -> no singularizar\n    entity = toPascalCase(entityParts.join(\"-\"));\n  }\n\n  // Construir verb\n  const verb = method.toLowerCase();\n\n  // Construir operationId\n  let operationId = verb + entity;\n\n  // Añadir todos los parámetros en orden (\"PorIdEmpresaPorIdGrupoPorIdSerie\" etc.)\n  for (const param of paramNames) {\n    operationId += 'Por' + param.charAt(0).toUpperCase() + param.slice(1);\n  }\n\n  return operationId;\n}\n\n// Detecta si un segmento es param (empieza por \"{\" y termina por \"}\")\nfunction isParam(seg) {\n  return seg.startsWith('{') && seg.endsWith('}');\n}\n\n// Pasa una palabra de plural a singular, incluyendo excepciones\nfunction singularize(word) {\n  const exceptions = {\n    \"laborables\": \"laborable\",\n    \"asistentes\": \"asistente\",\n    \"disponibles\": \"disponible\",\n    \"informes\": \"informe\"\n  };\n\n  if (exceptions[word]) {\n    return exceptions[word];\n  }\n\n  if (word.endsWith('es')) {\n    return word.slice(0, -2);\n  } else if (word.endsWith('s')) {\n    return word.slice(0, -1);\n  }\n\n  return word;\n}\n\n// Convierte una cadena separada por guiones o guiones bajos a PascalCase\nfunction toPascalCase(text) {\n  return text\n    .split(/[-_]/g)\n    .filter(Boolean) // evita cadenas vacías en caso de \"--\"\n    .map(\n      word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()\n    )\n    .join('');\n}\n\nexport default createRulesetFunction(\n  {\n    input: {\n      type: \"object\"\n    },\n    options: null,\n  },\n  function validateOperationId(operation, _opts, context) {\n    if (!operation.operationId) {\n      return [\n        {\n          message: \"La operación debe definir un 'operationId'.\",\n          path: context.path.concat(['operationId']),\n        },\n      ];\n    }\n\n    const method = context.path[context.path.length - 1];\n    const url = context.path[1] || \"\";\n\n    const expected = computeExpectedOperationId(url, method);\n\n    if (operation.operationId !== expected) {\n      return [\n        {\n          message: `Esperado: '${expected}'; obtenido: '${operation.operationId}'.`,\n          path: context.path.concat(['operationId']),\n        },\n      ];\n    }\n  }\n);"
+    },
+    {
+      "id": "Rn4BenjcnUPQ0CZdUm5Kg",
+      "extendedFrom": "",
+      "name": "validateResponseDescription",
+      "content": "import { createRulesetFunction } from '@stoplight/spectral-core';\n\nexport default createRulesetFunction(\n  {\n    input: {\n      type: 'object',\n    },\n    options: {\n      type: 'object',\n      properties: {\n        statusCode: { type: 'string' },\n        expectedDescription: { type: 'string' },\n      },\n      required: ['statusCode', 'expectedDescription'],\n    },\n  },\n  function validateResponseDescription(responses, opts, context) {\n    const { statusCode, expectedDescription } = opts;\n\n    const response = responses[statusCode];\n    if (!response) return;\n\n    const actualDescription = response.description?.trim();\n\n    if (actualDescription !== expectedDescription) {\n      return [\n        {\n          message: `Respuesta ${statusCode} debe descripción '${expectedDescription}', encontrado '${actualDescription ?? '[vacía]'}'.`,\n          path: context.path.concat([statusCode, 'description']),\n        },\n      ];\n    }\n  }\n);"
+    }
+  ],
+  "extendedDefault": false
+}

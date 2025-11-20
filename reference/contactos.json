@@ -1,0 +1,2401 @@
+{
+  "openapi": "3.0.3",
+  "x-stoplight": {
+    "id": "qqo3nria0jhjd"
+  },
+  "info": {
+    "title": "contactos API",
+    "version": "1.0-SNAPSHOT",
+    "description": "API del microservicio de contactos",
+    "license": {
+      "name": "Proprietary - Internal Use Only",
+      "url": "https://v4.metacontratas.com/"
+    },
+    "contact": {
+      "email": "soporte.tecnico@metadata.es",
+      "name": "Metadata S.L.",
+      "url": "https://v4.metacontratas.com/"
+    }
+  },
+  "tags": [
+    {
+      "name": "CorreoElectronico",
+      "description": "Servicio de correos electrónicos"
+    },
+    {
+      "name": "Dirección",
+      "description": "Servicio de direcciones"
+    },
+    {
+      "name": "País",
+      "description": "Servicio de País"
+    },
+    {
+      "name": "Teléfono",
+      "description": "Servicio de teléfonos"
+    },
+    {
+      "name": "Tipo Entidad",
+      "description": "Servicio de TipoEntidad"
+    },
+    {
+      "name": "Tipo Entidad Contacto",
+      "description": "Servicio de Tipos de Entidad"
+    }
+  ],
+  "paths": {
+    "/contactos/v1/entidades": {
+      "get": {
+        "tags": [
+          "Tipo Entidad"
+        ],
+        "summary": "Devuelve todos los tipos de entidades del sistema",
+        "operationId": "getEntidades",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/porEntorno"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TipoEntidadDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Devuelve todos los tipos de entidades del sistema",
+        "x-stoplight": {
+          "id": "msvcpdazxb432"
+        }
+      },
+      "post": {
+        "tags": [
+          "Tipo Entidad"
+        ],
+        "summary": "Crea una nueva entidad",
+        "operationId": "postEntidades",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TipoEntidadDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TipoEntidadDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Crea una nueva entidad",
+        "x-stoplight": {
+          "id": "hfwo8heyikuf7"
+        }
+      }
+    },
+    "/contactos/v1/entidades/contar": {
+      "get": {
+        "tags": [
+          "Tipo Entidad"
+        ],
+        "summary": "Devuelve el número de entidades dadas de alta en el sistema",
+        "operationId": "getContarEntidades",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Devuelve el número de entidades dadas de alta en el sistema",
+        "x-stoplight": {
+          "id": "e2udj5op6cynm"
+        }
+      }
+    },
+    "/contactos/v1/entidades/{idEntidad}": {
+      "get": {
+        "tags": [
+          "Tipo Entidad"
+        ],
+        "summary": "Busca la entidad correspondiente al ID introducido",
+        "operationId": "getEntidadPorIdEntidad",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TipoEntidadDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Busca la entidad correspondiente al ID introducido",
+        "x-stoplight": {
+          "id": "8t7bvguivu0wh"
+        }
+      },
+      "put": {
+        "tags": [
+          "Tipo Entidad"
+        ],
+        "summary": "Actualiza una determinada entidad",
+        "operationId": "putEntidadPorIdEntidad",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TipoEntidadDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TipoEntidadDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Actualiza una determinada entidad",
+        "x-stoplight": {
+          "id": "hqfcj6d0ods7i"
+        }
+      },
+      "delete": {
+        "tags": [
+          "Tipo Entidad"
+        ],
+        "summary": "Elimina una determinada entidad",
+        "operationId": "deleteEntidadPorIdEntidad",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TipoEntidadDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Elimina una determinada entidad",
+        "x-stoplight": {
+          "id": "sqo9ak2wc5b5a"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEntidad"
+        }
+      ]
+    },
+    "/contactos/v1/paises": {
+      "get": {
+        "tags": [
+          "País"
+        ],
+        "summary": "Devuelve todos los países del sistema",
+        "operationId": "getPaises",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PaisDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "description": "Devuelve todos los países del sistema",
+        "x-stoplight": {
+          "id": "vrlwkvm8kej0u"
+        }
+      },
+      "post": {
+        "tags": [
+          "País"
+        ],
+        "summary": "Crea un nuevo país",
+        "operationId": "postPaises",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaisDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaisDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Crea un nuevo país",
+        "x-stoplight": {
+          "id": "trm71ic0vasao"
+        }
+      }
+    },
+    "/contactos/v1/paises/contar": {
+      "get": {
+        "tags": [
+          "País"
+        ],
+        "summary": "Devuelve el número de países dados de alta en el sistema",
+        "operationId": "getContarPaises",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "description": "Devuelve el número de países dados de alta en el sistema",
+        "x-stoplight": {
+          "id": "z78o3gatt5hnr"
+        }
+      }
+    },
+    "/contactos/v1/paises/{idPais}": {
+      "get": {
+        "tags": [
+          "País"
+        ],
+        "summary": "Busca el país correspondiente al ID introducido",
+        "operationId": "getPaisPorIdPais",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaisDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "description": "Busca el país correspondiente al ID introducido",
+        "x-stoplight": {
+          "id": "serjrfp3srf8g"
+        }
+      },
+      "put": {
+        "tags": [
+          "País"
+        ],
+        "summary": "Actualiza un determinado país",
+        "operationId": "putPaisPorIdPais",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaisDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaisDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Actualiza un determinado país",
+        "x-stoplight": {
+          "id": "nqfxupm4kh3me"
+        }
+      },
+      "delete": {
+        "tags": [
+          "País"
+        ],
+        "summary": "Elimina un determinado país",
+        "operationId": "deletePaisPorIdPais",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaisDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Elimina un determinado país",
+        "x-stoplight": {
+          "id": "3h8gxv2rznc56"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idPais"
+        }
+      ]
+    },
+    "/contactos/v1/tipos-entidades/{idTipoEntidad}/contactos": {
+      "get": {
+        "tags": [
+          "Tipo Entidad Contacto"
+        ],
+        "summary": "Recupera el listado de contactos mediante unos parámetros",
+        "description": "Si no se pasan los parámetros, devolverá todos los contactos",
+        "operationId": "getContactosPorIdTipoEntidad",
+        "parameters": [
+          {
+            "name": "idEntidad",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "format": "int32",
+                "type": "integer"
+              }
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ContactoDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador",
+          "administrador_grupo_entornos"
+        ],
+        "x-permisos": false,
+        "x-stoplight": {
+          "id": "vnf13bu0bo54e"
+        }
+      },
+      "post": {
+        "tags": [
+          "Tipo Entidad Contacto"
+        ],
+        "summary": "Crea un nuevo contacto",
+        "operationId": "postContactosPorIdTipoEntidad",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactoDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactoDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- DAC_0002 : No puede haber más de valor de %nombreTabla% como predeterminado\n - DAC_0003 : Debe haber un valor de %nombreTabla% como predeterminado"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador",
+          "administrador_grupo_entornos"
+        ],
+        "x-permisos": true,
+        "description": "Crea un nuevo contacto",
+        "x-stoplight": {
+          "id": "o0wshlpkav62x"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idTipoEntidad"
+        }
+      ]
+    },
+    "/contactos/v1/tipos-entidades/{idTipoEntidad}/entidades/{idEntidad}/contactos": {
+      "delete": {
+        "tags": [
+          "Tipo Entidad Contacto"
+        ],
+        "summary": "Elimina los contactos de una determinada entidad",
+        "operationId": "deleteContactosPorIdTipoEntidadPorIdEntidad",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ContactoDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador",
+          "administrador_grupo_entornos"
+        ],
+        "x-permisos": true,
+        "description": "Elimina los contactos de una determinada entidad",
+        "x-stoplight": {
+          "id": "hxb7t0i7iov3q"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEntidad"
+        },
+        {
+          "$ref": "#/components/parameters/idTipoEntidad"
+        }
+      ]
+    },
+    "/contactos/v1/tipos-entidades/{idTipoEntidad}/entidades/{idEntidad}/contactos/{idContacto}": {
+      "get": {
+        "tags": [
+          "Tipo Entidad Contacto"
+        ],
+        "summary": "Busca la entidad correspondiente al ID introducido",
+        "operationId": "getContactoPorIdTipoEntidadPorIdEntidadPorIdContacto",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactoDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador",
+          "administrador_grupo_entornos"
+        ],
+        "x-permisos": true,
+        "description": "Busca la entidad correspondiente al ID introducido",
+        "x-stoplight": {
+          "id": "h39c0407xgf6k"
+        }
+      },
+      "put": {
+        "tags": [
+          "Tipo Entidad Contacto"
+        ],
+        "summary": "Actualiza un determinado correo electrónico de un contacto",
+        "operationId": "putContactoPorIdTipoEntidadPorIdEntidadPorIdContacto",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactoDtoRequestUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactoDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador",
+          "administrador_grupo_entornos"
+        ],
+        "x-permisos": true,
+        "description": "Actualiza un determinado correo electrónico de un contacto",
+        "x-stoplight": {
+          "id": "kwalzyapifftz"
+        }
+      },
+      "delete": {
+        "tags": [
+          "Tipo Entidad Contacto"
+        ],
+        "summary": "Elimina un determinado contacto",
+        "operationId": "deleteContactoPorIdTipoEntidadPorIdEntidadPorIdContacto",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactoDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador",
+          "administrador_grupo_entornos"
+        ],
+        "x-permisos": true,
+        "description": "Elimina un determinado contacto",
+        "x-stoplight": {
+          "id": "x5hrx4dbgx5fq"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idContacto"
+        },
+        {
+          "$ref": "#/components/parameters/idEntidad"
+        },
+        {
+          "$ref": "#/components/parameters/idTipoEntidad"
+        }
+      ]
+    },
+    "/contactos/v1/tipos-entidades/{idTipoEntidad}/entidades/{idEntidad}/contactos/{idContacto}/correos-electronicos": {
+      "get": {
+        "tags": [
+          "CorreoElectronico"
+        ],
+        "summary": "Recupera el listado de correos electrónicos de un contacto",
+        "operationId": "getCorreosElectronicosPorIdTipoEntidadPorIdEntidadPorIdContacto",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CorreoElectronicoDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Recupera el listado de correos electrónicos de un contacto",
+        "x-stoplight": {
+          "id": "7v7htf5qg3iw3"
+        }
+      },
+      "post": {
+        "tags": [
+          "CorreoElectronico"
+        ],
+        "summary": "Crea un nuevo correo electrónico",
+        "operationId": "postCorreosElectronicosPorIdTipoEntidadPorIdEntidadPorIdContacto",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CorreoElectronicoDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CorreoElectronicoDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Crea un nuevo correo electrónico",
+        "x-stoplight": {
+          "id": "ufe6erjcip18h"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idContacto"
+        },
+        {
+          "$ref": "#/components/parameters/idEntidad"
+        },
+        {
+          "$ref": "#/components/parameters/idTipoEntidad"
+        }
+      ]
+    },
+    "/contactos/v1/tipos-entidades/{idTipoEntidad}/entidades/{idEntidad}/contactos/{idContacto}/correos-electronicos/{idCorreo}": {
+      "get": {
+        "tags": [
+          "CorreoElectronico"
+        ],
+        "summary": "Busca la entidad correo electrónico correspondiente al ID introducido",
+        "operationId": "getCorreoElectronicoPorIdTipoEntidadPorIdEntidadPorIdContactoPorIdCorreo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CorreoElectronicoDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Busca la entidad correo electrónico correspondiente al ID introducido",
+        "x-stoplight": {
+          "id": "k5dm32fwa0w5t"
+        }
+      },
+      "put": {
+        "tags": [
+          "CorreoElectronico"
+        ],
+        "summary": "Actualiza un determinado correo electrónico",
+        "operationId": "putCorreoElectronicoPorIdTipoEntidadPorIdEntidadPorIdContactoPorIdCorreo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CorreoElectronicoDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CorreoElectronicoDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Actualiza un determinado correo electrónico",
+        "x-stoplight": {
+          "id": "cr90oai1fwbh1"
+        }
+      },
+      "delete": {
+        "tags": [
+          "CorreoElectronico"
+        ],
+        "summary": "Elimina un determinado correo electrónico",
+        "operationId": "deleteCorreoElectronicoPorIdTipoEntidadPorIdEntidadPorIdContactoPorIdCorreo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CorreoElectronicoDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Elimina un determinado correo electrónico",
+        "x-stoplight": {
+          "id": "q0f9rg1axxaoh"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idContacto"
+        },
+        {
+          "$ref": "#/components/parameters/idEntidad"
+        },
+        {
+          "$ref": "#/components/parameters/idTipoEntidad"
+        },
+        {
+          "$ref": "#/components/parameters/idCorreo"
+        }
+      ]
+    },
+    "/contactos/v1/tipos-entidades/{idTipoEntidad}/entidades/{idEntidad}/contactos/{idContacto}/direcciones": {
+      "get": {
+        "tags": [
+          "Dirección"
+        ],
+        "summary": "Recupera el listado de direcciones de un contacto",
+        "operationId": "getDireccionesPorIdTipoEntidadPorIdEntidadPorIdContacto",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DireccionDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Recupera el listado de direcciones de un contacto",
+        "x-stoplight": {
+          "id": "8wt8q6lpzr6f4"
+        }
+      },
+      "post": {
+        "tags": [
+          "Dirección"
+        ],
+        "summary": "Crea una nueva dirección",
+        "operationId": "postDireccionesPorIdTipoEntidadPorIdEntidadPorIdContacto",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DireccionDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DireccionDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Crea una nueva dirección",
+        "x-stoplight": {
+          "id": "oznsjrmteqto5"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idContacto"
+        },
+        {
+          "$ref": "#/components/parameters/idEntidad"
+        },
+        {
+          "$ref": "#/components/parameters/idTipoEntidad"
+        }
+      ]
+    },
+    "/contactos/v1/tipos-entidades/{idTipoEntidad}/entidades/{idEntidad}/contactos/{idContacto}/direcciones/{idDireccion}": {
+      "get": {
+        "tags": [
+          "Dirección"
+        ],
+        "summary": "Busca la entidad dirección correspondiente al ID introducido",
+        "operationId": "getDireccionPorIdTipoEntidadPorIdEntidadPorIdContactoPorIdDireccion",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DireccionDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Busca la entidad dirección correspondiente al ID introducido",
+        "x-stoplight": {
+          "id": "0l9go42blgrlr"
+        }
+      },
+      "put": {
+        "tags": [
+          "Dirección"
+        ],
+        "summary": "Actualiza una determinada dirección",
+        "operationId": "putDireccionPorIdTipoEntidadPorIdEntidadPorIdContactoPorIdDireccion",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DireccionDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DireccionDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Actualiza una determinada dirección",
+        "x-stoplight": {
+          "id": "dd7hlmrenevsb"
+        }
+      },
+      "delete": {
+        "tags": [
+          "Dirección"
+        ],
+        "summary": "Elimina una determinada dirección",
+        "operationId": "deleteDireccionPorIdTipoEntidadPorIdEntidadPorIdContactoPorIdDireccion",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DireccionDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Elimina una determinada dirección",
+        "x-stoplight": {
+          "id": "fp2ypqriaqw59"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idContacto"
+        },
+        {
+          "$ref": "#/components/parameters/idEntidad"
+        },
+        {
+          "$ref": "#/components/parameters/idTipoEntidad"
+        },
+        {
+          "$ref": "#/components/parameters/idDireccion"
+        }
+      ]
+    },
+    "/contactos/v1/tipos-entidades/{idTipoEntidad}/entidades/{idEntidad}/contactos/{idContacto}/telefonos": {
+      "get": {
+        "tags": [
+          "Teléfono"
+        ],
+        "summary": "Recupera el listado de teléfonos de un contacto",
+        "operationId": "getTelefonosPorIdTipoEntidadPorIdEntidadPorIdContacto",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TelefonoDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Recupera el listado de teléfonos de un contacto",
+        "x-stoplight": {
+          "id": "3wy5optx4ba1y"
+        }
+      },
+      "post": {
+        "tags": [
+          "Teléfono"
+        ],
+        "summary": "Crea un nuevo teléfono",
+        "operationId": "postTelefonosPorIdTipoEntidadPorIdEntidadPorIdContacto",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TelefonoDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TelefonoDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Crea un nuevo teléfono",
+        "x-stoplight": {
+          "id": "05qxepzdph8pt"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idContacto"
+        },
+        {
+          "$ref": "#/components/parameters/idEntidad"
+        },
+        {
+          "$ref": "#/components/parameters/idTipoEntidad"
+        }
+      ]
+    },
+    "/contactos/v1/tipos-entidades/{idTipoEntidad}/entidades/{idEntidad}/contactos/{idContacto}/telefonos/{idTelefono}": {
+      "get": {
+        "tags": [
+          "Teléfono"
+        ],
+        "summary": "Busca la entidad teléfono correspondiente al ID introducido",
+        "operationId": "getTelefonoPorIdTipoEntidadPorIdEntidadPorIdContactoPorIdTelefono",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TelefonoDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Busca la entidad teléfono correspondiente al ID introducido",
+        "x-stoplight": {
+          "id": "4yodi1qtou7ij"
+        }
+      },
+      "put": {
+        "tags": [
+          "Teléfono"
+        ],
+        "summary": "Actualiza un determinado teléfono",
+        "operationId": "putTelefonoPorIdTipoEntidadPorIdEntidadPorIdContactoPorIdTelefono",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TelefonoDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TelefonoDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Actualiza un determinado teléfono",
+        "x-stoplight": {
+          "id": "0g1zjam6krub7"
+        }
+      },
+      "delete": {
+        "tags": [
+          "Teléfono"
+        ],
+        "summary": "Elimina un determinado teléfono",
+        "operationId": "deleteTelefonoPorIdTipoEntidadPorIdEntidadPorIdContactoPorIdTelefono",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TelefonoDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Elimina un determinado teléfono",
+        "x-stoplight": {
+          "id": "07oqtpo81j1sl"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idContacto"
+        },
+        {
+          "$ref": "#/components/parameters/idEntidad"
+        },
+        {
+          "$ref": "#/components/parameters/idTipoEntidad"
+        },
+        {
+          "$ref": "#/components/parameters/idTelefono"
+        }
+      ]
+    }
+  },
+  "components": {
+    "schemas": {
+      "ContactoDtoRequest": {
+        "required": [
+          "nombre",
+          "observaciones",
+          "idEntidad",
+          "correosElectronicos",
+          "direcciones",
+          "telefonos"
+        ],
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "maxLength": 255,
+            "type": "string"
+          },
+          "observaciones": {
+            "maxLength": 4096,
+            "type": "string"
+          },
+          "predeterminado": {
+            "type": "boolean"
+          },
+          "idEntidad": {
+            "format": "int32",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "type": "integer"
+          },
+          "correosElectronicos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CorreoElectronicoDtoRequest"
+            }
+          },
+          "direcciones": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DireccionDtoRequest"
+            }
+          },
+          "telefonos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TelefonoDtoRequest"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "ds0rf67aojgcl"
+        }
+      },
+      "ContactoDtoRequestUpdate": {
+        "required": [
+          "nombre",
+          "observaciones"
+        ],
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "maxLength": 255,
+            "type": "string"
+          },
+          "observaciones": {
+            "maxLength": 4096,
+            "type": "string"
+          },
+          "predeterminado": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "uvq19upqah69l"
+        }
+      },
+      "ContactoDtoResponse": {
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "type": "string"
+          },
+          "observaciones": {
+            "type": "string"
+          },
+          "predeterminado": {
+            "type": "boolean"
+          },
+          "idTipoEntidad": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEntidad": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idContacto": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "correosElectronicos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CorreoElectronicoDtoResponse"
+            }
+          },
+          "direcciones": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DireccionDtoResponse"
+            }
+          },
+          "telefonos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TelefonoDtoResponse"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "ogq8pvftlpn5t"
+        }
+      },
+      "ContactoTipoEntidadDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idTipoEntidad": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEntidad": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idContacto": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "uxbuwis8z89g8"
+        }
+      },
+      "CorreoElectronicoDtoRequest": {
+        "required": [
+          "email",
+          "nombre"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "maxLength": 255,
+            "type": "string"
+          },
+          "nombre": {
+            "maxLength": 256,
+            "type": "string"
+          },
+          "predeterminado": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "g77ssm583r5qq"
+        }
+      },
+      "CorreoElectronicoDtoResponse": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "predeterminado": {
+            "type": "boolean"
+          },
+          "idCorreo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idContacto": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "m5q5imlmflc8b"
+        }
+      },
+      "DireccionDtoRequest": {
+        "required": [
+          "idPais",
+          "direccion",
+          "placeId"
+        ],
+        "type": "object",
+        "properties": {
+          "idPais": {
+            "format": "int32",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "type": "integer"
+          },
+          "predeterminada": {
+            "type": "boolean"
+          },
+          "direccion": {
+            "maxLength": 512,
+            "type": "string"
+          },
+          "placeId": {
+            "type": "string"
+          },
+          "extraData": {
+            "type": "object",
+            "additionalProperties": {}
+          }
+        },
+        "x-stoplight": {
+          "id": "gerwbtswtcg8u"
+        }
+      },
+      "DireccionDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idPais": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "predeterminada": {
+            "type": "boolean"
+          },
+          "direccion": {
+            "type": "string"
+          },
+          "placeId": {
+            "type": "string"
+          },
+          "idDireccion": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "contacto": {
+            "$ref": "#/components/schemas/ContactoTipoEntidadDtoResponse"
+          },
+          "extraData": {
+            "type": "object",
+            "additionalProperties": {}
+          }
+        },
+        "x-stoplight": {
+          "id": "0ge5db1g0hqnj"
+        }
+      },
+      "PaisDtoRequest": {
+        "required": [
+          "nombre",
+          "nombreEN",
+          "nombreFR",
+          "prefijoTel",
+          "iso2",
+          "iso3"
+        ],
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "maxLength": 128,
+            "minLength": 3,
+            "type": "string"
+          },
+          "nombreEN": {
+            "maxLength": 128,
+            "minLength": 3,
+            "type": "string"
+          },
+          "nombreFR": {
+            "maxLength": 128,
+            "minLength": 3,
+            "type": "string"
+          },
+          "prefijoTel": {
+            "maxLength": 45,
+            "minLength": 1,
+            "type": "string"
+          },
+          "iso2": {
+            "maxLength": 2,
+            "minLength": 1,
+            "type": "string"
+          },
+          "iso3": {
+            "maxLength": 3,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "k2oaxzrfoko5l"
+        }
+      },
+      "PaisDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idPais": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "nombreEN": {
+            "type": "string"
+          },
+          "nombreFR": {
+            "type": "string"
+          },
+          "prefijoTel": {
+            "type": "string"
+          },
+          "iso2": {
+            "type": "string"
+          },
+          "iso3": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "3d642jm3ikj77"
+        }
+      },
+      "TelefonoDtoRequest": {
+        "required": [
+          "idPais",
+          "telefono",
+          "nombre"
+        ],
+        "type": "object",
+        "properties": {
+          "idPais": {
+            "format": "int32",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "type": "integer"
+          },
+          "telefono": {
+            "maxLength": 16,
+            "minLength": 6,
+            "type": "string"
+          },
+          "nombre": {
+            "maxLength": 256,
+            "type": "string"
+          },
+          "predeterminado": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "fywqxep6lgrhn"
+        }
+      },
+      "TelefonoDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idTelefono": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idContacto": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "pais": {
+            "$ref": "#/components/schemas/PaisDtoResponse"
+          },
+          "telefono": {
+            "type": "string"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "predeterminado": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "slvekr4nyxyay"
+        }
+      },
+      "TipoEntidadDtoRequest": {
+        "required": [
+          "entidad",
+          "observaciones",
+          "porEntorno"
+        ],
+        "type": "object",
+        "properties": {
+          "entidad": {
+            "maxLength": 45,
+            "type": "string"
+          },
+          "observaciones": {
+            "maxLength": 4096,
+            "type": "string"
+          },
+          "porEntorno": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "g3h9f30nuogm4"
+        }
+      },
+      "TipoEntidadDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idTipoEntidad": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "entidad": {
+            "type": "string"
+          },
+          "observaciones": {
+            "type": "string"
+          },
+          "porEntorno": {
+            "type": "boolean"
+          },
+          "minutosAzureSas": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "vjf5au01j2j7t"
+        }
+      }
+    },
+    "securitySchemes": {
+      "jwt": {
+        "type": "http",
+        "description": "Authentication",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "parameters": {
+      "porEntorno": {
+        "name": "porEntorno",
+        "in": "query",
+        "schema": {
+          "type": "boolean"
+        },
+        "description": "TODO: add description"
+      },
+      "X-Timezone": {
+        "name": "X-Timezone",
+        "in": "header",
+        "description": "Zona horaria desde la que se hace la petición",
+        "required": true,
+        "schema": {
+          "default": "Europe/Madrid",
+          "type": "string"
+        }
+      },
+      "idEntidad": {
+        "name": "idEntidad",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idPais": {
+        "name": "idPais",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idTipoEntidad": {
+        "name": "idTipoEntidad",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idContacto": {
+        "name": "idContacto",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idCorreo": {
+        "name": "idCorreo",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idDireccion": {
+        "name": "idDireccion",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idTelefono": {
+        "name": "idTelefono",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      }
+    }
+  }
+}

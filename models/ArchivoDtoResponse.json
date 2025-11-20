@@ -1,0 +1,110 @@
+{
+  "title": "ArchivoDtoResponse",
+  "x-stoplight": {
+    "id": "48ifcb26o0lht"
+  },
+  "type": "object",
+  "required": [
+    "idTipoEntidad",
+    "idEntidad",
+    "observaciones",
+    "nombre"
+  ],
+  "properties": {
+    "idTipoEntidad": {
+      "format": "int32",
+      "type": "integer",
+      "x-stoplight": {
+        "id": "v6hgjw73tcd0a"
+      }
+    },
+    "idEntidad": {
+      "type": "string",
+      "x-stoplight": {
+        "id": "crrqx83vdgl41"
+      }
+    },
+    "idTipoEntidadSecundaria": {
+      "format": "int32",
+      "type": "integer",
+      "x-stoplight": {
+        "id": "m5d0rpfa4kspg"
+      }
+    },
+    "idEntidadSecundaria": {
+      "type": "string",
+      "x-stoplight": {
+        "id": "uinze9pj31uhe"
+      }
+    },
+    "observaciones": {
+      "type": "string",
+      "x-stoplight": {
+        "id": "ransmr8p0n1f7"
+      }
+    },
+    "nombre": {
+      "type": "string",
+      "x-stoplight": {
+        "id": "uew51r1kzwsec"
+      }
+    },
+    "esCreacion": {
+      "type": "boolean",
+      "x-stoplight": {
+        "id": "p5s1ubk5tzzjc"
+      }
+    },
+    "extension": {
+      "type": "string",
+      "x-stoplight": {
+        "id": "n91n65qe5znbl"
+      }
+    },
+    "numeroPaginas": {
+      "format": "int32",
+      "type": "integer",
+      "x-stoplight": {
+        "id": "n9w7xv8oz4t2c"
+      }
+    },
+    "uuid": {
+      "type": "string",
+      "x-stoplight": {
+        "id": "qi2ppd9ibo578"
+      }
+    },
+    "fechaInsercion": {
+      "$ref": "./ZonedDateTime.json",
+      "x-stoplight": {
+        "id": "ndtdzkqb4vxwj"
+      }
+    },
+    "fechaModificacion": {
+      "$ref": "./ZonedDateTime.json",
+      "x-stoplight": {
+        "id": "oh15yay6quz4i"
+      }
+    },
+    "tamano": {
+      "format": "int32",
+      "type": "integer",
+      "x-stoplight": {
+        "id": "qrffcawoz6mqa"
+      }
+    },
+    "url": {
+      "type": "string",
+      "x-stoplight": {
+        "id": "0e53xk6r2abj0"
+      }
+    },
+    "idEmpresa": {
+      "format": "int32",
+      "type": "integer",
+      "x-stoplight": {
+        "id": "xk82a9li18y41"
+      }
+    }
+  }
+}

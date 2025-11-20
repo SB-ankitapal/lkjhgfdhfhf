@@ -1,0 +1,491 @@
+{
+  "openapi": "3.0.3",
+  "x-stoplight": {
+    "id": "pn3eokvc0g8hz"
+  },
+  "info": {
+    "title": "quartz API",
+    "version": "1.0-SNAPSHOT",
+    "description": "API del microservicio de quartz",
+    "license": {
+      "name": "Proprietary - Internal Use Only",
+      "url": "https://v4.metacontratas.com/"
+    },
+    "contact": {
+      "email": "soporte.tecnico@metadata.es",
+      "name": "Metadata S.L.",
+      "url": "https://v4.metacontratas.com/"
+    }
+  },
+  "tags": [
+    {
+      "name": "Planificador",
+      "description": "Servicio de planificacion de eventos"
+    }
+  ],
+  "paths": {
+    "/quartz/v1/planificador": {
+      "put": {
+        "tags": [
+          "Planificador"
+        ],
+        "summary": "Modifica una tarea",
+        "operationId": "putPlanificador",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuartzDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "- QRTZ_0006 : No existe ninguna tarea activa con el id y grupo indicados"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "description": "Modifica una tarea",
+        "x-stoplight": {
+          "id": "mr9t5rx7vmtzz"
+        }
+      },
+      "post": {
+        "tags": [
+          "Planificador"
+        ],
+        "summary": "Planifica una tarea",
+        "operationId": "postPlanificador",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuartzDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "- QRTZ_0001 : La RRule solicitada no puede ser planificada actualmente\n - QRTZ_0002 : Error al planificar tarea genérica\n - QRTZ_0007 : Ya existe una tarea con el id y grupo indicados"
+          }
+        },
+        "description": "Planifica una tarea",
+        "x-stoplight": {
+          "id": "09m17smhvfjwd"
+        }
+      },
+      "delete": {
+        "tags": [
+          "Planificador"
+        ],
+        "summary": "Elimina una tarea",
+        "operationId": "deletePlanificador",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuartzDtoRequestDelete"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "- QRTZ_0006 : No existe ninguna tarea activa con el id y grupo indicados"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "description": "Elimina una tarea",
+        "x-stoplight": {
+          "id": "xchm95e8sj8z8"
+        }
+      }
+    },
+    "/quartz/v1/planificador/lista": {
+      "post": {
+        "tags": [
+          "Planificador"
+        ],
+        "summary": "Planifica una lista de tareas",
+        "operationId": "postListaPlanificador",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/QuartzDtoRequest"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "- QRTZ_0001 : La RRule solicitada no puede ser planificada actualmente\n - QRTZ_0002 : Error al planificar tarea genérica\n - QRTZ_0007 : Ya existe una tarea con el id y grupo indicados"
+          }
+        },
+        "description": "Planifica una lista de tareas",
+        "x-stoplight": {
+          "id": "mtqrt1ws2kduj"
+        }
+      },
+      "delete": {
+        "tags": [
+          "Planificador"
+        ],
+        "summary": "Elimina una lista de tareas",
+        "operationId": "deleteListaPlanificador",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/QuartzDtoRequestDelete"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "- QRTZ_0006 : No existe ninguna tarea activa con el id y grupo indicados"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "description": "Elimina una lista de tareas",
+        "x-stoplight": {
+          "id": "jcyx94e18uodg"
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ActionEnum": {
+        "enum": [
+          "TAREA_ASIGNADA",
+          "CITA_ASIGNADA",
+          "ENVIAR_CORREO_AVISO_INFORMACIONES",
+          "RECORDATORIO_CITA_DISPONIBLE",
+          "RECORDATORIO_CITA",
+          "INICIAR",
+          "FINALIZAR",
+          "ELIMINAR_ENTORNO",
+          "TAREA_EXPIRADA",
+          "DUMMY",
+          "TOKEN_FIRMA_EXPIRADO"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "w55c8rhenc9dz"
+        }
+      },
+      "ExchangeEnum": {
+        "enum": [
+          "ARCHIVOS",
+          "CAE",
+          "COMUN",
+          "CONTACTOS",
+          "ENTORNOS",
+          "ESTRUCTURA",
+          "SOLICITUDES",
+          "LOGIN",
+          "PERMISOS",
+          "CA",
+          "CORREOS",
+          "FORMULARIOS",
+          "MQL",
+          "TAREAS",
+          "QUARTZ",
+          "CALENDARIOS",
+          "PROVEEDORES",
+          "METAIA",
+          "FIRMA"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "rytwkcz1eiizu"
+        }
+      },
+      "GroupIdEnum": {
+        "enum": [
+          "QUARTZ_test",
+          "FORMULARIOS",
+          "CALENDARIOS_NOTIFICACION",
+          "AVISO_INFORMACIONES",
+          "ENTORNOS",
+          "EVENTOS",
+          "TAREAS",
+          "TOKEN_FIRMA"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "vjhhc8ximurz8"
+        }
+      },
+      "OffsetDateTime": {
+        "format": "date-time",
+        "type": "string",
+        "example": "2022-03-10T12:15:50-04:00",
+        "x-stoplight": {
+          "id": "r195h2m8f8e8s"
+        }
+      },
+      "QuartzDtoRequest": {
+        "required": [
+          "idEmpresa",
+          "service",
+          "table",
+          "entityId",
+          "action",
+          "groupId",
+          "dtoReenviado",
+          "exchange",
+          "usuarioSistema",
+          "tipoEvento",
+          "tipoMensaje",
+          "recuento",
+          "fechaInicio"
+        ],
+        "type": "object",
+        "properties": {
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "service": {
+            "$ref": "#/components/schemas/ServicioEnum"
+          },
+          "table": {
+            "$ref": "#/components/schemas/TablaEnum"
+          },
+          "entityId": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "action": {
+            "$ref": "#/components/schemas/ActionEnum"
+          },
+          "groupId": {
+            "$ref": "#/components/schemas/GroupIdEnum"
+          },
+          "dtoReenviado": {
+            "type": "object"
+          },
+          "exchange": {
+            "$ref": "#/components/schemas/ExchangeEnum"
+          },
+          "usuarioSistema": {
+            "type": "string"
+          },
+          "tipoEvento": {
+            "type": "string"
+          },
+          "tipoMensaje": {
+            "$ref": "#/components/schemas/RabbitTipoMensajeEnum"
+          },
+          "recuento": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "reglaRecurrencia": {
+            "type": "string"
+          },
+          "fechaInicio": {
+            "$ref": "#/components/schemas/OffsetDateTime"
+          },
+          "fechaFin": {
+            "$ref": "#/components/schemas/OffsetDateTime"
+          },
+          "minutosAnterioridadAviso": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "ugadhq4b3zb81"
+        }
+      },
+      "QuartzDtoRequestDelete": {
+        "required": [
+          "idEmpresa",
+          "service",
+          "table",
+          "entityId",
+          "action",
+          "groupId"
+        ],
+        "type": "object",
+        "properties": {
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "service": {
+            "$ref": "#/components/schemas/ServicioEnum"
+          },
+          "table": {
+            "$ref": "#/components/schemas/TablaEnum"
+          },
+          "entityId": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "action": {
+            "$ref": "#/components/schemas/ActionEnum"
+          },
+          "groupId": {
+            "$ref": "#/components/schemas/GroupIdEnum"
+          }
+        },
+        "x-stoplight": {
+          "id": "sy4qsqaw0t88a"
+        }
+      },
+      "RabbitTipoMensajeEnum": {
+        "enum": [
+          "EVENT",
+          "COMMAND"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "e0vu7oc122d56"
+        }
+      },
+      "ServicioEnum": {
+        "enum": [
+          "ARCHIVOS",
+          "CAE",
+          "COMUN",
+          "CONTACTOS",
+          "ENTORNOS",
+          "ESTRUCTURA",
+          "SOLICITUDES",
+          "LOGIN",
+          "PERMISOS",
+          "CA",
+          "FORMULARIOS",
+          "TAREAS",
+          "QUARTZ",
+          "CORREOS",
+          "CALENDARIOS",
+          "MQL",
+          "METAMARKET",
+          "PROVEEDORES",
+          "METAIA",
+          "METADATOS",
+          "FIRMA",
+          "INFORMES",
+          "COMUNICACIONES"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "ibxap68kqrqw6"
+        }
+      },
+      "TablaEnum": {
+        "enum": [
+          "FORMULARIO_TAREA",
+          "CALENDARIOS_CITA",
+          "INFORMACION",
+          "CALENDARIOS_CITA_DISPONIBLE",
+          "CALENDARIOS_NOTIFICACION",
+          "EVENTOS",
+          "ENTORNO",
+          "CALENDARIOS_GRUPOS",
+          "TAREAS_TAREA",
+          "FIRMA_TOKEN_FIRMA"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "2tz1vxr2xrjep"
+        }
+      }
+    },
+    "securitySchemes": {
+      "jwt": {
+        "type": "http",
+        "description": "Authentication",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "parameters": {
+      "X-Timezone": {
+        "name": "X-Timezone",
+        "in": "header",
+        "description": "Zona horaria desde la que se hace la petición",
+        "required": true,
+        "schema": {
+          "default": "Europe/Madrid",
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,1155 @@
+{
+  "openapi": "3.0.3",
+  "x-stoplight": {
+    "id": "04jf9puwzyckf"
+  },
+  "info": {
+    "title": "archivos API",
+    "version": "1.0-SNAPSHOT",
+    "description": "API del microservicio de archivos",
+    "license": {
+      "name": "Proprietary - Internal Use Only",
+      "url": "https://v4.metacontratas.com/"
+    },
+    "contact": {
+      "email": "soporte.tecnico@metadata.es",
+      "name": "Metadata S.L.",
+      "url": "https://v4.metacontratas.com/"
+    }
+  },
+  "tags": [
+    {
+      "name": "Archivo",
+      "description": "Servicio de Archivo"
+    },
+    {
+      "name": "Gestión de Archivos en Biblioteca",
+      "description": "API para manejar estructura jerárquica de archivos en Data Lake"
+    }
+  ],
+  "paths": {
+    "/archivos/v1/archivos": {
+      "get": {
+        "tags": [
+          "Archivo"
+        ],
+        "summary": "Recupera los archivos de una entidad mediante unos parámetros",
+        "operationId": "getArchivos",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/idEntidad"
+          },
+          {
+            "$ref": "#/components/parameters/idEntidadSecundaria"
+          },
+          {
+            "$ref": "#/components/parameters/idTipoEntidad"
+          },
+          {
+            "$ref": "#/components/parameters/idTipoEntidadSecundaria"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ArchivoDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-permisos": true,
+        "description": "Recupera los archivos de una entidad mediante unos parámetros",
+        "x-stoplight": {
+          "id": "cs9qxnia7d92b"
+        }
+      },
+      "post": {
+        "tags": [
+          "Archivo"
+        ],
+        "summary": "Crea o modifica un archivo",
+        "description": "Si tipo entidad del archivo permite múltiples archivos se inserta siempre en lugar de sobrescribir",
+        "operationId": "postArchivos",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ArchivoDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArchivoDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- ARC_0001 : Error al encontrar un documento, puede no existir en ruta especificada\n - ARC_0002 : No se ha podido recuperar el tipo del archivo a insertar\n - ARC_0006 : Si se especifica uno de los campos, idTipoEntidadSecundaria o idEntidadSecundaria, ambos deben estar presentes"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-permisos": true,
+        "x-stoplight": {
+          "id": "rv1t45bx4qvvj"
+        }
+      },
+      "delete": {
+        "tags": [
+          "Archivo"
+        ],
+        "summary": "Elimina el archivo a partir de unos filtros",
+        "operationId": "deleteArchivos",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/idEntidad"
+          },
+          {
+            "$ref": "#/components/parameters/idEntidadSecundaria"
+          },
+          {
+            "$ref": "#/components/parameters/idTipoEntidad"
+          },
+          {
+            "$ref": "#/components/parameters/idTipoEntidadSecundaria"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ArchivoDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-permisos": true,
+        "description": "Elimina el archivo a partir de unos filtros",
+        "x-stoplight": {
+          "id": "4x2wn98ikb0km"
+        }
+      }
+    },
+    "/archivos/v1/archivos-biblioteca": {
+      "post": {
+        "tags": [
+          "Gestión de Archivos en Biblioteca"
+        ],
+        "summary": "Subir múltiples archivos a una ubicación en la biblioteca",
+        "description": "Permite subir hasta 10 archivos en una sola operación manteniendo la misma ubicación base (Data Lake).",
+        "operationId": "postArchivosBiblioteca",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ArchivoBibliotecaDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ArchivoBibliotecaDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- ARC_0022 : No se puede crear o actualizar un archivo cuyo tipo de entidad depende del entorno con un JWT sin idEmpresa\n - ARC_0003 : El archivo supera el tamaño máximo permitido\n - ARC_0004 : La extensión del archivo %s no está permitida"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-permisos": true,
+        "x-stoplight": {
+          "id": "r9xta0f8ls6xw"
+        }
+      }
+    },
+    "/archivos/v1/archivos-biblioteca/generar-sas": {
+      "get": {
+        "tags": [
+          "Gestión de Archivos en Biblioteca"
+        ],
+        "summary": "Genera token SAS",
+        "description": "Genera una URL SAS para el directorio de archivos en árbol (Data Lake). Si el directorio no existe, se creará automáticamente.",
+        "operationId": "getGenerarSasArchivosBiblioteca",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/idEntidad"
+          },
+          {
+            "$ref": "#/components/parameters/idTipoEntidad"
+          },
+          {
+            "$ref": "#/components/parameters/permiso"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenSasDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-permisos": true,
+        "x-stoplight": {
+          "id": "m6gt8eifhcd26"
+        }
+      }
+    },
+    "/archivos/v1/archivos/binario/{uuid}": {
+      "get": {
+        "tags": [
+          "Archivo"
+        ],
+        "summary": "Recupera el binario de un archivo por su UUID",
+        "operationId": "getBinarioArchivoPorUuid",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "format": "byte",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- ARC_0018 : No se puede determinar la empresa principal de entorno %s\n - ARC_0019 : El archivo %s no existe en Azure Data Lake Storage\n - ARC_0021 : No se pueden obtener, modificar o eliminar archivos con idEmpresa distinto al del JWT"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-permisos": true,
+        "description": "Recupera el binario de un archivo por su UUID",
+        "x-stoplight": {
+          "id": "68e09n8v2mw4g"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/uuid"
+        }
+      ]
+    },
+    "/archivos/v1/archivos/binarios-comprimidos": {
+      "get": {
+        "tags": [
+          "Archivo"
+        ],
+        "summary": "Obtiene los binarios de archivos identificados por sus UUIDs en un zip",
+        "operationId": "getBinariosComprimidosArchivos",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/nombre"
+          },
+          {
+            "$ref": "#/components/parameters/uuids"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "format": "byte",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- ARC_0005 : Se necesita más de un archivo para poder descargarse\n - ARC_0018 : No se puede determinar la empresa principal de entorno %s\n - ARC_0019 : El archivo %s no existe en Azure Data Lake Storage\n - ARC_0021 : No se pueden obtener, modificar o eliminar archivos con idEmpresa distinto al del JWT"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-permisos": true,
+        "description": "Obtiene los binarios de archivos identificados por sus UUIDs en un zip",
+        "x-stoplight": {
+          "id": "wvug396i6ul9v"
+        }
+      }
+    },
+    "/archivos/v1/archivos/miniatura/{uuid}": {
+      "get": {
+        "tags": [
+          "Archivo"
+        ],
+        "summary": "Recupera el binario de una miniatura por el UUID del archivo asociado",
+        "operationId": "getMiniaturaArchivoPorUuid",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/alto"
+          },
+          {
+            "$ref": "#/components/parameters/ancho"
+          },
+          {
+            "$ref": "#/components/parameters/modoMiniaturizacion"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "format": "byte",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- ARC_0008 : Error al reescalar una imagen\n - ARC_0009 : El archivo indicado no permite miniaturas.\n - ARC_0010 : No es posible establecer un alto para una miniatura con reescalado a lo ancho.\n - ARC_0011 : No es posible establecer un ancho para una miniatura con reescalado a lo alto.\n - ARC_0012 : El ancho no puede ser nulo y tiene que ser estrictamente mayor que cero.\n - ARC_0013 : El alto  no puede ser nulo y tiene que ser estrictamente mayor que cero.\n - ARC_0014 : No es posible que el alto del recorte ({altoRecorte}) sea mayor que el de la imagen original ({altoOriginal}).\n - ARC_0015 : No es posible que el ancho del recorte ({anchoRecorte}) sea mayor que el de la imagen original ({anchoOriginal}).\n - ARC_0018 : No se puede determinar la empresa principal de entorno %s\n - ARC_0019 : El archivo %s no existe en Azure Data Lake Storage\n - ARC_0021 : No se pueden obtener, modificar o eliminar archivos con idEmpresa distinto al del JWT"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "description": "Recupera el binario de una miniatura por el UUID del archivo asociado",
+        "x-stoplight": {
+          "id": "3xs3invsjuz62"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/uuid"
+        }
+      ]
+    },
+    "/archivos/v1/archivos/observaciones": {
+      "put": {
+        "tags": [
+          "Archivo"
+        ],
+        "summary": "Modifica las observaciones de archivos",
+        "operationId": "putObservacionesArchivos",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ArchivoObservacionesDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ArchivoDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- ARC_0006 : Si se especifica uno de los campos, idTipoEntidadSecundaria o idEntidadSecundaria, ambos deben estar presentes"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-permisos": true,
+        "description": "Modifica las observaciones de archivos",
+        "x-stoplight": {
+          "id": "jxgzikabkq87h"
+        }
+      }
+    },
+    "/archivos/v1/archivos/url-contenedor-comun": {
+      "get": {
+        "tags": [
+          "Archivo"
+        ],
+        "summary": "Obtiene la URL del contenedor común en Data Lake Storage",
+        "operationId": "getUrlContenedorComunArchivos",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UrlStorageDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador",
+          "administrador_grupo_entornos"
+        ],
+        "x-permisos": false,
+        "description": "Obtiene la URL del contenedor común en Data Lake Storage",
+        "x-stoplight": {
+          "id": "2myw3vku7m1vx"
+        }
+      }
+    },
+    "/archivos/v1/archivos/url-contenedor-publico/{idEmpresa}": {
+      "get": {
+        "tags": [
+          "Archivo"
+        ],
+        "summary": "Obtiene la URL del contenedor público de una empresa en Data Lake Storage",
+        "operationId": "getUrlContenedorPublicoArchivoPorIdEmpresa",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenSasDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": false,
+        "description": "Obtiene la URL del contenedor público de una empresa en Data Lake Storage",
+        "x-stoplight": {
+          "id": "zg1uc1i6rhl0q"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idEmpresa"
+        }
+      ]
+    },
+    "/archivos/v1/archivos/{uuid}": {
+      "get": {
+        "tags": [
+          "Archivo"
+        ],
+        "summary": "Recupera un archivo por medio del uuid",
+        "operationId": "getArchivoPorUuid",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArchivoDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- ARC_0021 : No se pueden obtener, modificar o eliminar archivos con idEmpresa distinto al del JWT"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-permisos": true,
+        "description": "Recupera un archivo por medio del uuid",
+        "x-stoplight": {
+          "id": "7xeygcw1tvr4h"
+        }
+      },
+      "delete": {
+        "tags": [
+          "Archivo"
+        ],
+        "summary": "Elimina un archivo dado su UUID",
+        "operationId": "deleteArchivoPorUuid",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArchivoDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- ARC_0021 : No se pueden obtener, modificar o eliminar archivos con idEmpresa distinto al del JWT"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-permisos": true,
+        "description": "Elimina un archivo dado su UUID",
+        "x-stoplight": {
+          "id": "5ph32vzxbn1jh"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/uuid"
+        }
+      ]
+    }
+  },
+  "components": {
+    "schemas": {
+      "ArchivoBibliotecaContenidoDtoRequest": {
+        "required": [
+          "contenido",
+          "nombre"
+        ],
+        "type": "object",
+        "properties": {
+          "contenido": {
+            "format": "binary",
+            "type": "string"
+          },
+          "nombre": {
+            "pattern": "^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ0-9_\\-/. ()\\[\\]{}!@#$%&=+'\"]{1,64}$",
+            "type": "string"
+          },
+          "rutaCustom": {
+            "pattern": "^[a-zA-Z0-9_\\-/ ]*$",
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "xyz4xxp6yw7ci"
+        }
+      },
+      "ArchivoBibliotecaDtoRequest": {
+        "required": [
+          "idTipoEntidad",
+          "idEntidad",
+          "archivos"
+        ],
+        "type": "object",
+        "properties": {
+          "idTipoEntidad": {
+            "format": "int32",
+            "pattern": "^\\d{1,11}$",
+            "type": "integer"
+          },
+          "idEntidad": {
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "archivos": {
+            "maxItems": 20,
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ArchivoBibliotecaContenidoDtoRequest"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "opwqjohioydpy"
+        }
+      },
+      "ArchivoBibliotecaDtoResponse": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "wl3axudlm1iow"
+        }
+      },
+      "ArchivoDtoRequest": {
+        "required": [
+          "idTipoEntidad",
+          "idEntidad",
+          "observaciones",
+          "nombre",
+          "binario"
+        ],
+        "type": "object",
+        "properties": {
+          "idTipoEntidad": {
+            "format": "int32",
+            "pattern": "^\\d{1,11}$",
+            "type": "integer"
+          },
+          "idEntidad": {
+            "type": "string"
+          },
+          "idTipoEntidadSecundaria": {
+            "format": "int32",
+            "pattern": "^\\d{1,11}$",
+            "type": "integer"
+          },
+          "idEntidadSecundaria": {
+            "type": "string"
+          },
+          "observaciones": {
+            "maxLength": 4096,
+            "type": "string"
+          },
+          "nombre": {
+            "maxLength": 64,
+            "type": "string"
+          },
+          "binario": {
+            "format": "binary",
+            "type": "string"
+          },
+          "generarUrl": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "awrhu6ffsqvk1"
+        }
+      },
+      "ArchivoDtoResponse": {
+        "required": [
+          "idTipoEntidad",
+          "idEntidad",
+          "observaciones",
+          "nombre"
+        ],
+        "type": "object",
+        "properties": {
+          "idTipoEntidad": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEntidad": {
+            "type": "string"
+          },
+          "idTipoEntidadSecundaria": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEntidadSecundaria": {
+            "type": "string"
+          },
+          "observaciones": {
+            "type": "string"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "esCreacion": {
+            "type": "boolean"
+          },
+          "extension": {
+            "type": "string"
+          },
+          "numeroPaginas": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "uuid": {
+            "type": "string"
+          },
+          "fechaInsercion": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "fechaModificacion": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "tamano": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "url": {
+            "type": "string"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "6yn3ov1te1rh1"
+        }
+      },
+      "ArchivoObservacionesDtoRequest": {
+        "required": [
+          "idTipoEntidad",
+          "idEntidad",
+          "observaciones"
+        ],
+        "type": "object",
+        "properties": {
+          "idTipoEntidad": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEntidad": {
+            "type": "string"
+          },
+          "idTipoEntidadSecundaria": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEntidadSecundaria": {
+            "type": "string"
+          },
+          "observaciones": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "vtv2g3qh03yvf"
+        }
+      },
+      "FormatoEnum": {
+        "enum": [
+          "CROP_CENTRADO",
+          "REESCALADO",
+          "REESCALADO_ALTO",
+          "REESCALADO_ANCHO"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "pukbeldapvsu8"
+        }
+      },
+      "PermisoTokenSasEnum": {
+        "enum": [
+          "SOLO_LECTURA",
+          "LECTURA_ESCRITURA_MOVIMIENTO"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "69f7iz6ec464r"
+        }
+      },
+      "TokenSasDtoResponse": {
+        "type": "object",
+        "properties": {
+          "sasToken": {
+            "type": "string"
+          },
+          "rutaBase": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "ag876qfinjjib"
+        }
+      },
+      "UrlStorageDtoResponse": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "ddxzyi547dj0m"
+        }
+      },
+      "ZonedDateTime": {
+        "format": "date-time",
+        "type": "string",
+        "example": "2022-03-10T12:15:50-04:00",
+        "x-stoplight": {
+          "id": "lpuhk76tpmp47"
+        }
+      }
+    },
+    "securitySchemes": {
+      "jwt": {
+        "type": "http",
+        "description": "Authentication",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "parameters": {
+      "idEntidad": {
+        "name": "idEntidad",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "TODO: add description"
+      },
+      "idEntidadSecundaria": {
+        "name": "idEntidadSecundaria",
+        "in": "query",
+        "schema": {
+          "type": "string"
+        },
+        "description": "TODO: add description"
+      },
+      "idTipoEntidad": {
+        "name": "idTipoEntidad",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idTipoEntidadSecundaria": {
+        "name": "idTipoEntidadSecundaria",
+        "in": "query",
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "X-Timezone": {
+        "name": "X-Timezone",
+        "in": "header",
+        "description": "Zona horaria desde la que se hace la petición",
+        "required": true,
+        "schema": {
+          "default": "Europe/Madrid",
+          "type": "string"
+        }
+      },
+      "permiso": {
+        "name": "permiso",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/PermisoTokenSasEnum"
+        },
+        "description": "TODO: add description"
+      },
+      "uuid": {
+        "name": "uuid",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "TODO: add description"
+      },
+      "nombre": {
+        "name": "nombre",
+        "in": "query",
+        "schema": {
+          "type": "string"
+        },
+        "description": "TODO: add description"
+      },
+      "uuids": {
+        "name": "uuids",
+        "in": "query",
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "description": "TODO: add description"
+      },
+      "alto": {
+        "name": "alto",
+        "in": "query",
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "ancho": {
+        "name": "ancho",
+        "in": "query",
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "modoMiniaturizacion": {
+        "name": "modoMiniaturizacion",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/FormatoEnum"
+        },
+        "description": "TODO: add description"
+      },
+      "idEmpresa": {
+        "name": "idEmpresa",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      }
+    }
+  }
+}

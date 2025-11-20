@@ -1,0 +1,2898 @@
+{
+  "openapi": "3.0.3",
+  "x-stoplight": {
+    "id": "9ldgxg5yhzqsf"
+  },
+  "info": {
+    "title": "permisos API",
+    "version": "1.0-SNAPSHOT",
+    "description": "API del microservicio de permisos",
+    "license": {
+      "name": "Proprietary - Internal Use Only",
+      "url": "https://v4.metacontratas.com/"
+    },
+    "contact": {
+      "email": "soporte.tecnico@metadata.es",
+      "name": "Metadata S.L.",
+      "url": "https://v4.metacontratas.com/"
+    }
+  },
+  "tags": [
+    {
+      "name": "Entidad",
+      "description": "Servicio de entidad"
+    },
+    {
+      "name": "Grupo Usuario",
+      "description": "Servicio de grupos de usuarios"
+    },
+    {
+      "name": "Permiso",
+      "description": "Servicio de permisos front"
+    },
+    {
+      "name": "Permiso Back",
+      "description": "Servicio de permisos back"
+    },
+    {
+      "name": "Rol",
+      "description": "Servicio de roles"
+    },
+    {
+      "name": "Usuario",
+      "description": "Servicio de usuarios"
+    },
+    {
+      "name": "Usuario sin Entorno",
+      "description": "Servicio de Servicio de Usuarios sin usar idEntorno en el JWT"
+    },
+    {
+      "name": "Usuario-entorno",
+      "description": "Servicio de usuarios-entornos"
+    }
+  ],
+  "paths": {
+    "/permisos/v1/entidad": {
+      "get": {
+        "tags": [
+          "Entidad"
+        ],
+        "summary": "Devuelve todas las entidades del sistema",
+        "operationId": "getEntidades",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntidadDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Devuelve todas las entidades del sistema",
+        "x-stoplight": {
+          "id": "kav2gkjkm273w"
+        }
+      }
+    },
+    "/permisos/v1/grupos-usuarios": {
+      "get": {
+        "tags": [
+          "Grupo Usuario"
+        ],
+        "summary": "Devuelve todos los grupos de usuario del sistema",
+        "operationId": "getGruposUsuarios",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/idGrupoEntornos"
+          },
+          {
+            "$ref": "#/components/parameters/idsGruposUsuario"
+          },
+          {
+            "$ref": "#/components/parameters/porDefecto"
+          },
+          {
+            "$ref": "#/components/parameters/rol"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GrupoUsuarioDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": true,
+        "description": "Devuelve todos los grupos de usuario del sistema",
+        "x-stoplight": {
+          "id": "aqi18qbscwm3s"
+        }
+      },
+      "post": {
+        "tags": [
+          "Grupo Usuario"
+        ],
+        "summary": "Crea un nuevo grupo usuario",
+        "operationId": "postGrupoUsuario",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GrupoUsuarioCreacionDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrupoUsuarioDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Crea un nuevo grupo usuario",
+        "x-stoplight": {
+          "id": "rqn0p4lmobemr"
+        }
+      }
+    },
+    "/permisos/v1/grupos-usuarios/{idGrupoUsuario}": {
+      "get": {
+        "tags": [
+          "Grupo Usuario"
+        ],
+        "summary": "Busca la entidad correspondiente al ID introducido",
+        "operationId": "getGrupoUsuarioPorIdGrupoUsuario",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrupoUsuarioDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": true,
+        "description": "Busca la entidad correspondiente al ID introducido",
+        "x-stoplight": {
+          "id": "2067tcr9yu095"
+        }
+      },
+      "put": {
+        "tags": [
+          "Grupo Usuario"
+        ],
+        "summary": "Actualiza un determinado grupo usuario",
+        "operationId": "putGrupoUsuarioPorIdGrupoUsuario",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GrupoUsuarioEdicionDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrupoUsuarioDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- PER_0013 : No se puede editar o borrar un grupo de usuarios de tipo interno."
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Actualiza un determinado grupo usuario",
+        "x-stoplight": {
+          "id": "x4e21wvwkr60a"
+        }
+      },
+      "delete": {
+        "tags": [
+          "Grupo Usuario"
+        ],
+        "summary": "Elimina una determinada entidad",
+        "operationId": "deleteGrupoUsuarioPorIdGrupoUsuario",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrupoUsuarioDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- PER_0013 : No se puede editar o borrar un grupo de usuarios de tipo interno."
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Elimina una determinada entidad",
+        "x-stoplight": {
+          "id": "2b30fsm2b9d5y"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idGrupoUsuario"
+        }
+      ]
+    },
+    "/permisos/v1/grupos-usuarios/{idGrupoUsuario}/permisos": {
+      "get": {
+        "tags": [
+          "Grupo Usuario"
+        ],
+        "summary": "Obtiene los permisos asociados a un grupo usuario",
+        "operationId": "getPermisosPorIdGrupoUsuario",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PermisoFrontDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene los permisos asociados a un grupo usuario",
+        "x-stoplight": {
+          "id": "otyo5l8515j5k"
+        }
+      },
+      "post": {
+        "tags": [
+          "Grupo Usuario"
+        ],
+        "summary": "Inserta y elimina los permisos de un grupo usuario",
+        "operationId": "postPermisosPorIdGrupoUsuario",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestBodyDobleListaInteger"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PermisoRolGrupoUsuarioDTO_Rabbit"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- PER_0014 : No se pueden modificar los permisos de un grupo de usuarios de tipo interno."
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Inserta y elimina los permisos de un grupo usuario",
+        "x-stoplight": {
+          "id": "b8vj96idizwxw"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idGrupoUsuario"
+        }
+      ]
+    },
+    "/permisos/v1/grupos-usuarios/{idGrupoUsuario}/usuarios": {
+      "get": {
+        "tags": [
+          "Grupo Usuario"
+        ],
+        "summary": "Obtiene los usuarios asociados a un grupo usuario",
+        "operationId": "getUsuariosPorIdGrupoUsuario",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UsuarioIdDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene los usuarios asociados a un grupo usuario",
+        "x-stoplight": {
+          "id": "a3ab02zsog3ld"
+        }
+      },
+      "post": {
+        "tags": [
+          "Grupo Usuario"
+        ],
+        "summary": "Inserta y elimina los usuarios de un grupo usuario",
+        "operationId": "postUsuariosPorIdGrupoUsuario",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestBodyDobleListaObjetoUsuarioDTO_PKUsuarioDTO_PK"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuariosRelacionadosDTOResponse_Rabbit"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- PER_0014 : No se pueden modificar los permisos de un grupo de usuarios de tipo interno."
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": true,
+        "description": "Inserta y elimina los usuarios de un grupo usuario",
+        "x-stoplight": {
+          "id": "idyxn3tza959v"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idGrupoUsuario"
+        }
+      ]
+    },
+    "/permisos/v1/permisos-back": {
+      "get": {
+        "tags": [
+          "Permiso Back"
+        ],
+        "summary": "Devuelve un listado de permisos de back",
+        "operationId": "getPermisosBack",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/permisosFront"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PermisoBackDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Devuelve un listado de permisos de back",
+        "x-stoplight": {
+          "id": "0aony80t5vg2d"
+        }
+      }
+    },
+    "/permisos/v1/permisos-front": {
+      "get": {
+        "tags": [
+          "Permiso"
+        ],
+        "summary": "Devuelve todos los permisos front del sistema",
+        "operationId": "getPermisosFront",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/idModulo"
+          },
+          {
+            "name": "idRol",
+            "in": "query",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PermisoFrontDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": true,
+        "description": "Devuelve todos los permisos front del sistema",
+        "x-stoplight": {
+          "id": "unifm6tac8pvw"
+        }
+      }
+    },
+    "/permisos/v1/permisos-front/{idPermisoFront}/roles": {
+      "get": {
+        "tags": [
+          "Permiso"
+        ],
+        "summary": "Devuelve los roles de permiso front determinado",
+        "operationId": "getRolesPorIdPermisoFront",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RolDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Devuelve los roles de permiso front determinado",
+        "x-stoplight": {
+          "id": "yzzpnnwngn7dh"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idPermisoFront"
+        }
+      ]
+    },
+    "/permisos/v1/roles": {
+      "get": {
+        "tags": [
+          "Rol"
+        ],
+        "summary": "Devuelve todos los roles del sistema",
+        "operationId": "getRoles",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RolDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Devuelve todos los roles del sistema",
+        "x-stoplight": {
+          "id": "iauio7k80h6f6"
+        }
+      }
+    },
+    "/permisos/v1/roles/{idRol}/permisos": {
+      "get": {
+        "tags": [
+          "Rol"
+        ],
+        "summary": "Devuelve los permisos de un grupoPermiso determinado",
+        "operationId": "getPermisosPorIdRol",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PermisoFrontDTO_GET"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Devuelve los permisos de un grupoPermiso determinado",
+        "x-stoplight": {
+          "id": "4cxq1c67va9nx"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idRol"
+        }
+      ]
+    },
+    "/permisos/v1/roles/{idRol}/usuarios": {
+      "get": {
+        "tags": [
+          "Rol"
+        ],
+        "summary": "Obtiene los usuarios asociados a un rol",
+        "operationId": "getUsuariosPorIdRol",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/obtenerInfo"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UsuarioIdDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene los usuarios asociados a un rol",
+        "x-stoplight": {
+          "id": "ng6q98jv16ovx"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idRol"
+        }
+      ]
+    },
+    "/permisos/v1/usuarios": {
+      "post": {
+        "tags": [
+          "Usuario sin Entorno"
+        ],
+        "summary": "Crea un usuario en la base de datos común de permisos",
+        "operationId": "postUsuario",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioEntornoComunDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioEntornoDtoResponseCreate"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- PER_0010 : No puede añadir el usuario porque ya existe uno igual\n - PER_0026: Para esta operación se necesita un JWT sin id_entorno"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-permisos": true,
+        "description": "Crea un usuario en la base de datos común de permisos",
+        "x-stoplight": {
+          "id": "u21xb3pa9gy07"
+        }
+      }
+    },
+    "/permisos/v1/usuarios-entornos": {
+      "get": {
+        "tags": [
+          "Usuario-entorno"
+        ],
+        "summary": "Devuelve los usuarios de entornos a partir de unos filtros",
+        "description": "- Si se filtra por los idsPermisosFront, solo se devolverán los usuarios que tengan todos los permisos por los que se filtren",
+        "operationId": "getUsuariosEntornos",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/idEmpresa"
+          },
+          {
+            "$ref": "#/components/parameters/idEntorno"
+          },
+          {
+            "name": "idUsuario",
+            "in": "query",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/idsPermisosFront"
+          },
+          {
+            "$ref": "#/components/parameters/idsUsuarioEntorno"
+          },
+          {
+            "$ref": "#/components/parameters/internos"
+          },
+          {
+            "$ref": "#/components/parameters/obtenerInfo"
+          },
+          {
+            "$ref": "#/components/parameters/rol"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UsuarioEntornoDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": true,
+        "x-stoplight": {
+          "id": "qvc54u6ln8ejn"
+        }
+      },
+      "post": {
+        "tags": [
+          "Usuario-entorno"
+        ],
+        "summary": "Inserta un usuario y lo añade a uno o varios grupos de usuarios",
+        "operationId": "postUsuarioEntorno",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioEntornoDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioEntornoDtoResponseCreate"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- PER_0007 : No se tiene acceso a algún entorno especificado <br> PER_0010 : No puede añadir el usuario porque ya existe uno igual <br> PER_0020: Un usuario externo no puede tener acceso a un módulo que no sea multiempresa %s <br> PER_0021: No puede dar de alta un usuario con rol EMPRESA_INTERNO para una empresa que no sea la principal <br> PER_0022: No puede dar de alta un usuario con rol EMPRESA_EXTERNO para la empresa principal"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": true,
+        "description": "Inserta un usuario y lo añade a uno o varios grupos de usuarios",
+        "x-stoplight": {
+          "id": "8klzopzwzyev6"
+        }
+      }
+    },
+    "/permisos/v1/usuarios-entornos/{idUsuarioEntorno}": {
+      "get": {
+        "tags": [
+          "Usuario-entorno"
+        ],
+        "summary": "Devuelve un usuario entorno filtrando por el idUsuarioEntorno",
+        "operationId": "getUsuarioEntornoPorIdUsuarioEntorno",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioEntornoDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": true,
+        "description": "Devuelve un usuario entorno filtrando por el idUsuarioEntorno",
+        "x-stoplight": {
+          "id": "v386o8n0pfrpt"
+        }
+      },
+      "put": {
+        "tags": [
+          "Usuario-entorno"
+        ],
+        "summary": "Modifica la relación de un usuario-empresa filtrando por el idUsuarioEntorno",
+        "operationId": "putUsuarioEntornoPorIdUsuarioEntorno",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioEntornoDtoRequestUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioEntornoDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": true,
+        "description": "Modifica la relación de un usuario-empresa filtrando por el idUsuarioEntorno",
+        "x-stoplight": {
+          "id": "jl2ylrpozgq32"
+        }
+      },
+      "delete": {
+        "tags": [
+          "Usuario-entorno"
+        ],
+        "summary": "Elimina un UsuarioEntorno",
+        "operationId": "deleteUsuarioEntornoPorIdUsuarioEntorno",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioEntornoDtoResponseUpdate"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- PER_0008 : No se puede borrar un usuario que ya está confirmado\n - PER_0009 : No se puede borrar el usuario. Pruebe a borrar dentro de unos minutos"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": true,
+        "description": "Elimina un UsuarioEntorno",
+        "x-stoplight": {
+          "id": "cvohvkfgfma7r"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idUsuarioEntorno"
+        }
+      ]
+    },
+    "/permisos/v1/usuarios-entornos/{idUsuarioEntorno}/activar": {
+      "post": {
+        "tags": [
+          "Usuario-entorno"
+        ],
+        "summary": "Activa el acceso de un Usuario",
+        "operationId": "postActivarUsuarioEntornoPorIdUsuarioEntorno",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActivarDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- PER_0004 : No se puede activar/desactivar el usuario hasta que el usuario no confirme su acceso.\n - PER_0005 : El usuario no se puede activar porque ya está activo."
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": true,
+        "description": "Activa el acceso de un Usuario",
+        "x-stoplight": {
+          "id": "mlwxesp5aogu3"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idUsuarioEntorno"
+        }
+      ]
+    },
+    "/permisos/v1/usuarios-entornos/{idUsuarioEntorno}/desactivar": {
+      "post": {
+        "tags": [
+          "Usuario-entorno"
+        ],
+        "summary": "Desactiva el acceso de un usuario",
+        "operationId": "postDesactivarUsuarioEntornoPorIdEntorno",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DesactivarDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- PER_0004 : No se puede activar/desactivar el usuario hasta que el usuario no confirme su acceso.\n - PER_0006 : El usuario no se puede desactivar porque ya está desactivado."
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": true,
+        "description": "Desactiva el acceso de un usuario",
+        "x-stoplight": {
+          "id": "7loulf2de1nbq"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idUsuarioEntorno"
+        }
+      ]
+    },
+    "/permisos/v1/usuarios-entornos/{idUsuarioEntorno}/grupos-usuarios": {
+      "get": {
+        "tags": [
+          "Usuario-entorno"
+        ],
+        "summary": "Obtiene los grupos de usuarios asociados a un usuario filtrando por el id de usuario-entorno",
+        "operationId": "getGruposUsuariosPorIdUsuarioEntorno",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GrupoUsuarioDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene los grupos de usuarios asociados a un usuario filtrando por el id de usuario-entorno",
+        "x-stoplight": {
+          "id": "lgi6bgq20sdmx"
+        }
+      },
+      "post": {
+        "tags": [
+          "Usuario-entorno"
+        ],
+        "summary": "Inserta y elimina los grupos de un UsuarioEntorno en base al Id de usuario-entorno",
+        "operationId": "postGruposUsuariosPorIdEntorno",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestBodyDobleListaInteger"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GruposUsuarioRelacionadosDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": true,
+        "description": "Inserta y elimina los grupos de un UsuarioEntorno en base al Id de usuario-entorno",
+        "x-stoplight": {
+          "id": "ewva0jjftjnt5"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idUsuarioEntorno"
+        }
+      ]
+    },
+    "/permisos/v1/usuarios-entornos/{idUsuarioEntorno}/permisos": {
+      "get": {
+        "tags": [
+          "Usuario-entorno"
+        ],
+        "summary": "Obtiene los permisos asociados a un usuario",
+        "operationId": "getPermisosPorIdUsuarioEntorno",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/idEntidad"
+          },
+          {
+            "$ref": "#/components/parameters/porEntorno"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PermisoFrontDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene los permisos asociados a un usuario",
+        "x-stoplight": {
+          "id": "6rardn7000x0s"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idUsuarioEntorno"
+        }
+      ]
+    },
+    "/permisos/v1/usuarios-entornos/{idUsuarioEntorno}/reenviar-correo-activacion": {
+      "post": {
+        "tags": [
+          "Usuario-entorno"
+        ],
+        "summary": "Reenvía el correo de activación a un usuario",
+        "operationId": "postReenviarCorreoActivacionUsuarioEntornoPorIdUsuarioEntorno",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActivarDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- PER_0011 : No se puede mandar el correo de activación porque el usuario ya está activo."
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "empresa_externo"
+        ],
+        "x-permisos": true,
+        "description": "Reenvía el correo de activación a un usuario",
+        "x-stoplight": {
+          "id": "waylpuxd1lkku"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idUsuarioEntorno"
+        }
+      ]
+    },
+    "/permisos/v1/usuarios/{idUsuario}/interno": {
+      "get": {
+        "tags": [
+          "Usuario"
+        ],
+        "summary": "Devuelve el usuario entorno interno de un usuario, si existe",
+        "operationId": "getUsuarioInternoPorIdUsuario",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioEntornoDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Devuelve el usuario entorno interno de un usuario, si existe",
+        "x-stoplight": {
+          "id": "wb2b6c7fqf127"
+        }
+      },
+      "post": {
+        "tags": [
+          "Usuario"
+        ],
+        "summary": "Crea un usuario entorno interno para un usuario",
+        "operationId": "postUsuarioInternoPorIdUsuario",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioEntornoDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- PER_0024: Para esta operación se necesita un JWT con id_entorno\n- PER_0025: Ya existe un usuario-entorno interno para el usuario"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "administrador_grupo_entornos"
+        ],
+        "x-permisos": true,
+        "description": "Crea un usuario entorno interno para un usuario",
+        "x-stoplight": {
+          "id": "qc4ji8m3ku99a"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idUsuario"
+        }
+      ]
+    },
+    "/permisos/v1/usuarios/{idUsuario}/permisos-front-para-usuarios-entornos": {
+      "get": {
+        "tags": [
+          "Usuario sin Entorno"
+        ],
+        "summary": "Obtiene para cada usuario entorno del usuario, su listado de permisos de front por cada empresa usuario y rol de cada empresa principal de sus accesos",
+        "description": "Se puede filtrar por entidad para devolver por cada usuario entorno, los permisos concretos de una entidad y por idEmpresa\npara obtener los permisos referentes a la empresa concreta.\n",
+        "operationId": "getPermisosFrontParaUsuariosEntornosPorIdUsuario",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/idsEmpresas"
+          },
+          {
+            "$ref": "#/components/parameters/idsEntidades"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PermisoFrontPorEmpresaPrincipalDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "empresa_interno",
+          "superadministrador"
+        ],
+        "x-permisos": false,
+        "x-stoplight": {
+          "id": "zyvuh2zp55as7"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idUsuario"
+        }
+      ]
+    }
+  },
+  "components": {
+    "schemas": {
+      "AccionDtoResponse": {
+        "required": [
+          "idAccion",
+          "nombre"
+        ],
+        "type": "object",
+        "properties": {
+          "idAccion": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "qtp0fjrb9gizo"
+        }
+      },
+      "ActivarDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idUsuarioEntorno": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "rol": {
+            "$ref": "#/components/schemas/RolUsuarioEntornoEnum"
+          },
+          "idUsuario": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "ssozlelxgs26p"
+        }
+      },
+      "DesactivarDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idUsuarioEntorno": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "rol": {
+            "$ref": "#/components/schemas/RolUsuarioEntornoEnum"
+          },
+          "idUsuario": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "nnrfj1apejlzz"
+        }
+      },
+      "EmpresaDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idPaisIdentificador": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "identificador": {
+            "type": "string"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "autonomo": {
+            "type": "boolean"
+          },
+          "uuid": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "iwasz4onzh8ng"
+        }
+      },
+      "EmpresaGrupoEntornosDtoResponse": {
+        "required": [
+          "idEmpresa"
+        ],
+        "type": "object",
+        "properties": {
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "cif": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "s03zj5ypch2dz"
+        }
+      },
+      "EntidadDtoResponse": {
+        "required": [
+          "idEntidad",
+          "nombre"
+        ],
+        "type": "object",
+        "properties": {
+          "idEntidad": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "yhxcvtm5xkl0c"
+        }
+      },
+      "GrupoEntornosDtoResponse": {
+        "required": [
+          "idGrupoEntornos",
+          "empresaAdministradora",
+          "nombre",
+          "fechaCreacion"
+        ],
+        "type": "object",
+        "properties": {
+          "idGrupoEntornos": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "empresaAdministradora": {
+            "$ref": "#/components/schemas/EmpresaGrupoEntornosDtoResponse"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "fechaCreacion": {
+            "type": "string"
+          },
+          "informacionAdicional": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "ky1befsbnbsmg"
+        }
+      },
+      "GrupoUsuarioCreacionDtoRequest": {
+        "required": [
+          "idRol",
+          "nombre",
+          "observaciones",
+          "porDefecto"
+        ],
+        "type": "object",
+        "properties": {
+          "idRol": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "maxLength": 128,
+            "type": "string"
+          },
+          "observaciones": {
+            "maxLength": 1024,
+            "type": "string"
+          },
+          "porDefecto": {
+            "type": "boolean"
+          },
+          "idPerfilAccesoDocumento": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idGrupoEntornos": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "s9jw0q3q39i9q"
+        }
+      },
+      "GrupoUsuarioDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idGrupoUsuario": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idRol": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "observaciones": {
+            "type": "string"
+          },
+          "porDefecto": {
+            "type": "boolean"
+          },
+          "interno": {
+            "type": "boolean"
+          },
+          "rol": {
+            "type": "string"
+          },
+          "perfilAccesoDocumento": {
+            "$ref": "#/components/schemas/PerfilAccesoDocumentoDtoResponse"
+          },
+          "grupoEntorno": {
+            "$ref": "#/components/schemas/GrupoEntornosDtoResponse"
+          }
+        },
+        "x-stoplight": {
+          "id": "w3iaeb97rwpcc"
+        }
+      },
+      "GrupoUsuarioEdicionDtoRequest": {
+        "required": [
+          "nombre",
+          "observaciones",
+          "porDefecto"
+        ],
+        "type": "object",
+        "properties": {
+          "idPerfilAccesoDocumento": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "maxLength": 128,
+            "type": "string"
+          },
+          "observaciones": {
+            "maxLength": 1024,
+            "type": "string"
+          },
+          "porDefecto": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "9h4dxwvb2087y"
+        }
+      },
+      "GruposUsuarioRelacionadosDtoResponse": {
+        "type": "object",
+        "properties": {
+          "listadoEliminar": {
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "listadoInsertar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GrupoUsuarioDtoResponse"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "iwbe9v62hmtvn"
+        }
+      },
+      "PerfilAccesoDocumentoDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idPerfilAccesoDocumento": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "interno": {
+            "type": "boolean"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "observaciones": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "o87z2oirqei6r"
+        }
+      },
+      "PermisoBackDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idPermisoBack": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "otsx2aypkk3ln"
+        }
+      },
+      "PermisoFrontDTO_GET": {
+        "required": [
+          "idPermisoFront",
+          "permiso",
+          "observaciones",
+          "accion",
+          "entidad"
+        ],
+        "type": "object",
+        "properties": {
+          "idPermisoFront": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "permiso": {
+            "type": "string"
+          },
+          "observaciones": {
+            "type": "string"
+          },
+          "accion": {
+            "$ref": "#/components/schemas/AccionDtoResponse"
+          },
+          "entidad": {
+            "$ref": "#/components/schemas/EntidadDtoResponse"
+          },
+          "idModulo": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "h4ftgjdq3lw3a"
+        }
+      },
+      "PermisoFrontDtoResponse": {
+        "type": "object",
+        "properties": {
+          "entidad": {
+            "$ref": "#/components/schemas/EntidadDtoResponse"
+          },
+          "accion": {
+            "$ref": "#/components/schemas/AccionDtoResponse"
+          },
+          "idPermisoFront": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "observaciones": {
+            "type": "string"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "gruposUsuarios": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GrupoUsuarioDtoResponse"
+            }
+          },
+          "idModulo": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "95hlf82grw0qb"
+        }
+      },
+      "PermisoFrontPorEmpresaDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "rolUsuario": {
+            "$ref": "#/components/schemas/RolUsuarioEntornoEnum"
+          },
+          "permisos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PermisoFrontDtoResponse"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "o8vtda6zec4t8"
+        }
+      },
+      "PermisoFrontPorEmpresaPrincipalDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idEmpresaPrincipal": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "permisosPorEmpresa": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PermisoFrontPorEmpresaDtoResponse"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "b4sqdwp4nt73v"
+        }
+      },
+      "PermisoRolGrupoUsuarioDTO_Rabbit": {
+        "type": "object",
+        "properties": {
+          "idGrupoUsuario": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "permisosInsertar": {
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "permisosEliminar": {
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "izq5tj4zjrs2e"
+        }
+      },
+      "RelacionUsuarioEmpresaEnum": {
+        "enum": [
+          "PROPIA",
+          "EXTERNA"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "pc60gyxenxlf5"
+        }
+      },
+      "RequestBodyDobleListaInteger": {
+        "required": [
+          "listadoInsertar",
+          "listadoEliminar"
+        ],
+        "type": "object",
+        "properties": {
+          "listadoInsertar": {
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "listadoEliminar": {
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "g214vdri65sfl"
+        }
+      },
+      "RequestBodyDobleListaObjetoUsuarioDTO_PKUsuarioDTO_PK": {
+        "required": [
+          "listadoInsertar",
+          "listadoEliminar"
+        ],
+        "type": "object",
+        "properties": {
+          "listadoInsertar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UsuarioDTO_PK"
+            }
+          },
+          "listadoEliminar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UsuarioDTO_PK"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "8jrrcqgywp6s9"
+        }
+      },
+      "RolDtoResponse": {
+        "required": [
+          "idRol",
+          "nombre",
+          "observaciones"
+        ],
+        "type": "object",
+        "properties": {
+          "idRol": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "observaciones": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "0mtkhd4aadmx7"
+        }
+      },
+      "RolUsuarioEntornoEnum": {
+        "enum": [
+          "EMPRESA_INTERNO",
+          "EMPRESA_EXTERNO",
+          "EMPLEADO_INTERNO",
+          "EMPLEADO_EXTERNO",
+          "SUPERADMINISTRADOR",
+          "ADMINISTRADOR_GRUPO_ENTORNOS"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "j6kjph53tjoay"
+        }
+      },
+      "UsuarioDTO_PK": {
+        "type": "object",
+        "properties": {
+          "idUsuario": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "pyaojwzckbons"
+        }
+      },
+      "UsuarioDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idUsuario": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "apellido1": {
+            "type": "string"
+          },
+          "apellido2": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "rol": {
+            "type": "string"
+          },
+          "fechaActivacion": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "fechaCreacion": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "idPaisTelefono": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "telefono": {
+            "type": "string"
+          },
+          "uuid": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "f5r1rght88two"
+        }
+      },
+      "UsuarioEntornoComunDtoRequest": {
+        "required": [
+          "idUsuario"
+        ],
+        "type": "object",
+        "properties": {
+          "idUsuario": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "vmct5z3e2fb2w"
+        }
+      },
+      "UsuarioEntornoDtoRequest": {
+        "required": [
+          "rol",
+          "idEmpresaUsuario"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "idGruposUsuario": {
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "idEntornos": {
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "relacion": {
+            "$ref": "#/components/schemas/RelacionUsuarioEmpresaEnum"
+          },
+          "rol": {
+            "$ref": "#/components/schemas/RolUsuarioEntornoEnum"
+          },
+          "idEmpresaUsuario": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "uh5sqwofwsuhr"
+        }
+      },
+      "UsuarioEntornoDtoRequestUpdate": {
+        "required": [
+          "relacionUsuarioEmpresa"
+        ],
+        "type": "object",
+        "properties": {
+          "relacionUsuarioEmpresa": {
+            "$ref": "#/components/schemas/RelacionUsuarioEmpresaEnum"
+          }
+        },
+        "x-stoplight": {
+          "id": "n4qn5fiidgyc5"
+        }
+      },
+      "UsuarioEntornoDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idUsuarioEntorno": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "empresa": {
+            "$ref": "#/components/schemas/EmpresaDtoResponse"
+          },
+          "empresaUsuario": {
+            "$ref": "#/components/schemas/EmpresaDtoResponse"
+          },
+          "usuario": {
+            "$ref": "#/components/schemas/UsuarioDtoResponse"
+          },
+          "relacionUsuarioEmpresa": {
+            "$ref": "#/components/schemas/RelacionUsuarioEmpresaEnum"
+          },
+          "rol": {
+            "$ref": "#/components/schemas/RolUsuarioEntornoEnum"
+          },
+          "activo": {
+            "type": "boolean"
+          },
+          "fechaActivacion": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "fechaUltimoAcceso": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          }
+        },
+        "x-stoplight": {
+          "id": "cbkicnjqsse5e"
+        }
+      },
+      "UsuarioEntornoDtoResponseCreate": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "idGruposUsuario": {
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "idEntornos": {
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "idUsuarioEntorno": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "relacion": {
+            "$ref": "#/components/schemas/RelacionUsuarioEmpresaEnum"
+          },
+          "rol": {
+            "$ref": "#/components/schemas/RolUsuarioEntornoEnum"
+          },
+          "idUsuario": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEmpresaUsuario": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "butv0cnrzkeon"
+        }
+      },
+      "UsuarioEntornoDtoResponseUpdate": {
+        "type": "object",
+        "properties": {
+          "relacionUsuarioEmpresa": {
+            "$ref": "#/components/schemas/RelacionUsuarioEmpresaEnum"
+          },
+          "idUsuarioEntorno": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "rol": {
+            "$ref": "#/components/schemas/RolUsuarioEntornoEnum"
+          },
+          "idUsuario": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "fusqo7vvnd5cu"
+        }
+      },
+      "UsuarioIdDtoResponse": {
+        "required": [
+          "idUsuario",
+          "idEmpresa"
+        ],
+        "type": "object",
+        "properties": {
+          "idUsuario": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "divgbfslh9grj"
+        }
+      },
+      "UsuariosRelacionadosDTOResponse_Rabbit": {
+        "type": "object",
+        "properties": {
+          "idGrupoUsuario": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "listadoInsertar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UsuarioDTO_PK"
+            }
+          },
+          "listadoEliminar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UsuarioDTO_PK"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "3p4djlan0bp8n"
+        }
+      },
+      "ZonedDateTime": {
+        "format": "date-time",
+        "type": "string",
+        "example": "2022-03-10T12:15:50-04:00",
+        "x-stoplight": {
+          "id": "ptunopbyc8r0g"
+        }
+      }
+    },
+    "securitySchemes": {
+      "jwt": {
+        "type": "http",
+        "description": "Authentication",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "parameters": {
+      "X-Timezone": {
+        "name": "X-Timezone",
+        "in": "header",
+        "description": "Zona horaria desde la que se hace la petición",
+        "required": true,
+        "schema": {
+          "default": "Europe/Madrid",
+          "type": "string"
+        }
+      },
+      "idGrupoEntornos": {
+        "name": "idGrupoEntornos",
+        "in": "query",
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idsGruposUsuario": {
+        "name": "idsGruposUsuario",
+        "in": "query",
+        "schema": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "description": "TODO: add description"
+      },
+      "porDefecto": {
+        "name": "porDefecto",
+        "in": "query",
+        "schema": {
+          "type": "boolean"
+        },
+        "description": "TODO: add description"
+      },
+      "rol": {
+        "name": "rol",
+        "in": "query",
+        "schema": {
+          "$ref": "#/components/schemas/RolUsuarioEntornoEnum"
+        },
+        "description": "TODO: add description"
+      },
+      "idGrupoUsuario": {
+        "name": "idGrupoUsuario",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "permisosFront": {
+        "name": "permisosFront",
+        "in": "query",
+        "schema": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "description": "TODO: add description"
+      },
+      "idModulo": {
+        "name": "idModulo",
+        "in": "query",
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idPermisoFront": {
+        "name": "idPermisoFront",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idRol": {
+        "name": "idRol",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "obtenerInfo": {
+        "name": "obtenerInfo",
+        "in": "query",
+        "schema": {
+          "type": "boolean"
+        },
+        "description": "TODO: add description"
+      },
+      "idEmpresa": {
+        "name": "idEmpresa",
+        "in": "query",
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idEntorno": {
+        "name": "idEntorno",
+        "in": "query",
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idsPermisosFront": {
+        "name": "idsPermisosFront",
+        "in": "query",
+        "schema": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "description": "TODO: add description"
+      },
+      "idsUsuarioEntorno": {
+        "name": "idsUsuarioEntorno",
+        "in": "query",
+        "schema": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "description": "TODO: add description"
+      },
+      "internos": {
+        "name": "internos",
+        "in": "query",
+        "schema": {
+          "type": "boolean"
+        },
+        "description": "TODO: add description"
+      },
+      "idUsuarioEntorno": {
+        "name": "idUsuarioEntorno",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idEntidad": {
+        "name": "idEntidad",
+        "in": "query",
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "porEntorno": {
+        "name": "porEntorno",
+        "in": "query",
+        "schema": {
+          "default": true,
+          "type": "boolean"
+        },
+        "description": "TODO: add description"
+      },
+      "idUsuario": {
+        "name": "idUsuario",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idsEmpresas": {
+        "name": "idsEmpresas",
+        "in": "query",
+        "schema": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "description": "TODO: add description"
+      },
+      "idsEntidades": {
+        "name": "idsEntidades",
+        "in": "query",
+        "schema": {
+          "type": "array",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "description": "TODO: add description"
+      }
+    }
+  }
+}

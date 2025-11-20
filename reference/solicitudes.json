@@ -1,0 +1,4507 @@
+{
+  "openapi": "3.0.3",
+  "x-stoplight": {
+    "id": "j3l81j546w0qb"
+  },
+  "info": {
+    "title": "solicitudes API",
+    "version": "1.0-SNAPSHOT",
+    "description": "API del microservicio de solicitudes",
+    "license": {
+      "name": "Proprietary - Internal Use Only",
+      "url": "https://v4.metacontratas.com/"
+    },
+    "contact": {
+      "email": "soporte.tecnico@metadata.es",
+      "name": "Metadata S.L.",
+      "url": "https://v4.metacontratas.com/"
+    }
+  },
+  "tags": [
+    {
+      "name": "Solicitud Trabajo",
+      "description": "Servicio de Solicitudes de Trabajo"
+    },
+    {
+      "name": "Solicitud de alta de autonomos",
+      "description": "Servicio de solicitudes de autónomos"
+    },
+    {
+      "name": "Solicitud de altas",
+      "description": "Servicio de solicitudes de altas"
+    },
+    {
+      "name": "Solicitud de empresa",
+      "description": "Servicio de solicitudes de empresas"
+    }
+  ],
+  "paths": {
+    "/solicitudes/v1/solicitudes-altas": {
+      "get": {
+        "tags": [
+          "Solicitud de altas"
+        ],
+        "summary": "Devuelve una lista de solicitudes aplicando un filtro",
+        "operationId": "getSolicitudesAlta",
+        "parameters": [
+          {
+            "name": "filtro",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "finalizadas",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "idUsuarioCreacion",
+            "in": "query",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "mostrarBorradas",
+            "in": "query",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SolicitudAltaDtoResponseListado"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "administrador_grupo_entornos"
+        ],
+        "x-permisos": true,
+        "description": "Devuelve una lista de solicitudes aplicando un filtro",
+        "x-stoplight": {
+          "id": "i7sh6b03ol0y5"
+        }
+      }
+    },
+    "/solicitudes/v1/solicitudes-altas/{idSolicitud}": {
+      "get": {
+        "tags": [
+          "Solicitud de altas"
+        ],
+        "summary": "Devuelve una solicitud de alta",
+        "operationId": "getSolicitudAltaPorIdSolicitud",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolicitudAltaDtoResponseDetalle"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "GEN_0041: El usuario entorno no tiene acceso a la entidad %s con id %s"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador",
+          "administrador_grupo_entornos"
+        ],
+        "x-permisos": true,
+        "description": "Devuelve una solicitud de alta",
+        "x-stoplight": {
+          "id": "mk26q2rtd51hg"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idSolicitud"
+        }
+      ]
+    },
+    "/solicitudes/v1/solicitudes-altas/{idSolicitud}/borrar": {
+      "post": {
+        "tags": [
+          "Solicitud de altas"
+        ],
+        "summary": "Borrar una solicitud de alta",
+        "operationId": "postBorrarPorIdSolicitud",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolicitudAltaDtoResponseListado"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- SO_0018 : No se puede modificar una solicitud borrada\n - GEN_0041: El usuario entorno no tiene acceso a la entidad %s con id %s"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "administrador_grupo_entornos"
+        ],
+        "x-permisos": true,
+        "description": "Borrar una solicitud de alta",
+        "x-stoplight": {
+          "id": "anm9lczcyc4pz"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idSolicitud"
+        }
+      ]
+    },
+    "/solicitudes/v1/solicitudes-altas/{idSolicitud}/confirmar-creacion": {
+      "post": {
+        "tags": [
+          "Solicitud de altas"
+        ],
+        "summary": "Confirma un proceso de alta cambiando el estado de la solicitud de CREANDO a CREADA",
+        "operationId": "postConfirmarCreacionPorIdSolicitud",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolicitudDtoRabbit"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- SO_0015 : No se puede confirmar la creación de una empresa que no tenga el estado de creación en CREANDO"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador"
+        ],
+        "x-permisos": true,
+        "description": "Confirma un proceso de alta cambiando el estado de la solicitud de CREANDO a CREADA",
+        "x-stoplight": {
+          "id": "4mcg1t0kf59g5"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idSolicitud"
+        }
+      ]
+    },
+    "/solicitudes/v1/solicitudes-autonomos": {
+      "post": {
+        "tags": [
+          "Solicitud de alta de autonomos"
+        ],
+        "summary": "Crea un alta de autónomo",
+        "operationId": "postSolicitudAutonomo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SolicitudAutonomoDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolicitudAutonomoDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "SO_0022 : Usuario no autorizado para la creación de la solicitud"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador",
+          "administrador_grupo_entornos"
+        ],
+        "x-permisos": true,
+        "description": "Crea un alta de autónomo",
+        "x-stoplight": {
+          "id": "0dgykwz1cwuf6"
+        }
+      }
+    },
+    "/solicitudes/v1/solicitudes-autonomos/{idSolicitud}": {
+      "put": {
+        "tags": [
+          "Solicitud de alta de autonomos"
+        ],
+        "summary": "Modifica una solicitud de alta de un autónomo",
+        "operationId": "putSolicitudAutonomoPorIdSolicitud",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SolicitudAltaAutonomoDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolicitudAltaAutonomoDtoResponseDetalle"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- SO_0018 : No se puede modificar una solicitud borrada\n - SO_0020 : No se puede modificar una solicitud que no sea de autónomo\n - SO_0012 : No se puede modificar una solicitud que está en estado CONFIRMADA\n - GEN_0041: El usuario entorno no tiene acceso a la entidad %s con id %s"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador",
+          "administrador_grupo_entornos"
+        ],
+        "x-permisos": true,
+        "description": "Modifica una solicitud de alta de un autónomo",
+        "x-stoplight": {
+          "id": "snldewnb2e5zf"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idSolicitud"
+        }
+      ]
+    },
+    "/solicitudes/v1/solicitudes-autonomos/{idSolicitud}/finalizar": {
+      "post": {
+        "tags": [
+          "Solicitud de alta de autonomos"
+        ],
+        "summary": "Termina un proceso de alta autónomo creando la empresa correspondiente a la solicitud",
+        "operationId": "postFinalizarPorIdSolicitud",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SolicitudAltaAutonomoDtoRequestFinalizar"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolicitudAltaAutonomoDtoResponseFinalizar"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- SO_0012 : No se puede modificar una solicitud que está en estado CONFIRMADA\n - SO_0013 : No se puede crear una empresa/autónomo que ya está creada o se está creando\n - SO_0016 : No se puede finalizar una solicitud que no sea de autónomo\n - SO_0018 : No se puede modificar una solicitud borrada\n - GEN_0041: El usuario entorno no tiene acceso a la entidad %s con id %s"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador",
+          "administrador_grupo_entornos"
+        ],
+        "x-permisos": true,
+        "description": "Termina un proceso de alta autónomo creando la empresa correspondiente a la solicitud",
+        "x-stoplight": {
+          "id": "fymc29ux1veif"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idSolicitud"
+        }
+      ]
+    },
+    "/solicitudes/v1/solicitudes-empresas": {
+      "post": {
+        "tags": [
+          "Solicitud de empresa"
+        ],
+        "summary": "Crea una nueva solicitud de alta de empresa",
+        "operationId": "postSolicitudEmpresa",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SolicitudEmpresaDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolicitudEmpresaDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "SO_0022 : Usuario no autorizado para la creación de la solicitud"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador",
+          "administrador_grupo_entornos"
+        ],
+        "x-permisos": true,
+        "description": "Crea una nueva solicitud de alta de empresa",
+        "x-stoplight": {
+          "id": "8vr5s1xm507dd"
+        }
+      }
+    },
+    "/solicitudes/v1/solicitudes-empresas/{idSolicitud}": {
+      "put": {
+        "tags": [
+          "Solicitud de empresa"
+        ],
+        "summary": "Modifica una solicitud de alta de una empresa",
+        "operationId": "putSolicitudEmpresaPorIdSolicitud",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SolicitudAltaEmpresaDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolicitudAltaEmpresaDtoResponseDetalle"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- SO_0018 : No se puede modificar una solicitud borrada\n - SO_0021 : No se puede modificar una solicitud que no sea de empresa\n - SO_0012 : No se puede modificar una solicitud que está en estado CONFIRMADA\n - GEN_0041: El usuario entorno no tiene acceso a la entidad %s con id %s"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador",
+          "administrador_grupo_entornos"
+        ],
+        "x-permisos": true,
+        "description": "Modifica una solicitud de alta de una empresa",
+        "x-stoplight": {
+          "id": "p7eqgmfjl7fi5"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idSolicitud"
+        }
+      ]
+    },
+    "/solicitudes/v1/solicitudes-empresas/{idSolicitud}/finalizar": {
+      "post": {
+        "tags": [
+          "Solicitud de empresa"
+        ],
+        "summary": "Termina un proceso de alta creando la empresa correspondiente a la solicitud",
+        "operationId": "postFinalizarPorIdSolicitudesEmpresas",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SolicitudAltaEmpresaDtoRequestFinalizar"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolicitudAltaEmpresaDtoResponseFinalizar"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- SO_0012 : No se puede modificar una solicitud que está en estado CONFIRMADA\n - SO_0013 : No se puede crear una empresa/autónomo que ya está creada o se está creando\n - SO_0018 : No se puede modificar una solicitud borrada\n - GEN_0041: El usuario entorno no tiene acceso a la entidad %s con id %s"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador",
+          "administrador_grupo_entornos"
+        ],
+        "x-permisos": true,
+        "description": "Termina un proceso de alta creando la empresa correspondiente a la solicitud",
+        "x-stoplight": {
+          "id": "c9zr2oc28fu0m"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idSolicitud"
+        }
+      ]
+    },
+    "/solicitudes/v1/solicitudes-trabajo": {
+      "get": {
+        "tags": [
+          "Solicitud Trabajo"
+        ],
+        "summary": "Recupera un listado de solicitudes de trabajo filtrado por un tipo de solicitud",
+        "description": "Según el tipo de solicitud se devolverá lo siguiente:\nCLIENTES:\n    -Solicitudes: Soy la subcontrata y la solicitud es de tipo SOLICITUD (borradores con tu usuario y no borradores)\n    -Altas: Soy la subcontrata y la solicitud es de tipo ALTA (no borradores)\nSUBCONTRATAS:\n    -Solicitudes: Soy la empresa principal y la solicitud es de tipo SOLICITUD (no borradores)\n    -Altas: Soy la empresa principal y la solicitud es de tipo ALTA (borradores de tu usuario y no borradores)\nADMINISTRACION:\n    -Solicitudes: Todas las solicitudes que sean tipo SOLICITUD (no borradores)\n    -Altas: Ninguna\n",
+        "operationId": "getSolicitudesTrabajo",
+        "parameters": [
+          {
+            "name": "estado",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/EstadoSolicitudTrabajoEnum"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "filtroTipoSolicitudTrabajo",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/FiltroTipoSolicitudTrabajoEnum"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "idEmpresaPrincipal",
+            "in": "query",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "idEmpresaSubcontrata",
+            "in": "query",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolicitudTrabajoDtoResponseListado"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- SO_0029: No tienes permiso para acceder a esta solicitud\n - SO_0030: No puedes acceder a las solicitudes de trabajo en modo administración sin ser un usuario administrador\n - SO_0036: No se pueden filtrar las solicitudes de trabajo sin estar en filtro INTERNO y sin ser usuario administrador"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "x-stoplight": {
+          "id": "izu2n3ou34ets"
+        }
+      },
+      "post": {
+        "tags": [
+          "Solicitud Trabajo"
+        ],
+        "summary": "Inserta o actualiza una solicitud de trabajo.",
+        "description": "- Inserta una nueva solicitud de trabajo cuando el campo 'idSolicitud' es nulo y viene el campo subcontrata\n\n- Actualiza una solicitud existente con los datos recibidos, modificando la subcontrata, contratante, destino y datos de validación según corresponda.\n\n  Ajusta el paso de la solicitud según los datos proporcionados y el paso actual del proceso, siguiendo estos criterios:\n    * SUBCONTRATA a CONTRATANTE: Ocurre cuando se agrega un nuevo contratante.\n    * CONTRATANTE a DESTINO: Se realiza cuando se actualiza el destino del contratante.\n    * DESTINO a VALIDACIÓN: Sucede al proporcionar los datos de validación requeridos.\n",
+        "operationId": "postSolicitudTrabajo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SolicitudTrabajoDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolicitudTrabajoDtoResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolicitudTrabajoDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- SO_0024: La solicitud debe estar en estado %s para realizar esta operación\n - SO_0025: El campo subcontrata y tipo solicitud son obligatorios, contratante, destino y datos de validación deben ser nulos\n - SO_0026: En el paso %s, los campos %s no deben estar presentes\n - SO_0027: No puedes realizar esta operación sobre un borrador que no es tuyo\n - SO_0028: No se puede confirmar un borrador que aun no ha sido completado\n - SO_0029: No tienes permiso para acceder a esta solicitud\n - SO_0034: No se puede relacionar la empresa %s con otras empresas porque no tiene activado el módulo CAE\n - SO_0039: Las empresas %d y %d ya están vinculadas. No se puede procesar otro alta/solicitud\n - SO_0040: No se pueden relacionar las empresas porque la empresa %d ya está en el entorno de la empresa %d\n - SO_0044: La empresa contratante %s no está subcontratada por la empresa %s.\n - SO_0045: Si la solicitud de trabajo se especifica como contratada por SUBCONTRATA se debe definir un idEmpresaContratante diferente al ID de la empresa principal.\n - SO_0047: Si la solicitud es de tipo ALTA no se debe cumplimentar la empresa responsable de gestionar, ya que siempre es la subcontrata\n - SO_0048: La empresa seleccionada como empresa validadora no se encuentra entre las configuradas por la empresa principal\n - SO_0049: La empresa principal cuenta con varias empresas validadoras, se debe seleccionar una"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "x-stoplight": {
+          "id": "5en7gy3idyurg"
+        }
+      }
+    },
+    "/solicitudes/v1/solicitudes-trabajo/comprobaciones-accesos": {
+      "get": {
+        "tags": [
+          "Solicitud Trabajo"
+        ],
+        "summary": "Recupera los permisos de los accesos que tiene el usuario que realiza la petición, devolviendo\nsi puede crear solicitudes y si tiene solicitudes como validador externo\n",
+        "operationId": "getComprobacionesAccesosSolicitudesTrabajo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComprobacionesAccesosDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Recupera los permisos de los accesos que tiene el usuario que realiza la petición, devolviendo\nsi puede crear solicitudes y si tiene solicitudes como validador externo\n",
+        "x-stoplight": {
+          "id": "dxr61qw1kw8rq"
+        }
+      }
+    },
+    "/solicitudes/v1/solicitudes-trabajo/configuraciones": {
+      "get": {
+        "tags": [
+          "Solicitud Trabajo"
+        ],
+        "summary": "Recupera las configuraciones de una empresa",
+        "operationId": "getConfiguracionesSolicitudesTrabajo",
+        "parameters": [
+          {
+            "name": "idEmpresa",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntornoConfiguracionListaDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- SO_0029: No tienes permiso para acceder a esta solicitud"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": false,
+        "description": "Recupera las configuraciones de una empresa",
+        "x-stoplight": {
+          "id": "vpxtowec19hk1"
+        }
+      }
+    },
+    "/solicitudes/v1/solicitudes-trabajo/empresas-usuarios": {
+      "get": {
+        "tags": [
+          "Solicitud Trabajo"
+        ],
+        "summary": "Recupera el listado de empresas que aparecen en el selector de empresa, en el acordeón de Subcontrata/Proveedor, al realizar una nueva\nsolicitud de trabajo. Este listado depende del usuario que haga la petición, en concreto, depende de sus accesos.\n",
+        "operationId": "getEmpresasUsuarioSolicitudesTrabajo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmpresaDtoResponseInformacion"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Recupera el listado de empresas que aparecen en el selector de empresa, en el acordeón de Subcontrata/Proveedor, al realizar una nueva\nsolicitud de trabajo. Este listado depende del usuario que haga la petición, en concreto, depende de sus accesos.\n",
+        "x-stoplight": {
+          "id": "yq4tzhonj6c4h"
+        }
+      }
+    },
+    "/solicitudes/v1/solicitudes-trabajo/motivos-rechazo": {
+      "get": {
+        "tags": [
+          "Solicitud Trabajo"
+        ],
+        "summary": "Recupera los motivos de rechazo comunes",
+        "operationId": "getMotivosRechazoSolicitudesTrabajo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MotivoRechazoComunDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": false,
+        "description": "Recupera los motivos de rechazo comunes",
+        "x-stoplight": {
+          "id": "6oes7gzsijdyo"
+        }
+      }
+    },
+    "/solicitudes/v1/solicitudes-trabajo/{idSolicitudTrabajo}": {
+      "get": {
+        "tags": [
+          "Solicitud Trabajo"
+        ],
+        "summary": "Obtiene la información de una solicitud de trabajo filtrando por ID",
+        "operationId": "getSolicitudTrabajoPorIdSolicitudTrabajo",
+        "parameters": [
+          {
+            "name": "filtroTipoSolicitudTrabajo",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/FiltroTipoSolicitudTrabajoEnum"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolicitudTrabajoDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- SO_0027: No puedes realizar esta operación sobre un borrador que no es tuyo\n - SO_0029: No tienes permiso para acceder a esta solicitud\n - SO_0031: No se puede acceder a una solicitud tipo ALTA en estado borrador desde el filtro CLIENTES\n - SO_0032: No se puede acceder a una solicitud tipo SOLICITUD en estado borrador desde el filtro SUBCONTRATAS o SUBCONTRATAS_EN_CLIENTES\n - SO_0033: No se puede acceder a una solicitud en estado borrador desde el filtro ADMINISTRACION\n - SO_0030: No puedes acceder a las solicitudes de trabajo en modo administración sin ser un usuario administrador\n - SO_0036: No se pueden filtrar las solicitudes de trabajo sin estar en filtro INTERNO y sin ser usuario administrador"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene la información de una solicitud de trabajo filtrando por ID",
+        "x-stoplight": {
+          "id": "hmprqa0ft1mcb"
+        }
+      },
+      "delete": {
+        "tags": [
+          "Solicitud Trabajo"
+        ],
+        "summary": "Elimina una solicitud de trabajo pendiente, rechazada o en borrador.",
+        "operationId": "deleteSolicitudTrabajoPorIdSolicitudTrabajo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolicitudTrabajoDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- SO_0023: No se puede eliminar una solicitud de trabajo que no esté pendiente, rechazada o borrador\n - SO_0027: No puedes realizar esta operación sobre un borrador que no es tuyo\n - SO_0029: No tienes permiso para acceder a esta solicitud"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Elimina una solicitud de trabajo pendiente, rechazada o en borrador.",
+        "x-stoplight": {
+          "id": "qgh5fyais13da"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idSolicitudTrabajo"
+        }
+      ]
+    },
+    "/solicitudes/v1/solicitudes-trabajo/{idSolicitudTrabajo}/aprobar": {
+      "post": {
+        "tags": [
+          "Solicitud Trabajo"
+        ],
+        "summary": "Aprueba una solicitud pendiente",
+        "operationId": "postAprobarPorIdSolicitudTrabajo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SolicitudTrabajoAsignacionesDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolicitudTrabajoDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- SO_0024: La solicitud debe estar en estado %s para realizar esta operación\n - SO_0029: No tienes permiso para acceder a esta solicitud\n - SO_0034: No se puede relacionar la empresa %s con otras empresas porque no tiene activado el módulo CAE\n - SO_0039: Las empresas %d y %d ya están vinculadas. No se puede procesar otro alta/solicitud\n - SO_0040: No se pueden relacionar las empresas porque la empresa %d ya está en el entorno de la empresa %d\n - SO_0041: Se deben incluir asignaciones para guardar los históricos de una Solicitud de Trabajo"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Aprueba una solicitud pendiente",
+        "x-stoplight": {
+          "id": "bswou187spk4n"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idSolicitudTrabajo"
+        }
+      ]
+    },
+    "/solicitudes/v1/solicitudes-trabajo/{idSolicitudTrabajo}/enviar": {
+      "post": {
+        "tags": [
+          "Solicitud Trabajo"
+        ],
+        "summary": "Endpoint para confirmar que el borrador ha sido terminado y por tanto la solicitud de trabajo pasa a estar disponible para ser validada.",
+        "operationId": "postEnviarPorIdSolicitudTrabajo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SolicitudTrabajoAsignacionesDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolicitudTrabajoDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- SO_0024: La solicitud debe estar en estado %s para realizar esta operación\n - SO_0027: No puedes realizar esta operación sobre un borrador que no es tuyo\n - SO_0028: No se puede confirmar un borrador que aun no ha sido completado\n - SO_0029: No tienes permiso para acceder a esta solicitud\n - SO_0034: No se puede relacionar la empresa %s con otras empresas porque no tiene activado el módulo CAE\n - SO_0039: Las empresas %d y %d ya están vinculadas. No se puede procesar otro alta/solicitud\n - SO_0040: No se pueden relacionar las empresas porque la empresa %d ya está en el entorno de la empresa %d\n - SO_0041: Se deben incluir asignaciones para guardar los históricos de una Solicitud de Trabajo"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Endpoint para confirmar que el borrador ha sido terminado y por tanto la solicitud de trabajo pasa a estar disponible para ser validada.",
+        "x-stoplight": {
+          "id": "2zux7o79i4s7g"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idSolicitudTrabajo"
+        }
+      ]
+    },
+    "/solicitudes/v1/solicitudes-trabajo/{idSolicitudTrabajo}/grupos-usuarios": {
+      "get": {
+        "tags": [
+          "Solicitud Trabajo"
+        ],
+        "summary": "Obtiene los grupos de usuario de la empresa principal de la solicitud de trabajo.",
+        "operationId": "getGruposUsuariosPorIdSolicitudTrabajo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GrupoUsuarioDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- SO_0029: No tienes permiso para acceder a esta solicitud\n - SO_0024: La solicitud debe estar en estado %s para realizar esta operación\n - SO_0038: No se puede acceder a las asignaciones de una solicitud tipo ALTA en estado borrador con paso SUBCONTRATA o CONTRATANTE"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene los grupos de usuario de la empresa principal de la solicitud de trabajo.",
+        "x-stoplight": {
+          "id": "0i4chdict8exh"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idSolicitudTrabajo"
+        }
+      ]
+    },
+    "/solicitudes/v1/solicitudes-trabajo/{idSolicitudTrabajo}/historicos": {
+      "get": {
+        "tags": [
+          "Solicitud Trabajo"
+        ],
+        "summary": "Obtiene los históricos de asignaciones de una solicitud de trabajo",
+        "operationId": "getHistoricosPorIdSolicitudTrabajo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolicitudTrabajoHistoricosDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- SO_0024: La solicitud debe estar en estado %s para realizar esta operación"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene los históricos de asignaciones de una solicitud de trabajo",
+        "x-stoplight": {
+          "id": "dhozt7bj6wtpl"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idSolicitudTrabajo"
+        }
+      ]
+    },
+    "/solicitudes/v1/solicitudes-trabajo/{idSolicitudTrabajo}/packs-documentales": {
+      "post": {
+        "tags": [
+          "Solicitud Trabajo"
+        ],
+        "summary": "Obtiene los packs documentales disponibles en UgUts especificadas llamando a CAE.",
+        "operationId": "postPacksDocumentalesPorIdSolicitudTrabajo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/UgUtIdDtoRequest"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UgUtPacksDocumentalesDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- SO_0029: No tienes permiso para acceder a esta solicitud\n - SO_0024: La solicitud debe estar en estado %s para realizar esta operación\n - SO_0038: No se puede acceder a las asignaciones de una solicitud tipo ALTA en estado borrador con paso SUBCONTRATA o CONTRATANTE"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene los packs documentales disponibles en UgUts especificadas llamando a CAE.",
+        "x-stoplight": {
+          "id": "8pzjsuzuw3pyp"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idSolicitudTrabajo"
+        }
+      ]
+    },
+    "/solicitudes/v1/solicitudes-trabajo/{idSolicitudTrabajo}/pendiente": {
+      "post": {
+        "tags": [
+          "Solicitud Trabajo"
+        ],
+        "summary": "Actualiza a pendiente una solicitud rechazada",
+        "operationId": "postPendientePorIdSolicitudTrabajo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolicitudTrabajoDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- SO_0024: La solicitud debe estar en estado %s para realizar esta operación\n - SO_0029: No tienes permiso para acceder a esta solicitud\n - SO_0039: Las empresas %d y %d ya están vinculadas. No se puede procesar otro alta/solicitud\n - SO_0040: No se pueden relacionar las empresas porque la empresa %d ya está en el entorno de la empresa %d\n - SO_0042: Se han eliminado las asignaciones mínimas necesarias para procesar el alta. Debe gestionar una nueva alta."
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Actualiza a pendiente una solicitud rechazada",
+        "x-stoplight": {
+          "id": "6j1v766vdqodb"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idSolicitudTrabajo"
+        }
+      ]
+    },
+    "/solicitudes/v1/solicitudes-trabajo/{idSolicitudTrabajo}/rechazar": {
+      "post": {
+        "tags": [
+          "Solicitud Trabajo"
+        ],
+        "summary": "Rechaza una solicitud pendiente",
+        "operationId": "postRechazarPorIdSolicitudTrabajo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MotivoRechazoDtoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolicitudTrabajoDtoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- SO_0024: La solicitud debe estar en estado %s para realizar esta operación\n - SO_0029: No tienes permiso para acceder a esta solicitud"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Rechaza una solicitud pendiente",
+        "x-stoplight": {
+          "id": "td5y9te7y4u6b"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idSolicitudTrabajo"
+        }
+      ]
+    },
+    "/solicitudes/v1/solicitudes-trabajo/{idSolicitudTrabajo}/relaciones-contratacion": {
+      "get": {
+        "tags": [
+          "Solicitud Trabajo"
+        ],
+        "summary": "Obtención de relaciones de contratación en modo árbol",
+        "description": "Filtra las relaciones de contratación según los parámetros y la solicitud de trabajo",
+        "operationId": "getRelacionesContratacionPorIdSolicitudTrabajo",
+        "parameters": [
+          {
+            "name": "idUg",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "idUt",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RelacionContratacionDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- SO_0024: La solicitud debe estar en estado %s para realizar esta operación\n - SO_0038: No se puede acceder a las asignaciones de una solicitud tipo ALTA en estado borrador con paso SUBCONTRATA o CONTRATANTE"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "x-stoplight": {
+          "id": "b9eck3nfglvv8"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idSolicitudTrabajo"
+        }
+      ]
+    },
+    "/solicitudes/v1/solicitudes-trabajo/{idSolicitudTrabajo}/relaciones-contratacion-por-defecto": {
+      "get": {
+        "tags": [
+          "Solicitud Trabajo"
+        ],
+        "summary": "Obtiene relaciones de contratación por defecto en modo árbol tomando los parámetros de empresas de una Solicitud de Trabajo en Pendiente.",
+        "operationId": "getRelacionesContratacionPorDefectoPorIdSolicitudTrabajo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RelacionContratacionDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- SO_0024: La solicitud debe estar en estado %s para realizar esta operación\n - SO_0038: No se puede acceder a las asignaciones de una solicitud tipo ALTA en estado borrador con paso SUBCONTRATA o CONTRATANTE"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene relaciones de contratación por defecto en modo árbol tomando los parámetros de empresas de una Solicitud de Trabajo en Pendiente.",
+        "x-stoplight": {
+          "id": "cmkxeh0ap0dc0"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idSolicitudTrabajo"
+        }
+      ]
+    },
+    "/solicitudes/v1/solicitudes-trabajo/{idSolicitudTrabajo}/subcontratas": {
+      "get": {
+        "tags": [
+          "Solicitud Trabajo"
+        ],
+        "summary": "Obtiene el listado de empresas subcontratas de la empresa principal de la solicitud de trabajo",
+        "operationId": "getSubcontratasPorIdSolicitudTrabajo",
+        "parameters": [
+          {
+            "name": "filtro",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EmpresaDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- SO_0024: La solicitud debe estar en estado %s para realizar esta operación\n - SO_0043: La solicitud no debe estar en el paso SUBCONTRATA para realizar esta operación"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Obtiene el listado de empresas subcontratas de la empresa principal de la solicitud de trabajo",
+        "x-stoplight": {
+          "id": "shsbpxtctpcpu"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idSolicitudTrabajo"
+        }
+      ]
+    },
+    "/solicitudes/v1/solicitudes-trabajo/{idSolicitudTrabajo}/tipo-estructura-recursos": {
+      "get": {
+        "tags": [
+          "Solicitud Trabajo"
+        ],
+        "summary": " Recupera el tipo estructura de la empresa principal de la solicitud de trabajo",
+        "operationId": "getTipoEstructuraRecursosPorIdSolicitudTrabajo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TipoEstructuraModuloDtoResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- SO_0029: No tienes permiso para acceder a esta solicitud\n - SO_0024: La solicitud debe estar en estado %s para realizar esta operación\n - SO_0038: No se puede acceder a las asignaciones de una solicitud tipo ALTA en estado borrador con paso SUBCONTRATA o CONTRATANTE"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": " Recupera el tipo estructura de la empresa principal de la solicitud de trabajo",
+        "x-stoplight": {
+          "id": "up4zdrjr6d7ub"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idSolicitudTrabajo"
+        }
+      ]
+    },
+    "/solicitudes/v1/solicitudes-trabajo/{idSolicitudTrabajo}/ugs": {
+      "get": {
+        "tags": [
+          "Solicitud Trabajo"
+        ],
+        "summary": "Recupera las ugs que le corresponden a la empresa principal de la solicitud de trabajo",
+        "operationId": "getUgsPorIdSolicitudTrabajo",
+        "parameters": [
+          {
+            "name": "idTipoEstructura",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "modoArbol",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UgDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- SO_0029: No tienes permiso para acceder a esta solicitud\n - SO_0024: La solicitud debe estar en estado %s para realizar esta operación\n - SO_0038: No se puede acceder a las asignaciones de una solicitud tipo ALTA en estado borrador con paso SUBCONTRATA o CONTRATANTE"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Recupera las ugs que le corresponden a la empresa principal de la solicitud de trabajo",
+        "x-stoplight": {
+          "id": "vte87a7y0w6v7"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idSolicitudTrabajo"
+        }
+      ]
+    },
+    "/solicitudes/v1/solicitudes-trabajo/{idSolicitudTrabajo}/ugs/{idUg}/uts": {
+      "get": {
+        "tags": [
+          "Solicitud Trabajo"
+        ],
+        "summary": "Recupera las uts que le corresponden a la empresa principal de la solicitud de trabajo que estén relacionadas con la ug",
+        "operationId": "getUtsPorIdSolicitudTrabajoPorIdUg",
+        "parameters": [
+          {
+            "name": "modoArbol",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UtDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- SO_0029: No tienes permiso para acceder a esta solicitud\n - SO_0024: La solicitud debe estar en estado %s para realizar esta operación\n - SO_0038: No se puede acceder a las asignaciones de una solicitud tipo ALTA en estado borrador con paso SUBCONTRATA o CONTRATANTE"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Recupera las uts que le corresponden a la empresa principal de la solicitud de trabajo que estén relacionadas con la ug",
+        "x-stoplight": {
+          "id": "sj5qhwdcngmkv"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idSolicitudTrabajo"
+        },
+        {
+          "$ref": "#/components/parameters/idUg"
+        }
+      ]
+    },
+    "/solicitudes/v1/solicitudes-trabajo/{idSolicitudTrabajo}/uts": {
+      "get": {
+        "tags": [
+          "Solicitud Trabajo"
+        ],
+        "summary": "Recupera las uts que le corresponden a la empresa principal de la solicitud de trabajo",
+        "operationId": "getUtsPorIdSolicitudTrabajo",
+        "parameters": [
+          {
+            "name": "idTipoEstructura",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "name": "modoArbol",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UtDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- SO_0029: No tienes permiso para acceder a esta solicitud\n - SO_0024: La solicitud debe estar en estado %s para realizar esta operación\n - SO_0038: No se puede acceder a las asignaciones de una solicitud tipo ALTA en estado borrador con paso SUBCONTRATA o CONTRATANTE"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Recupera las uts que le corresponden a la empresa principal de la solicitud de trabajo",
+        "x-stoplight": {
+          "id": "w2xnjqiui6460"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idSolicitudTrabajo"
+        }
+      ]
+    },
+    "/solicitudes/v1/solicitudes-trabajo/{idSolicitudTrabajo}/uts/{idUt}/ugs": {
+      "get": {
+        "tags": [
+          "Solicitud Trabajo"
+        ],
+        "summary": "Recupera las ugs que le corresponden a la empresa principal de la solicitud de trabajo que estén relacionadas con la ut",
+        "operationId": "getUgsPorIdSolicitudTrabajoPorIdUt",
+        "parameters": [
+          {
+            "name": "modoArbol",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "TODO: add description"
+          },
+          {
+            "$ref": "#/components/parameters/X-Timezone"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UgDtoResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "- SO_0029: No tienes permiso para acceder a esta solicitud\n - SO_0024: La solicitud debe estar en estado %s para realizar esta operación\n - SO_0038: No se puede acceder a las asignaciones de una solicitud tipo ALTA en estado borrador con paso SUBCONTRATA o CONTRATANTE"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "x-roles": [
+          "superadministrador",
+          "no_administrador"
+        ],
+        "x-permisos": true,
+        "description": "Recupera las ugs que le corresponden a la empresa principal de la solicitud de trabajo que estén relacionadas con la ut",
+        "x-stoplight": {
+          "id": "60qn1gsta5lcj"
+        }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/idSolicitudTrabajo"
+        },
+        {
+          "$ref": "#/components/parameters/idUt"
+        }
+      ]
+    }
+  },
+  "components": {
+    "schemas": {
+      "AplicableAEnum": {
+        "enum": [
+          "EMPRESA",
+          "EMPLEADO",
+          "RECURSO"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "miogulfz6hrne"
+        }
+      },
+      "ComprobacionesAccesosDtoResponse": {
+        "type": "object",
+        "properties": {
+          "puedeCrearSolicitudesTrabajo": {
+            "type": "boolean"
+          },
+          "tieneSolicitudesComoValidadorExterno": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "qm1h9ews45zw6"
+        }
+      },
+      "ConfiguracionEnum": {
+        "enum": [
+          "NOMBRE_ENTIDAD_AGRUPADORA_COMPRA",
+          "CREACION_ENTIDAD_AGRUPADORA_COMPRA",
+          "NUMERO_ENTIDAD_AGRUPADORA_COMPRA",
+          "PERMITIR_FACTURA_SIN_DOCUMENTO",
+          "PERMITIR_CAMBIO_ESTADO_FACTURA",
+          "NOMBRE_FACTURA_SUBIDA_ERP",
+          "NOMBRE_FACTURA_RECIBIDA_ERP",
+          "NOMBRE_FACTURA_RECHAZADA_ERP",
+          "NOMBRE_FACTURA_POR_PAGAR_ERP",
+          "NOMBRE_FACTURA_PAGADA_ERP",
+          "ID_FACTURA_SUBIDA_ERP",
+          "ID_FACTURA_RECIBIDA_ERP",
+          "ID_FACTURA_RECHAZADA_ERP",
+          "ID_FACTURA_POR_PAGAR_ERP",
+          "ID_FACTURA_PAGADA_ERP",
+          "ZONA_HORARIA",
+          "ZONA_HORARIA_POR_DEFECTO_UG",
+          "PERIODO_RANGO_FECHAS_NUMERO",
+          "PERIODO_RANGO_FECHAS_UNIDAD_TIEMPO",
+          "LISTA_IDS_EMPRESAS_VALIDADORAS",
+          "CRITERIOS_VALIDACION_SOLICITUDES",
+          "INFORMACION_CONTACTO",
+          "CADENA_CONEXION_AZURE_STORAGE_ACCOUNT"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "skhrnql0bh0nc"
+        }
+      },
+      "ContratadoPorEnum": {
+        "enum": [
+          "EMPRESA_PRINCIPAL",
+          "SUBCONTRATA"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "suuktige465kq"
+        }
+      },
+      "CorreoElectronicoDtoRequest": {
+        "required": [
+          "email"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "maxLength": 255,
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "kxdha29ap9ghi"
+        }
+      },
+      "CorreoElectronicoDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idCorreoElectronico": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "email": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "0qu6vs77fldgd"
+        }
+      },
+      "DayOfWeek": {
+        "enum": [
+          "MONDAY",
+          "TUESDAY",
+          "WEDNESDAY",
+          "THURSDAY",
+          "FRIDAY",
+          "SATURDAY",
+          "SUNDAY"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "32dfr3ac3q5x2"
+        }
+      },
+      "DireccionDtoRequest": {
+        "required": [
+          "direccion",
+          "idPais"
+        ],
+        "type": "object",
+        "properties": {
+          "direccion": {
+            "maxLength": 512,
+            "type": "string"
+          },
+          "placeId": {
+            "type": "string"
+          },
+          "idPais": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "extraData": {
+            "type": "object",
+            "additionalProperties": {}
+          }
+        },
+        "x-stoplight": {
+          "id": "jn79wih9vgdjg"
+        }
+      },
+      "DireccionDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idDireccion": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "direccion": {
+            "type": "string"
+          },
+          "placeId": {
+            "type": "string"
+          },
+          "idPais": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "extraData": {
+            "type": "object",
+            "additionalProperties": {}
+          }
+        },
+        "x-stoplight": {
+          "id": "6adiwltsry6so"
+        }
+      },
+      "Duration": {
+        "format": "duration",
+        "type": "string",
+        "example": "P1D",
+        "x-stoplight": {
+          "id": "y6sui1awr3evz"
+        }
+      },
+      "EmpresaDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "cif": {
+            "type": "string"
+          },
+          "uuid": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "fo9kf0lttawz5"
+        }
+      },
+      "EmpresaDtoResponseInformacion": {
+        "type": "object",
+        "properties": {
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "cif": {
+            "type": "string"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "persona": {
+            "type": "string"
+          },
+          "telefono": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "idPaisTelefono": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "uuid": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "nuuxo6gsugmeb"
+        }
+      },
+      "EntornoConfiguracionListaDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idConfiguracion": {
+            "$ref": "#/components/schemas/ConfiguracionEnum"
+          },
+          "valor": {
+            "type": "string"
+          },
+          "idEntorno": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "modulo": {
+            "$ref": "#/components/schemas/ModuloEnum"
+          }
+        },
+        "x-stoplight": {
+          "id": "gxxgbetrsxbgc"
+        }
+      },
+      "EstadoCreacionEnum": {
+        "enum": [
+          "CREADA",
+          "CREANDO",
+          "PENDIENTE"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "cnpddc9si7fxl"
+        }
+      },
+      "EstadoSolicitudEnum": {
+        "enum": [
+          "PENDIENTE",
+          "RECHAZADA",
+          "CONFIRMADA"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "c4nwpp06y7dg7"
+        }
+      },
+      "EstadoSolicitudTrabajoEnum": {
+        "enum": [
+          "BORRADOR",
+          "PENDIENTE",
+          "RECHAZADA",
+          "CONFIRMADA"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "lsh53tttzmbhx"
+        }
+      },
+      "FiltroTipoSolicitudTrabajoEnum": {
+        "enum": [
+          "CLIENTES",
+          "SUBCONTRATAS",
+          "ADMINISTRACION",
+          "INTERNO",
+          "SUBCONTRATAS_EN_CLIENTES"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "bjxswtkbl6jth"
+        }
+      },
+      "GrupoEntornosDtoResponse": {
+        "required": [
+          "idEmpresaAdministradora",
+          "idGrupoEntornos",
+          "nombre"
+        ],
+        "type": "object",
+        "properties": {
+          "idEmpresaAdministradora": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idGrupoEntornos": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "dc7kls7uwhnlr"
+        }
+      },
+      "GrupoUsuarioDtoRequest": {
+        "required": [
+          "nombre",
+          "idGrupoUsuario"
+        ],
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "maxLength": 128,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "idGrupoUsuario": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "7gstk77nubiqe"
+        }
+      },
+      "GrupoUsuarioDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idGrupoUsuario": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idRol": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "observaciones": {
+            "type": "string"
+          },
+          "porDefecto": {
+            "type": "boolean"
+          },
+          "interno": {
+            "type": "boolean"
+          },
+          "rol": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "g5jbmd0wtey2q"
+        }
+      },
+      "Instant": {
+        "format": "date-time",
+        "type": "string",
+        "example": "2022-03-10T16:15:50Z",
+        "x-stoplight": {
+          "id": "ac8ax09hzy5w4"
+        }
+      },
+      "LocalDateTime": {
+        "format": "date-time",
+        "type": "string",
+        "example": "2022-03-10T12:15:50",
+        "x-stoplight": {
+          "id": "utjzeodcgg4ia"
+        }
+      },
+      "LocalTime": {
+        "format": "local-time",
+        "type": "string",
+        "externalDocs": {
+          "description": "As defined by 'partial-time' in RFC3339",
+          "url": "https://www.rfc-editor.org/rfc/rfc3339.html#section-5.6"
+        },
+        "example": "13:45:30.123456789",
+        "x-stoplight": {
+          "id": "bobw5exm7omg6"
+        }
+      },
+      "ModoVisualizacionEnum": {
+        "enum": [
+          "GESTION",
+          "VALIDACION"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "zo6g45m5ggqbr"
+        }
+      },
+      "ModuloEnum": {
+        "enum": [
+          "ESTRUCTURA",
+          "CAE",
+          "CA",
+          "FORMULARIOS",
+          "METAMARKET",
+          "MQL",
+          "TAREAS",
+          "PROVEEDORES",
+          "PRL",
+          "GESTION_DOCUMENTAL",
+          "ADMINISTRACION",
+          "CALENDARIOS"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "ckfgz3scs28jr"
+        }
+      },
+      "Month": {
+        "enum": [
+          "JANUARY",
+          "FEBRUARY",
+          "MARCH",
+          "APRIL",
+          "MAY",
+          "JUNE",
+          "JULY",
+          "AUGUST",
+          "SEPTEMBER",
+          "OCTOBER",
+          "NOVEMBER",
+          "DECEMBER"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "wtee48wj9w867"
+        }
+      },
+      "MotivoRechazoComunDtoResponse": {
+        "type": "object",
+        "properties": {
+          "nombreMotivoRechazo": {
+            "type": "string"
+          },
+          "textoMotivoRechazo": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "bu93kbh39flsm"
+        }
+      },
+      "MotivoRechazoDtoRequest": {
+        "required": [
+          "motivoRechazo"
+        ],
+        "type": "object",
+        "properties": {
+          "motivoRechazo": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "jr5mz1gz30y8n"
+        }
+      },
+      "PackDocumentalPorDefectoUgsUtsDtoRequest": {
+        "required": [
+          "idPackDocumental",
+          "nombre",
+          "aplicableA",
+          "origenUg",
+          "origenUt"
+        ],
+        "type": "object",
+        "properties": {
+          "idPackDocumental": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "maxLength": 256,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "aplicableA": {
+            "$ref": "#/components/schemas/AplicableAEnum"
+          },
+          "porDefecto": {
+            "type": "boolean"
+          },
+          "origenUg": {
+            "type": "boolean"
+          },
+          "origenUt": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "4ze9eqz4035bc"
+        }
+      },
+      "PackDocumentalPorDefectoUgsUtsDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idPackDocumental": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "aplicableA": {
+            "$ref": "#/components/schemas/AplicableAEnum"
+          },
+          "origenUg": {
+            "type": "boolean"
+          },
+          "origenUt": {
+            "type": "boolean"
+          },
+          "porDefecto": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "iyef98awqwe9p"
+        }
+      },
+      "PasoSolicitudTrabajoEnum": {
+        "enum": [
+          "SUBCONTRATA",
+          "CONTRATANTE",
+          "DESTINO",
+          "VALIDACION"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "qbu9d9y7433z0"
+        }
+      },
+      "PermisoSolicitudTrabajoDtoResponse": {
+        "type": "object",
+        "properties": {
+          "consultar": {
+            "type": "boolean"
+          },
+          "gestionar": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "xp1bwplft39u3"
+        }
+      },
+      "PriorizarUgUtEnum": {
+        "enum": [
+          "UG",
+          "UT"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "2qr70r52590m8"
+        }
+      },
+      "RelacionContratacionDtoRequest": {
+        "required": [
+          "permiteSubcontratar",
+          "nombre",
+          "fechaInicio",
+          "fechaFin",
+          "idEmpresaQueAporta",
+          "idEmpresaQueSolicita",
+          "idUg",
+          "idUt"
+        ],
+        "type": "object",
+        "properties": {
+          "permiteSubcontratar": {
+            "type": "boolean"
+          },
+          "nombre": {
+            "maxLength": 255,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "fechaInicio": {
+            "type": "string"
+          },
+          "fechaFin": {
+            "type": "string"
+          },
+          "idEmpresaQueAporta": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEmpresaQueSolicita": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idUg": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idUt": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "536lg3mjoen6h"
+        }
+      },
+      "RelacionContratacionDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idRelacion": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idRelacionPadre": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "permiteSubcontratar": {
+            "type": "boolean"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "fechaInicio": {
+            "type": "string"
+          },
+          "fechaFin": {
+            "type": "string"
+          },
+          "ugUt": {
+            "$ref": "#/components/schemas/UgUtDtoResponse"
+          },
+          "empresa": {
+            "$ref": "#/components/schemas/EmpresaDtoResponse"
+          },
+          "empresaQueSolicita": {
+            "$ref": "#/components/schemas/EmpresaDtoResponse"
+          },
+          "empresaQueAporta": {
+            "$ref": "#/components/schemas/EmpresaDtoResponse"
+          },
+          "relacionesContratacion": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RelacionContratacionDtoResponse"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "5zzm7ju0fsqvy"
+        }
+      },
+      "SolicitudAltaAutonomoDtoRequest": {
+        "required": [
+          "nombre",
+          "apellido1",
+          "apellido2",
+          "comentarios",
+          "estado",
+          "identificador",
+          "nombreComercial",
+          "idPaisIdentificador",
+          "idGrupoEntornos"
+        ],
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "type": "string"
+          },
+          "apellido1": {
+            "type": "string"
+          },
+          "apellido2": {
+            "type": "string"
+          },
+          "comentarios": {
+            "type": "string"
+          },
+          "estado": {
+            "$ref": "#/components/schemas/EstadoSolicitudEnum"
+          },
+          "identificador": {
+            "type": "string"
+          },
+          "nombreComercial": {
+            "type": "string"
+          },
+          "idPaisIdentificador": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idGrupoEntornos": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "qadn65wnub5ol"
+        }
+      },
+      "SolicitudAltaAutonomoDtoRequestFinalizar": {
+        "required": [
+          "telefono",
+          "direccion",
+          "correoElectronico",
+          "nombreComercial",
+          "zonaHoraria",
+          "idGrupoEntornos"
+        ],
+        "type": "object",
+        "properties": {
+          "nombreContacto": {
+            "type": "string"
+          },
+          "telefono": {
+            "$ref": "#/components/schemas/TelefonoDtoRequest"
+          },
+          "direccion": {
+            "$ref": "#/components/schemas/DireccionDtoRequest"
+          },
+          "correoElectronico": {
+            "$ref": "#/components/schemas/CorreoElectronicoDtoRequest"
+          },
+          "nombreComercial": {
+            "type": "string"
+          },
+          "zonaHoraria": {
+            "$ref": "#/components/schemas/ZoneId"
+          },
+          "idGrupoEntornos": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "4fxzwxxswazym"
+        }
+      },
+      "SolicitudAltaAutonomoDtoResponseDetalle": {
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "type": "string"
+          },
+          "apellido1": {
+            "type": "string"
+          },
+          "apellido2": {
+            "type": "string"
+          },
+          "borrado": {
+            "type": "boolean"
+          },
+          "comentarios": {
+            "type": "string"
+          },
+          "estado": {
+            "$ref": "#/components/schemas/EstadoSolicitudEnum"
+          },
+          "estadoCreacion": {
+            "$ref": "#/components/schemas/EstadoCreacionEnum"
+          },
+          "fechaPeticion": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "identificador": {
+            "type": "string"
+          },
+          "idPaisIdentificador": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idSolicitudAlta": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "motivo": {
+            "type": "string"
+          },
+          "nombreComercial": {
+            "type": "string"
+          },
+          "usuarioPeticion": {
+            "$ref": "#/components/schemas/UsuarioDtoResponseAmpliado"
+          },
+          "usuarioTramitacion": {
+            "$ref": "#/components/schemas/UsuarioDtoResponseAmpliado"
+          },
+          "idGrupoEntornos": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "pgokawjlmpnir"
+        }
+      },
+      "SolicitudAltaAutonomoDtoResponseFinalizar": {
+        "type": "object",
+        "properties": {
+          "nombreContacto": {
+            "type": "string"
+          },
+          "idSolicitudAlta": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idContacto": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "telefono": {
+            "$ref": "#/components/schemas/TelefonoDtoResponse"
+          },
+          "direccion": {
+            "$ref": "#/components/schemas/DireccionDtoResponse"
+          },
+          "correoElectronico": {
+            "$ref": "#/components/schemas/CorreoElectronicoDtoResponse"
+          },
+          "nombreComercial": {
+            "type": "string"
+          },
+          "zonaHoraria": {
+            "$ref": "#/components/schemas/ZoneId"
+          },
+          "idGrupoEntornos": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "mti7itou20oh0"
+        }
+      },
+      "SolicitudAltaDtoResponseDetalle": {
+        "type": "object",
+        "properties": {
+          "idSolicitudAlta": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "estado": {
+            "$ref": "#/components/schemas/EstadoSolicitudEnum"
+          },
+          "identificador": {
+            "type": "string"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "apellido1": {
+            "type": "string"
+          },
+          "apellido2": {
+            "type": "string"
+          },
+          "idPaisIdentificador": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "tipo": {
+            "$ref": "#/components/schemas/TipoSolicitudAltaEnum"
+          },
+          "borrado": {
+            "type": "boolean"
+          },
+          "fechaPeticion": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "usuarioEmpresa": {
+            "$ref": "#/components/schemas/UsuarioDtoResponseAmpliado"
+          },
+          "usuarioTramitacion": {
+            "$ref": "#/components/schemas/UsuarioDtoResponseAmpliado"
+          },
+          "motivo": {
+            "type": "string"
+          },
+          "comentarios": {
+            "type": "string"
+          },
+          "estadoCreacion": {
+            "$ref": "#/components/schemas/EstadoCreacionEnum"
+          },
+          "nombreComercial": {
+            "type": "string"
+          },
+          "idUsuarioCreacion": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "zonaHoraria": {
+            "$ref": "#/components/schemas/ZoneId"
+          },
+          "grupoEntornos": {
+            "$ref": "#/components/schemas/GrupoEntornosDtoResponse"
+          }
+        },
+        "x-stoplight": {
+          "id": "k5jnvrh3uw3xl"
+        }
+      },
+      "SolicitudAltaDtoResponseListado": {
+        "type": "object",
+        "properties": {
+          "idSolicitudAlta": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "estado": {
+            "$ref": "#/components/schemas/EstadoSolicitudEnum"
+          },
+          "identificador": {
+            "type": "string"
+          },
+          "idPaisIdentificador": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "tipo": {
+            "$ref": "#/components/schemas/TipoSolicitudAltaEnum"
+          },
+          "borrado": {
+            "type": "boolean"
+          },
+          "fechaPeticion": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "usuarioEmpresa": {
+            "$ref": "#/components/schemas/UsuarioDtoResponse"
+          },
+          "nombreComercial": {
+            "type": "string"
+          },
+          "idUsuarioCreacion": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "grupoEntornos": {
+            "$ref": "#/components/schemas/GrupoEntornosDtoResponse"
+          }
+        },
+        "x-stoplight": {
+          "id": "8ryxudjchw8np"
+        }
+      },
+      "SolicitudAltaEmpresaDtoRequest": {
+        "required": [
+          "comentarios",
+          "estado",
+          "identificador",
+          "nombreComercial",
+          "idPaisIdentificador",
+          "idGrupoEntornos"
+        ],
+        "type": "object",
+        "properties": {
+          "comentarios": {
+            "type": "string"
+          },
+          "estado": {
+            "$ref": "#/components/schemas/EstadoSolicitudEnum"
+          },
+          "identificador": {
+            "type": "string"
+          },
+          "nombreComercial": {
+            "type": "string"
+          },
+          "idPaisIdentificador": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idGrupoEntornos": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "hr8r1m1ywb21q"
+        }
+      },
+      "SolicitudAltaEmpresaDtoRequestFinalizar": {
+        "required": [
+          "telefono",
+          "direccion",
+          "correoElectronico",
+          "nombreComercial",
+          "zonaHoraria",
+          "domicilioSocial",
+          "idGrupoEntornos"
+        ],
+        "type": "object",
+        "properties": {
+          "nombreContacto": {
+            "type": "string"
+          },
+          "telefono": {
+            "$ref": "#/components/schemas/TelefonoDtoRequest"
+          },
+          "direccion": {
+            "$ref": "#/components/schemas/DireccionDtoRequest"
+          },
+          "correoElectronico": {
+            "$ref": "#/components/schemas/CorreoElectronicoDtoRequest"
+          },
+          "nombreComercial": {
+            "type": "string"
+          },
+          "zonaHoraria": {
+            "$ref": "#/components/schemas/ZoneId"
+          },
+          "domicilioSocial": {
+            "$ref": "#/components/schemas/DireccionDtoRequest"
+          },
+          "idGrupoEntornos": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "9imx5qk8jtbsq"
+        }
+      },
+      "SolicitudAltaEmpresaDtoResponseDetalle": {
+        "type": "object",
+        "properties": {
+          "borrado": {
+            "type": "boolean"
+          },
+          "comentarios": {
+            "type": "string"
+          },
+          "estado": {
+            "$ref": "#/components/schemas/EstadoSolicitudEnum"
+          },
+          "estadoCreacion": {
+            "$ref": "#/components/schemas/EstadoCreacionEnum"
+          },
+          "fechaPeticion": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "identificador": {
+            "type": "string"
+          },
+          "idPaisIdentificador": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idSolicitudAlta": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "motivo": {
+            "type": "string"
+          },
+          "nombreComercial": {
+            "type": "string"
+          },
+          "razonSocial": {
+            "type": "string"
+          },
+          "usuarioPeticion": {
+            "$ref": "#/components/schemas/UsuarioDtoResponseAmpliado"
+          },
+          "usuarioTramitacion": {
+            "$ref": "#/components/schemas/UsuarioDtoResponseAmpliado"
+          },
+          "idGrupoEntornos": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "nw12eiilh18mg"
+        }
+      },
+      "SolicitudAltaEmpresaDtoResponseFinalizar": {
+        "type": "object",
+        "properties": {
+          "nombreContacto": {
+            "type": "string"
+          },
+          "idSolicitudAlta": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idContacto": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "telefono": {
+            "$ref": "#/components/schemas/TelefonoDtoResponse"
+          },
+          "direccion": {
+            "$ref": "#/components/schemas/DireccionDtoResponse"
+          },
+          "correoElectronico": {
+            "$ref": "#/components/schemas/CorreoElectronicoDtoResponse"
+          },
+          "nombreComercial": {
+            "type": "string"
+          },
+          "zonaHoraria": {
+            "$ref": "#/components/schemas/ZoneId"
+          },
+          "domicilioSocial": {
+            "$ref": "#/components/schemas/DireccionDtoResponse"
+          },
+          "idGrupoEntornos": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "8tl861csg4x0q"
+        }
+      },
+      "SolicitudAutonomoDtoRequest": {
+        "required": [
+          "idUsuarioEmpresa",
+          "idPaisIdentificador",
+          "identificador",
+          "nombre",
+          "apellido1",
+          "apellido2",
+          "idGrupoEntornos"
+        ],
+        "type": "object",
+        "properties": {
+          "idUsuarioEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idPaisIdentificador": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "identificador": {
+            "maxLength": 45,
+            "minLength": 1,
+            "type": "string"
+          },
+          "nombre": {
+            "maxLength": 128,
+            "minLength": 1,
+            "type": "string"
+          },
+          "apellido1": {
+            "maxLength": 128,
+            "minLength": 1,
+            "type": "string"
+          },
+          "apellido2": {
+            "maxLength": 128,
+            "type": "string"
+          },
+          "idGrupoEntornos": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "dfld52mlntrws"
+        }
+      },
+      "SolicitudAutonomoDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idUsuarioEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idSolicitudAlta": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "estado": {
+            "$ref": "#/components/schemas/EstadoSolicitudEnum"
+          },
+          "identificador": {
+            "type": "string"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "apellido1": {
+            "type": "string"
+          },
+          "apellido2": {
+            "type": "string"
+          },
+          "idPaisIdentificador": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idGrupoEntornos": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "tsviq4gz8xzst"
+        }
+      },
+      "SolicitudDtoRabbit": {
+        "type": "object",
+        "properties": {
+          "idSolicitud": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "ppt7nib8hldl9"
+        }
+      },
+      "SolicitudEmpresaDtoRequest": {
+        "required": [
+          "idUsuarioEmpresa",
+          "idPaisIdentificador",
+          "identificador",
+          "nombreComercial",
+          "idGrupoEntornos"
+        ],
+        "type": "object",
+        "properties": {
+          "idUsuarioEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idPaisIdentificador": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "identificador": {
+            "maxLength": 45,
+            "minLength": 1,
+            "type": "string"
+          },
+          "nombreComercial": {
+            "maxLength": 128,
+            "minLength": 1,
+            "type": "string"
+          },
+          "idGrupoEntornos": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "d0g9ulbw6y0av"
+        }
+      },
+      "SolicitudEmpresaDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idUsuarioEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idSolicitudAlta": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "estado": {
+            "$ref": "#/components/schemas/EstadoSolicitudEnum"
+          },
+          "identificador": {
+            "type": "string"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "idPaisIdentificador": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombreComercial": {
+            "type": "string"
+          },
+          "idGrupoEntornos": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "5srkm4wvj76bd"
+        }
+      },
+      "SolicitudTrabajoAsignacionesDtoRequest": {
+        "required": [
+          "relacionesContratacion",
+          "packsUgUts",
+          "gruposUsuarios",
+          "tipoEstructura"
+        ],
+        "type": "object",
+        "properties": {
+          "relacionesContratacion": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RelacionContratacionDtoRequest"
+            }
+          },
+          "packsUgUts": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UgUtPacksDocumentalesDtoRequest"
+            }
+          },
+          "gruposUsuarios": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GrupoUsuarioDtoRequest"
+            }
+          },
+          "tipoEstructura": {
+            "$ref": "#/components/schemas/TipoEstructuraModuloDtoRequest"
+          }
+        },
+        "x-stoplight": {
+          "id": "2gej31jl2jewe"
+        }
+      },
+      "SolicitudTrabajoDtoRequest": {
+        "type": "object",
+        "properties": {
+          "idSolicitudTrabajo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "subcontrata": {
+            "$ref": "#/components/schemas/SolicitudTrabajoDtoRequestEmpresa"
+          },
+          "empresaPrincipal": {
+            "$ref": "#/components/schemas/SolicitudTrabajoDtoRequestEmpresa"
+          },
+          "destino": {
+            "$ref": "#/components/schemas/SolicitudTrabajoDtoRequestDestino"
+          },
+          "datosValidacion": {
+            "$ref": "#/components/schemas/SolicitudTrabajoDtoRequestDatosValidacion"
+          },
+          "tipoSolicitud": {
+            "$ref": "#/components/schemas/TipoSolicitudTrabajoEnum"
+          }
+        },
+        "x-stoplight": {
+          "id": "t45oh30awcnds"
+        }
+      },
+      "SolicitudTrabajoDtoRequestDatosValidacion": {
+        "type": "object",
+        "properties": {
+          "motivoSolicitud": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "n280xynva0ho2"
+        }
+      },
+      "SolicitudTrabajoDtoRequestDestino": {
+        "required": [
+          "solicitudAcceso",
+          "contratadoPor"
+        ],
+        "type": "object",
+        "properties": {
+          "solicitudAcceso": {
+            "type": "string"
+          },
+          "contratadoPor": {
+            "$ref": "#/components/schemas/ContratadoPorEnum"
+          },
+          "idEmpresaContratante": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEmpresaValidadora": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "0bc1edknm30qn"
+        }
+      },
+      "SolicitudTrabajoDtoRequestEmpresa": {
+        "required": [
+          "idEmpresa",
+          "persona",
+          "telefono",
+          "email",
+          "direccion"
+        ],
+        "type": "object",
+        "properties": {
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "persona": {
+            "type": "string"
+          },
+          "telefono": {
+            "$ref": "#/components/schemas/TelefonoDtoRequest"
+          },
+          "email": {
+            "$ref": "#/components/schemas/CorreoElectronicoDtoRequest"
+          },
+          "direccion": {
+            "$ref": "#/components/schemas/DireccionDtoRequest"
+          },
+          "departamento": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "7q4vw7gjrrpkz"
+        }
+      },
+      "SolicitudTrabajoDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idSolicitudTrabajo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "estado": {
+            "$ref": "#/components/schemas/EstadoSolicitudTrabajoEnum"
+          },
+          "subcontrata": {
+            "$ref": "#/components/schemas/SolicitudTrabajoDtoResponseEmpresa"
+          },
+          "empresaPrincipal": {
+            "$ref": "#/components/schemas/SolicitudTrabajoDtoResponseEmpresa"
+          },
+          "destino": {
+            "$ref": "#/components/schemas/SolicitudTrabajoDtoResponseDestino"
+          },
+          "datosValidacion": {
+            "$ref": "#/components/schemas/SolicitudTrabajoDtoResponseDatosValidacion"
+          },
+          "paso": {
+            "$ref": "#/components/schemas/PasoSolicitudTrabajoEnum"
+          },
+          "permisos": {
+            "$ref": "#/components/schemas/PermisoSolicitudTrabajoDtoResponse"
+          },
+          "modoVisualizacion": {
+            "$ref": "#/components/schemas/ModoVisualizacionEnum"
+          }
+        },
+        "x-stoplight": {
+          "id": "cfoxvl29sbu8b"
+        }
+      },
+      "SolicitudTrabajoDtoResponseDatosValidacion": {
+        "type": "object",
+        "properties": {
+          "motivoSolicitud": {
+            "type": "string"
+          },
+          "creadaPor": {
+            "type": "string"
+          },
+          "fechaCreacion": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "validadaPor": {
+            "type": "string"
+          },
+          "fechaValidacion": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "motivoRechazo": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "wze6diq56jnf4"
+        }
+      },
+      "SolicitudTrabajoDtoResponseDestino": {
+        "type": "object",
+        "properties": {
+          "contratadoPor": {
+            "$ref": "#/components/schemas/ContratadoPorEnum"
+          },
+          "solicitudAcceso": {
+            "type": "string"
+          },
+          "empresaContratante": {
+            "$ref": "#/components/schemas/EmpresaDtoResponse"
+          },
+          "empresaValidadora": {
+            "$ref": "#/components/schemas/EmpresaDtoResponse"
+          }
+        },
+        "x-stoplight": {
+          "id": "gn2ayc25mqbxb"
+        }
+      },
+      "SolicitudTrabajoDtoResponseEmpresa": {
+        "type": "object",
+        "properties": {
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "persona": {
+            "type": "string"
+          },
+          "departamento": {
+            "type": "string"
+          },
+          "telefono": {
+            "$ref": "#/components/schemas/TelefonoDtoResponse"
+          },
+          "email": {
+            "$ref": "#/components/schemas/CorreoElectronicoDtoResponse"
+          },
+          "direccion": {
+            "$ref": "#/components/schemas/DireccionDtoResponse"
+          },
+          "uuid": {
+            "type": "string"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "cif": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "viwp7em88z944"
+        }
+      },
+      "SolicitudTrabajoDtoResponseListado": {
+        "type": "object",
+        "properties": {
+          "solicitudes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SolicitudTrabajoDtoResponseListadoSolicitud"
+            }
+          },
+          "altas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SolicitudTrabajoDtoResponseListadoSolicitud"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "80rh8n69ga792"
+        }
+      },
+      "SolicitudTrabajoDtoResponseListadoSolicitud": {
+        "type": "object",
+        "properties": {
+          "idSolicitudTrabajo": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "empresaPrincipal": {
+            "type": "string"
+          },
+          "empresaContratante": {
+            "type": "string"
+          },
+          "subcontrata": {
+            "type": "string"
+          },
+          "validadaPor": {
+            "type": "string"
+          },
+          "fechaSolicitud": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "fechaValidacion": {
+            "$ref": "#/components/schemas/ZonedDateTime"
+          },
+          "estado": {
+            "$ref": "#/components/schemas/EstadoSolicitudTrabajoEnum"
+          },
+          "permisos": {
+            "$ref": "#/components/schemas/PermisoSolicitudTrabajoDtoResponse"
+          },
+          "modoVisualizacion": {
+            "$ref": "#/components/schemas/ModoVisualizacionEnum"
+          },
+          "usuarioCreador": {
+            "type": "string"
+          },
+          "usuarioValidador": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "vgr6c4knayhds"
+        }
+      },
+      "SolicitudTrabajoHistoricosDtoResponse": {
+        "type": "object",
+        "properties": {
+          "relacionesContratacion": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RelacionContratacionDtoResponse"
+            }
+          },
+          "ugUtPacks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UgUtPacksDocumentalesDtoResponse"
+            }
+          },
+          "tipoEstructura": {
+            "$ref": "#/components/schemas/TipoEstructuraModuloDtoResponse"
+          },
+          "gruposUsuarios": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GrupoUsuarioDtoResponse"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "hsm8ut8f6w2fg"
+        }
+      },
+      "TelefonoDtoRequest": {
+        "required": [
+          "idPaisTelefono",
+          "telefono"
+        ],
+        "type": "object",
+        "properties": {
+          "idPaisTelefono": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "telefono": {
+            "maxLength": 16,
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "04hjshmc5usvd"
+        }
+      },
+      "TelefonoDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idTelefono": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idPaisTelefono": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "telefono": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "752q7iimi3mmk"
+        }
+      },
+      "TimeDefinition": {
+        "enum": [
+          "UTC",
+          "WALL",
+          "STANDARD"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "j0qzbasmpg7kl"
+        }
+      },
+      "TipoEstructuraModuloDtoRequest": {
+        "required": [
+          "usaUg",
+          "usaUt",
+          "nombreSingularUg",
+          "nombrePluralUg",
+          "priorizarUgUt",
+          "nombreSingularUt",
+          "nombrePluralUt"
+        ],
+        "type": "object",
+        "properties": {
+          "usaUg": {
+            "type": "boolean"
+          },
+          "usaUt": {
+            "type": "boolean"
+          },
+          "nombreSingularUg": {
+            "maxLength": 255,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "nombrePluralUg": {
+            "maxLength": 255,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "priorizarUgUt": {
+            "$ref": "#/components/schemas/PriorizarUgUtEnum"
+          },
+          "nombreSingularUt": {
+            "maxLength": 255,
+            "pattern": "\\S",
+            "type": "string"
+          },
+          "nombrePluralUt": {
+            "maxLength": 255,
+            "pattern": "\\S",
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "zumlauol6n2am"
+        }
+      },
+      "TipoEstructuraModuloDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idTipoEstructura": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "usaUg": {
+            "type": "boolean"
+          },
+          "usaUt": {
+            "type": "boolean"
+          },
+          "priorizarUgUt": {
+            "$ref": "#/components/schemas/PriorizarUgUtEnum"
+          },
+          "idTipoUgInterna": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idUgInterna": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombreSingularUg": {
+            "type": "string"
+          },
+          "nombrePluralUg": {
+            "type": "string"
+          },
+          "iconoUg": {
+            "type": "string"
+          },
+          "idTipoUtInterna": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idUtInterna": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombreSingularUt": {
+            "type": "string"
+          },
+          "nombrePluralUt": {
+            "type": "string"
+          },
+          "modulo": {
+            "$ref": "#/components/schemas/ModuloEnum"
+          },
+          "iconoUt": {
+            "type": "string"
+          },
+          "gestionRecursos": {
+            "type": "boolean"
+          },
+          "gestionAdministrativa": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "m9w5im7si5bep"
+        }
+      },
+      "TipoSolicitudAltaEnum": {
+        "enum": [
+          "EMPRESA",
+          "AUTONOMO"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "txqhnf7489wsa"
+        }
+      },
+      "TipoSolicitudTrabajoEnum": {
+        "enum": [
+          "SOLICITUD",
+          "ALTA"
+        ],
+        "type": "string",
+        "x-stoplight": {
+          "id": "ipvczx1qjfg7s"
+        }
+      },
+      "UgDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idUg": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nivel": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idTipoUg": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idUgPadre": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idTipoEstructura": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "observaciones": {
+            "type": "string"
+          },
+          "fechaDesde": {
+            "type": "string"
+          },
+          "fechaHasta": {
+            "type": "string"
+          },
+          "zonaHoraria": {
+            "$ref": "#/components/schemas/ZoneId"
+          },
+          "porDefectoEmpleado": {
+            "type": "boolean"
+          },
+          "porDefectoRecurso": {
+            "type": "boolean"
+          },
+          "porDefectoUsuario": {
+            "type": "boolean"
+          },
+          "porDefectoEmpresa": {
+            "type": "boolean"
+          },
+          "tieneUgsHijas": {
+            "type": "boolean"
+          },
+          "ugs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UgDtoResponse"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "aycgltw8hylah"
+        }
+      },
+      "UgUtDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idUg": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idUt": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombreUg": {
+            "type": "string"
+          },
+          "nombreUt": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "q8l7dy013xq3f"
+        }
+      },
+      "UgUtIdDtoRequest": {
+        "required": [
+          "idUt",
+          "idUg"
+        ],
+        "type": "object",
+        "properties": {
+          "idUt": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idUg": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "anyxqdn888agn"
+        }
+      },
+      "UgUtIdDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idUg": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idUt": {
+            "format": "int32",
+            "type": "integer"
+          }
+        },
+        "x-stoplight": {
+          "id": "lczzozlluv9ro"
+        }
+      },
+      "UgUtPacksDocumentalesDtoRequest": {
+        "required": [
+          "ugUt"
+        ],
+        "type": "object",
+        "properties": {
+          "ugUt": {
+            "$ref": "#/components/schemas/UgUtIdDtoRequest"
+          },
+          "packsDocumentales": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PackDocumentalPorDefectoUgsUtsDtoRequest"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "6yb0owb3rp29l"
+        }
+      },
+      "UgUtPacksDocumentalesDtoResponse": {
+        "type": "object",
+        "properties": {
+          "packsDocumentales": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PackDocumentalPorDefectoUgsUtsDtoResponse"
+            }
+          },
+          "ugUt": {
+            "$ref": "#/components/schemas/UgUtIdDtoResponse"
+          }
+        },
+        "x-stoplight": {
+          "id": "u1dmdbm49hgzw"
+        }
+      },
+      "UsuarioDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idUsuario": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "email": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "xzyl8yvsjw9xr"
+        }
+      },
+      "UsuarioDtoResponseAmpliado": {
+        "type": "object",
+        "properties": {
+          "idUsuario": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "apellido1": {
+            "type": "string"
+          },
+          "apellido2": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          }
+        },
+        "x-stoplight": {
+          "id": "jpi0okvzbf5ol"
+        }
+      },
+      "UtDtoResponse": {
+        "type": "object",
+        "properties": {
+          "idUt": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idEmpresa": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nivel": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idTipoUt": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idUtPadre": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "idTipoEstructura": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "observaciones": {
+            "type": "string"
+          },
+          "fechaDesde": {
+            "type": "string"
+          },
+          "fechaHasta": {
+            "type": "string"
+          },
+          "porDefectoEmpleado": {
+            "type": "boolean"
+          },
+          "porDefectoRecurso": {
+            "type": "boolean"
+          },
+          "porDefectoUsuario": {
+            "type": "boolean"
+          },
+          "porDefectoEmpresa": {
+            "type": "boolean"
+          },
+          "tieneUtsHijas": {
+            "type": "boolean"
+          },
+          "uts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UtDtoResponse"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "qovotku5qjtuj"
+        }
+      },
+      "ZoneId": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "rules": {
+            "$ref": "#/components/schemas/ZoneRules"
+          }
+        },
+        "x-stoplight": {
+          "id": "2xljdu9382r11"
+        }
+      },
+      "ZoneOffset": {
+        "type": "object",
+        "properties": {
+          "totalSeconds": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "rules": {
+            "$ref": "#/components/schemas/ZoneRules"
+          }
+        },
+        "x-stoplight": {
+          "id": "yilq9nv9t1pah"
+        }
+      },
+      "ZoneOffsetTransition": {
+        "type": "object",
+        "properties": {
+          "epochSecond": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "transition": {
+            "$ref": "#/components/schemas/LocalDateTime"
+          },
+          "offsetBefore": {
+            "$ref": "#/components/schemas/ZoneOffset"
+          },
+          "offsetAfter": {
+            "$ref": "#/components/schemas/ZoneOffset"
+          },
+          "instant": {
+            "$ref": "#/components/schemas/Instant"
+          },
+          "dateTimeBefore": {
+            "$ref": "#/components/schemas/LocalDateTime"
+          },
+          "dateTimeAfter": {
+            "$ref": "#/components/schemas/LocalDateTime"
+          },
+          "duration": {
+            "$ref": "#/components/schemas/Duration"
+          },
+          "durationSeconds": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "gap": {
+            "type": "boolean"
+          },
+          "overlap": {
+            "type": "boolean"
+          },
+          "validOffsets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ZoneOffset"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "s5w6jmii17roo"
+        }
+      },
+      "ZoneOffsetTransitionRule": {
+        "type": "object",
+        "properties": {
+          "month": {
+            "$ref": "#/components/schemas/Month"
+          },
+          "dom": {
+            "format": "byte",
+            "type": "string"
+          },
+          "dow": {
+            "$ref": "#/components/schemas/DayOfWeek"
+          },
+          "time": {
+            "$ref": "#/components/schemas/LocalTime"
+          },
+          "timeEndOfDay": {
+            "type": "boolean"
+          },
+          "timeDefinition": {
+            "$ref": "#/components/schemas/TimeDefinition"
+          },
+          "standardOffset": {
+            "$ref": "#/components/schemas/ZoneOffset"
+          },
+          "offsetBefore": {
+            "$ref": "#/components/schemas/ZoneOffset"
+          },
+          "offsetAfter": {
+            "$ref": "#/components/schemas/ZoneOffset"
+          },
+          "dayOfMonthIndicator": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "dayOfWeek": {
+            "$ref": "#/components/schemas/DayOfWeek"
+          },
+          "localTime": {
+            "$ref": "#/components/schemas/LocalTime"
+          },
+          "midnightEndOfDay": {
+            "type": "boolean"
+          }
+        },
+        "x-stoplight": {
+          "id": "s6wq8rofq0heo"
+        }
+      },
+      "ZoneRules": {
+        "type": "object",
+        "properties": {
+          "standardTransitions": {
+            "type": "array",
+            "items": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          "standardOffsets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ZoneOffset"
+            }
+          },
+          "savingsInstantTransitions": {
+            "type": "array",
+            "items": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          "savingsLocalTransitions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LocalDateTime"
+            }
+          },
+          "wallOffsets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ZoneOffset"
+            }
+          },
+          "lastRules": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ZoneOffsetTransitionRule"
+            }
+          },
+          "fixedOffset": {
+            "type": "boolean"
+          },
+          "transitions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ZoneOffsetTransition"
+            }
+          },
+          "transitionRules": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ZoneOffsetTransitionRule"
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "xggsxlq4dy0k7"
+        }
+      },
+      "ZonedDateTime": {
+        "format": "date-time",
+        "type": "string",
+        "example": "2022-03-10T12:15:50-04:00",
+        "x-stoplight": {
+          "id": "q8zwswgsil5lo"
+        }
+      }
+    },
+    "securitySchemes": {
+      "jwt": {
+        "type": "http",
+        "description": "Authentication",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "parameters": {
+      "X-Timezone": {
+        "name": "X-Timezone",
+        "in": "header",
+        "description": "Zona horaria desde la que se hace la petición",
+        "required": true,
+        "schema": {
+          "default": "Europe/Madrid",
+          "type": "string"
+        }
+      },
+      "idSolicitud": {
+        "name": "idSolicitud",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idSolicitudTrabajo": {
+        "name": "idSolicitudTrabajo",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idUg": {
+        "name": "idUg",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      },
+      "idUt": {
+        "name": "idUt",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "description": "TODO: add description"
+      }
+    }
+  }
+}
